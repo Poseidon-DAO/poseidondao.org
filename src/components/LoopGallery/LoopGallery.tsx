@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useMemo } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -43,9 +44,18 @@ const LoopGallery = (props: any) => {
       key={props.key}
       {...settings}
       // @ts-ignore
-      style={{ width: "100%" }}
+      style={{ width: "100%", marginBottom: '1rem', transform: props.scew }}
     >
-      {props.children}
+      {props.imgArray.map((i: string) => (
+        <Image
+          key={i}
+          alt="..."
+          width={180}
+          height={180}
+          className="img-fluid floating img-gallery"
+          src={`/img/collection/${i}`}
+        />
+        ))}
     </Slider>
   );
 };
