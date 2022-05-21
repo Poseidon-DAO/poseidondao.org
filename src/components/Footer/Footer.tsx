@@ -1,89 +1,74 @@
+import { Heading, Pane } from "evergreen-ui";
+import Image from "next/image";
 import Link from "next/link";
 import { SocialIcon } from "react-social-icons";
-import { Col, Container, Nav, NavItem, NavLink, Row } from "reactstrap";
+import styled from "styled-components";
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <Container>
-        <Row>
-          <Col md="3">
-            <img
-              alt="..."
-              className="logo img-fluid rounded"
-              src={require("assets/img/logo-transparent.png").default}
-            />
-          </Col>
-          <Col md="3">
-            <Nav>
-              <NavItem>
-                <NavLink
-                  href="https://opensea.io/PoseidonNftFund"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  OpenSea
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  href="https://superrare.com/poseidonnftfund"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  SuperRare
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  href="https://foundation.app/@Poseidonnftfund"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Foundation
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Col>
-          <Col md="2">
-            <Nav>
-              <NavItem>
-                <NavLink
-                  href="mailto:info@poseidonnft.org"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Contact Us
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Blog
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  href="https://poseidongroup.ch/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Group
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <Link href="/artists">
-                  <NavLink>Artists</NavLink>
-                </Link>
-              </NavItem>
-            </Nav>
-          </Col>
-          <Col md="4">
-            <h3 className="title">Follow us:</h3>
-            <div className="btn-wrapper profile">
+    <FooterContainer>
+      <Content>
+          <Image
+            height={100}
+            width={150}
+            alt="..."
+            className="logo img-fluid rounded"
+            src="/img/logo-transparent.png"
+          />
+          <Pane display='flex' flex={1}>
+              <Column>
+                  <NavLink
+                    href="https://opensea.io/PoseidonNftFund"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    OpenSea
+                  </NavLink>
+                  <NavLink
+                    href="https://superrare.com/poseidonnftfund"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    SuperRare
+                  </NavLink>
+                  <NavLink
+                    href="https://foundation.app/@Poseidonnftfund"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Foundation
+                  </NavLink>
+              </Column>
+              <Column>
+                  <NavLink
+                    href="mailto:info@poseidonnft.org"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Contact Us
+                  </NavLink>
+                  <NavLink
+                    href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Blog
+                  </NavLink>
+                  <NavLink
+                    href="https://poseidongroup.ch/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Group
+                  </NavLink>
+                  <Link href="/artists">
+                    <NavLink>Artists</NavLink>
+                  </Link>
+              </Column>
+          </Pane>
+          <Pane flex={1} display='flex' alignItems='flex-start' justifyContent='center' flexDirection='column'>
+            <Heading marginBottom='1rem' color='#d1d1da'>Follow us:</Heading>
+            <Row>
               <SocialIcon
                 className="social-icon"
                 target="_blank"
@@ -112,10 +97,66 @@ export default function Footer() {
                 bgColor="#4824fa"
                 fgColor="#fff"
               />
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </footer>
+            </Row>
+          </Pane>
+      </Content>
+    </FooterContainer>
   );
 }
+
+
+const FooterContainer = styled.footer`
+  padding: 50px 0;
+  border-top: 2px solid #e14eca;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at bottom, #292d61 30%, #171941 80%);
+  @media (max-width: 991px) {
+    padding-left: 0;
+  }
+  @media (max-width: 576px) {
+    text-align: center;
+  }
+`
+
+const Content = styled.footer`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 70%;
+  @media (max-width: 991px) {
+    flex-direction: column;
+    width: 95%;
+    align-items: center;
+  }
+  @media (max-width: 576px) {
+    text-align: center;
+  }
+`
+const NavLink = styled.a`
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: #d1d1da;
+`
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100%;
+  flex: 1;
+  @media (max-width: 991px) {
+    width: 15rem;
+    max-width: 90vw;
+    margin: 1rem 0;
+  }
+`
+
+const Row = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 50%;
+  min-width: 250px;
+`

@@ -102,7 +102,7 @@ const LandingPage = () => {
 
       <FullScreen>
         <Container>
-          <Pane flex={1}>
+          <Pane flex={1} marginBottom='4rem'>
             <Pane display='flex' alignItems='flex-end'>
               <Card>
                 <BsTrophy size={50} color='salmon' />
@@ -137,17 +137,17 @@ const LandingPage = () => {
             </Pane>
           </Pane>
           <Pane flex={1}>
-            <Pane width='80%'>
+            <ContentWrapper>
               <Heading marginBottom='2rem' color='#d1d1da' fontSize={40} fontWeight={300}>
                 DAO Collection
               </Heading>
-              <Text fontWeight={200} color='#d1d1da'>
+              <Text fontWeight={200} color='#d1d1da' textAlign='left'>
                 The DAO is built on top of a massive treasury made up of
                 historical NFTs, 1-of-1 and collectibles.
                 <br />
                 <br />
               </Text>
-              <Text fontWeight={200} color='#d1d1da'>
+              <Text fontWeight={200} color='#d1d1da' textAlign='left'>
                 Poseidon valued art and artists investing in the long term
                 vision of digital art.
               </Text>
@@ -189,10 +189,49 @@ const LandingPage = () => {
                   <AiOutlineRight size={12} color='#1C8CF8' style={{ marginTop: '1.5px' }}/>
                 </Pane>
               </Link>
-            </Pane>
+            </ContentWrapper>
           </Pane>
         </Container>
       </FullScreen>
+
+      <FullScreen>
+        <Container>
+          <ContentWrapper>
+            <Heading marginBottom='2rem' color='white' fontSize={40} fontWeight={300}>
+              Derivatives Collection
+            </Heading>
+            <Paragraph color='white'>
+              The purpose of the derivatives collection is to combine
+              different artistic styles with unique pieces of high
+              commercial value but little artistic content, valuing both the
+              starting work thanks to the collaboration of excellent artists
+              as well as the DAO itself and future token holders. Niro
+              Perrone, Gio' Roman and Bert One are just some of the artists
+              the DAO partnered with for derivatives project.
+            </Paragraph>
+            <br />
+            <Paragraph color='white'>
+              To make collectors and art lovers of all budgets participate
+              as much as possible in the project, to all those who make bids
+              during the auction, for each bid, they will be given in
+              airdrop the governance tokens of the DAO.
+            </Paragraph>
+            <Link
+                href="https://foundation.app/collection/posder"
+                target="_blank"
+                rel="noreferrer"
+            >
+              <Pane display='flex' alignItems='center' cursor='pointer' marginTop='1rem'>
+                <Text color='#1C8CF8' marginRight='1px'>
+                  On Foundation
+                </Text>
+                <AiOutlineRight size={12} color='#1C8CF8' style={{ marginTop: '1.5px' }}/>
+              </Pane>
+            </Link>
+          </ContentWrapper>
+        </Container>
+      </FullScreen>
+      <Footer />
     </>
   )}
 
@@ -206,20 +245,26 @@ const ContentWrapper = styled.div`
     max-width: 100%;
     align-items: center;
   }
-  `
+`
 const Container = styled.div`
   display: flex;
   width: 70vw;
+  justify-content: space-between;
+  @media (max-width: 1200px) {
+    width: 90vw;
+    justify-content: center;
+  }
   @media (max-width: 992px) {
     width: 95vw;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
   }
 `
 
 const Card = styled.div<{ big?: boolean, left?: boolean }>`
   display: flex;
-  width: 35%;
+  width: 11rem;
   justify-content: space-between;
   padding: ${props => props.big ? '2rem 2rem' : '1.5rem 1.2rem'};
   background-color: ${props => props.big ? '#4824FA' : '#202251'};
