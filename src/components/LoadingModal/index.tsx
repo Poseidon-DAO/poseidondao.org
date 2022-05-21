@@ -1,11 +1,13 @@
-import { Spinner } from "reactstrap";
+import { Dialog, Pane, Spinner } from "evergreen-ui";
 import styled from "styled-components";
 
 export default function LoadingModal() {
     return (
-      <Container>
-        <Spinner animation="border" style={{ height: 110, width: 110 }}/>
-      </Container>
+      <Pane>
+        <Dialog isShown >
+          <Spinner size={110} />
+        </Dialog>
+      </Pane>
   );
 }
 

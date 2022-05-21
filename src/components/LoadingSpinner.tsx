@@ -1,10 +1,10 @@
-import { Spinner } from "reactstrap";
+import { Spinner } from "evergreen-ui";
 import styled from "styled-components";
 
 export default function LoadingSpinner() {
   return (
     <LoadingContainer>
-      <Spinner animation="border" style={{ height: 110, width: 110 }}/>
+      <Spinner size={110} />
   </LoadingContainer>
   )
 }

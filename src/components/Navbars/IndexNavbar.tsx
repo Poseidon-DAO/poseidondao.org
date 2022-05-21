@@ -66,7 +66,7 @@ export default function IndexNavbar() {
       right={0}
       position='fixed'
       backgroundColor={color}
-      paddingX='5vw'
+      paddingX='10vw'
       display='flex'
       justifyContent='space-between'
       alignItems='center'
