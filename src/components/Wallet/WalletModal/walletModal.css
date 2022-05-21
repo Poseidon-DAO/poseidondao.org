@@ -1,0 +1,22 @@
+.provider {
+  height: 10rem;
+  width: 10rem;
+  margin: 0 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.provider:hover {
+  background-color: rgba(211, 211, 211, 0.6);
+  box-shadow: inset;
+  animation: scaleUp 0.1s ease 0s 1 normal forwards;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
