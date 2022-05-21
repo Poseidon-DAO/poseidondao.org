@@ -1,4 +1,4 @@
-import { Button } from "reactstrap";
+import { Button } from "evergreen-ui";
 import { ButtonTypes } from "types";
 
 interface IButtonProps {
@@ -21,7 +21,7 @@ export default function CustomButton({
       onClick={onClick}
       disabled={disabled}
       style={style ? style : {}}
-      color={type}
+      intent={type}
     >
       {text}
     </Button>

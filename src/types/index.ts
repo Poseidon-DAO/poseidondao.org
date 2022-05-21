@@ -4,13 +4,8 @@ export enum ProviderTypes {
 }
 
 export enum ButtonTypes {
-  primary = "primary",
-  secondary = "secondary",
   success = "success",
-  warning = "warning",
-  info = "info",
   danger = "danger",
-  link = "link",
 }
 
 export enum ToastTypes {

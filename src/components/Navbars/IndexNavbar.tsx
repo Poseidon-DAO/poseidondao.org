@@ -11,12 +11,14 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
+import { Image, Pane } from "evergreen-ui";
+import Logo from '../../../public/img/logo-transparent.png'
 
 export default function IndexNavbar() {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const [collapseOut, setCollapseOut] = useState("");
-  const [color, setColor] = useState("navbar-transparent");
-  const [logo, setLogo] = useState("logo");
+  const [color, setColor] = useState("transparent");
+  const [logoHeight, setLogo] = useState("5rem");
 
   useEffect(() => {
     window.addEventListener("scroll", changeColor);
@@ -30,14 +32,14 @@ export default function IndexNavbar() {
       document.documentElement.scrollTop > 99 ||
       document.body.scrollTop > 99
     ) {
-      setColor("bg-info");
-      setLogo("logo-scroll");
+      setColor('#4824fa');
+      setLogo("3rem");
     } else if (
       document.documentElement.scrollTop < 100 ||
       document.body.scrollTop < 100
     ) {
-      setColor("navbar-transparent");
-      setLogo("logo");
+      setColor("transparent");
+      setLogo("5rem");
     }
   };
 
@@ -55,94 +57,26 @@ export default function IndexNavbar() {
   };
 
   return (
-    <Navbar className={"fixed-top " + color} color-on-scroll="100" expand="lg">
-      <Container>
-        <div className="navbar-translate">
-          <NavbarBrand to="/" tag={Link} id="navbar-brand">
-            <img
-              alt="..."
-              className={"img-fluid rounded " + logo}
-              src={require("assets/img/logo-transparent.png").default}
-            />
-          </NavbarBrand>
-          <button
-            aria-expanded={collapseOpen}
-            className="navbar-toggler navbar-toggler"
-            onClick={toggleCollapse}
-          >
-            <span className="navbar-toggler-bar bar1" />
-            <span className="navbar-toggler-bar bar2" />
-            <span className="navbar-toggler-bar bar3" />
-          </button>
-        </div>
-        <Collapse
-          className={"justify-content-end " + collapseOut}
-          navbar
-          isOpen={collapseOpen}
-          onExiting={onCollapseExiting}
-          onExited={onCollapseExited}
-        >
-          <div className="navbar-collapse-header">
-            <Row>
-              <Col className="collapse-brand" xs="6">
-                <img
-                  alt="..."
-                  className={"img-fluid rounded " + logo}
-                  src={require("assets/img/logo-transparent.png").default}
-                />
-              </Col>
-              <Col className="collapse-close text-right" xs="6">
-                <button
-                  aria-expanded={collapseOpen}
-                  className="navbar-toggler"
-                  onClick={toggleCollapse}
-                >
-                  <i className="tim-icons icon-simple-remove" />
-                </button>
-              </Col>
-            </Row>
-          </div>
-          <Nav navbar>
-            {/* <UncontrolledDropdown nav>
-              <DropdownToggle
-                caret
-                color="default"
-                data-toggle="dropdown"
-                href="#pablo"
-                nav
-                onClick={(e) => e.preventDefault()}
-              >
-                <i className="fa fa-cogs d-lg-none d-xl-none" />
-                Getting started
-              </DropdownToggle>
-              <DropdownMenu className="dropdown-with-icons">
-                <DropdownItem href="https://demos.creative-tim.com/blk-design-system-react/#/documentation/overview">
-                  <i className="tim-icons icon-paper" />
-                  Documentation
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/register-page">
-                  <i className="tim-icons icon-bullet-list-67" />
-                  Register Page
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/landing-page">
-                  <i className="tim-icons icon-image-02" />
-                  Landing Page
-                </DropdownItem>
-                <DropdownItem tag={Link} to="/profile-page">
-                  <i className="tim-icons icon-single-02" />
-                  Profile Page
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
-            <NavItem>
-              <ConnectWallet />
-              {/* <UncontrolledTooltip delay={0} placement="left" target="connect">
-                Coming soon
-              </UncontrolledTooltip> */}
-            </NavItem>
-          </Nav>
-        </Collapse>
-      </Container>
-    </Navbar>
+    <Pane
+      height='10vh'
+      width='100vw'
+      zIndex={100}
+      top={0}
+      left={0}
+      right={0}
+      position='fixed'
+      backgroundColor={color}
+      paddingX='5vw'
+      display='flex'
+      justifyContent='space-between'
+      alignItems='center'
+    >
+      <Pane flex={1}>
+        <Image src={Logo.src} height={logoHeight} />
+      </Pane>
+      <Pane flex={1} justifyContent='flex-end' display='flex' >
+        <ConnectWallet />
+      </Pane>
+    </Pane>
   );
 }

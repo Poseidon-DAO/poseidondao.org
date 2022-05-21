@@ -1,3 +1,4 @@
+import { Dialog, Pane } from "evergreen-ui";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
 interface ICustomModalProps {
@@ -18,32 +19,36 @@ export default function CustomModal({
   footer,
 }: ICustomModalProps) {
   return (
-    <Modal isOpen={isOpen} fade backdrop={true} toggle={onClose}>
-      {header && (
-        <ModalHeader charCode="X" toggle={() => onClose()}>
-          {header}
-        </ModalHeader>
-      )}
-      {body && (
-        <ModalBody
-          style={
-            style
-              ? style
-              : {
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }
-          }
-        >
-          {body}
-        </ModalBody>
-      )}
-      {footer && (
-        <ModalFooter style={{ display: "flex", justifyContent: "flex-end" }}>
-          {footer}
-        </ModalFooter>
-      )}
-    </Modal>
+    <Pane>
+      <Dialog 
+        isShown={isOpen} 
+        title={header} 
+        hasFooter={false} 
+        shouldCloseOnEscapePress 
+        shouldCloseOnOverlayClick
+        onCloseComplete={onClose}
+      >
+        {body && (
+          <Pane
+            style={
+              style
+                ? style
+                : {
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }
+            }
+          >
+            {body}
+          </Pane>
+        )}
+        {footer && (
+          <Pane marginY='2rem' justifyContent='flex-end' display='flex'>
+            {footer}
+          </Pane>
+        )}
+      </Dialog>
+    </Pane>
   );
 }

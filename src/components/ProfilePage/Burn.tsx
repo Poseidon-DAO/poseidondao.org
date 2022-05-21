@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Form, FormGroup } from 'reactstrap'
 import { useState } from 'react';
-import { IMAGE_ARRAY } from 'assets/img/collection';
+import { IMAGE_ARRAY } from '../../../public/img/collection';
 
 interface BurnProps {
   availableBalance: string;

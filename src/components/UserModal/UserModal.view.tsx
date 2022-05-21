@@ -1,7 +1,6 @@
 import CustomModal from "../UI_KIT/CustomModal";
 import styled from "styled-components";
 import AvatarDisplay from "../UI_KIT/Avatar";
-import { Badge } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import { ButtonTypes } from "types";
@@ -11,6 +10,8 @@ import { useRouter } from 'next/router'
 import useCopyAddress from "utils/useCopyAddress";
 import { useCallback } from "react";
 import Actions from "redux/actions";
+import { Badge, Heading, Pane, Text } from "evergreen-ui";
+import CustomButton from "components/UI_KIT/CustomButton";
 
 interface UserModalProps {
   isOpen: boolean;
@@ -43,19 +44,18 @@ export default function UserModal({
   };
 
   const userBody = (
-    <Container>
-      <div style={{ height: "5rem", width: "20%" }}>
+    <Pane display='flex' width='100%'>
+      <Pane style={{ height: "5rem", width: "20%" }}>
         <AvatarDisplay size={50} />
-      </div>
+      </Pane>
       <Content>
-        <div>
-          <header>Address:</header>
-          <p>{user?.accounts[0]}</p>
-          <div>
+        <Pane>
+          <Heading>Address:</Heading>
+          <Text>{user?.accounts[0]}</Text>
           {!isProfile && process.env.NEXT_PUBLIC_CHAIN_ID === chainID ?
             <Link href ="/profile" style = {{ color: 'white', textDecoration: 'none' }}>
               <Badge
-                color="success"
+                color="green"
                 style={{ cursor: "pointer", marginRight: 5 }}
                 onClick={onClose}
                 >
@@ -64,7 +64,7 @@ export default function UserModal({
             </Link>
           : 
             <Badge
-              color="success"
+              color="green"
               style={{ cursor: "pointer", marginRight: 5 }}
               onClick={wrongChainModal}
               >
@@ -72,28 +72,29 @@ export default function UserModal({
             </Badge>
           }
           <Badge
-            color="info"
+            color="neutral"
             style={{ cursor: "pointer" }}
             onClick={copyAddress}
           >
               Copy Address
           </Badge>
-            </div>
-          <header>Balance:</header>
-          <p>{roundBalance(user?.balance, 6)} ETH</p>
-        </div>
+        </Pane>
+        <Pane>
+          <Heading>Balance:</Heading>
+          <Text>{roundBalance(user?.balance, 6)} ETH</Text>
+        </Pane>
         <LogoutContainer>
-          <Badge
+          <CustomButton
             onClick={onLogout}
-            color={ButtonTypes.danger}
+            type={ButtonTypes.danger}
             style={{ width: "25%", justifySelf: "flex-end", cursor: "pointer" }}
-          >
-            Disconnect
-          </Badge>
+            text="Disconnect"
+          />
         </LogoutContainer>
       </Content>
-    </Container>
+  </Pane>
   );
+
   return user?.accounts?.length ? (
     <CustomModal
       header="Account"
@@ -104,10 +105,6 @@ export default function UserModal({
   ) : null;
 }
 
-const Container = styled.div`
-  display: flex;
-  width: 100%;
-`;
 const Content = styled.div`
   display: flex;
   flex: 1;

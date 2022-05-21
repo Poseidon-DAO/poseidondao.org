@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "reactstrap";
+import { Button } from "evergreen-ui";
 import { useMoralis } from "react-moralis";
 import ConectWalletModal from "./WalletModal/ConnectWalletModal";
 import { ProviderTypes } from "types";
@@ -65,19 +65,21 @@ export default function ConnectWallet() {
 
   return (
     <>
-      {isAuthenticated && userData.accounts ? (
+      {isAuthenticated && userData.accounts && !showUserModal ? (
         <WalletInfo
           address={userData.accounts[0]}
           balance={wallet.balance}
           onClick={handleOpenUserModal}
         />
-      ) : (
+      ) : !showUserModal && (
         <Button
-          id="connect"
-          className="d-none d-lg-block"
-          type="button"
-          color="default"
+          color="white"
           onClick={handleWalletConnect}
+          appearance='primary'
+          backgroundColor='rgba(9,9,121,0.35)'
+          border='none'
+          width={150}
+          height={40}
         >
           CONNECT
         </Button>
@@ -91,3 +93,4 @@ export default function ConnectWallet() {
     </>
   );
 }
+
