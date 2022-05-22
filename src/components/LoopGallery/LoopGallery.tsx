@@ -44,7 +44,7 @@ const LoopGallery = (props: any) => {
       key={props.key}
       {...settings}
       // @ts-ignore
-      style={{ width: "100%", marginBottom: '1rem', transform: props.scew }}
+      style={{ width: "100%", marginBottom: "1rem", transform: props.skew }}
     >
       {props.imgArray.map((i: string) => (
         <Image
@@ -52,10 +52,9 @@ const LoopGallery = (props: any) => {
           alt="..."
           width={180}
           height={180}
-          className="img-fluid floating img-gallery"
           src={`/img/collection/${i}`}
         />
-        ))}
+      ))}
     </Slider>
   );
 };
