@@ -81,7 +81,7 @@ const LandingPage = () => {
       <FullScreen>
         <Container>
           <ContentWrapper>
-            <Heading marginBottom='2rem' color='white' fontSize={40} fontWeight={300}>Artists & Collectors DAO <br /></Heading>
+            <Heading marginBottom='2rem' color='white' fontSize={40} fontWeight={300} lineHeight='40px'>Artists & Collectors DAO <br /></Heading>
             <Paragraph color='white'>
               Poseidon DAO brings NFTs to the next step, enabling their
               evolution. The DAO is built on top of the knowledge of a huge
@@ -105,38 +105,38 @@ const LandingPage = () => {
           <Pane flex={1} marginBottom='4rem'>
             <Pane display='flex' alignItems='flex-end'>
               <Card>
-                <BsTrophy size={50} color='salmon' />
+                <BsTrophy size='25%' color='salmon' />
                 <Pane display='flex' flexDirection='column' justifyContent='space-between'>
                   <Heading size={600} color='white'>4</Heading>
-                  <Text fontSize={18} color='#8E88A9'>Collections</Text>
+                  <CardText>Collections</CardText>
                 </Pane>
               </Card>
               <Card big>
-                <IoRocketOutline size={50} color='white' />
+                <IoRocketOutline size='25%' color='white' />
                 <Pane display='flex' flexDirection='column' justifyContent='space-between'>
                   <Heading size={600} color='white'>3000+</Heading>
-                  <Text fontSize={18} color='#8E88A9'>NFTs</Text>
+                  <CardText>NFTs</CardText>
                 </Pane>
               </Card>
             </Pane>
             <Pane display='flex' alignItems='flex-end'>
               <Card big left>
-                <BsSuitHeart size={40} color='#1C8CF8' />
+                <BsSuitHeart size='25%' color='#1C8CF8' />
                 <Pane display='flex' flexDirection='column' justifyContent='space-between'>
                   <Heading size={600} color='white'>50+</Heading>
-                  <Text fontSize={18} color='#8E88A9'>Artists</Text>
+                  <CardText>Artists</CardText>
                 </Pane>
               </Card>
               <Card>
-                <FaCoins size={40} color='#06F1C2'/>
-                <Pane display='flex' flexDirection='column' justifyContent='space-between'>
+                <FaCoins size='25%' color='#06F1C2'/>
+                <Pane display='flex' flexDirection='column' justifyContent='space-between' alignItems='flex-end'>
                   <Heading size={600} color='white'>$10M+</Heading>
-                  <Text fontSize={18} color='#8E88A9'>Value</Text>
+                  <CardText>Value</CardText>
                 </Pane>
               </Card>
             </Pane>
           </Pane>
-          <Pane flex={1}>
+          <Pane flex={1} width='100%'>
             <ContentWrapper>
               <Heading marginBottom='2rem' color='#d1d1da' fontSize={40} fontWeight={300}>
                 DAO Collection
@@ -197,7 +197,7 @@ const LandingPage = () => {
       <FullScreen>
         <Container>
           <ContentWrapper>
-            <Heading marginBottom='2rem' color='white' fontSize={40} fontWeight={300}>
+            <Heading marginBottom='2rem' color='white' fontSize={40} fontWeight={300} lineHeight='40px'>
               Derivatives Collection
             </Heading>
             <Paragraph color='white'>
@@ -265,6 +265,7 @@ const Container = styled.div`
 const Card = styled.div<{ big?: boolean, left?: boolean }>`
   display: flex;
   width: 11rem;
+  max-width: 30vw;
   justify-content: space-between;
   padding: ${props => props.big ? '2rem 2rem' : '1.5rem 1.2rem'};
   background-color: ${props => props.big ? '#4824FA' : '#202251'};
@@ -274,11 +275,33 @@ const Card = styled.div<{ big?: boolean, left?: boolean }>`
     props.big ? `translateX(-5px)` : 
     ''};
   box-shadow: 5px 5px 5px 0px #00000040, inset 4px 4px 15px 0px #00000040, -8px 12px 19px -6px rgba(0,0,0,0.52);
+  @media (max-width: 992px) {
+    padding: ${props => props.big ? '1.5rem 1.5rem' : '1rem 1rem'};
+  }
 `
 
 const Link = styled.a`
   text-decoration: none;
   color: #1C8CF8;
+`
+
+const CardText = styled.p`
+    font-size: 18px;
+    color: #8E88A9;
+    margin: 0;
+    line-height: 1.5;
+    @media (max-width: 992px) {
+      font-size: 14px;
+    }
+`
+const Icon = styled.div<{ size: number }>`
+  width: ${props => props.size};
+  height: ${props => props.size};
+  background-color: #1C8CF8;
+  @media (max-width: 992px) {
+    width: ${props => props.size * 0.9};
+    height: ${props => props.size * 0.9};
+  }
 `
 
 export default LandingPage;

@@ -1,18 +1,25 @@
-import { Pane } from "evergreen-ui";
+import styled from "styled-components";
 
 const FullScreen = ({ children }: { children: React.ReactNode }) => (
-  <Pane
-    height='100vh' 
-    width='100vw' 
-    display="flex" 
-    margin={0} 
-    alignItems="center" 
-    backgroundColor='#202249'
-    justifyContent="center"
-    overflow='hidden'
-  >
+  <Container>
     {children}
-  </Pane>
+  </Container>
 );
 
 export default FullScreen;
+
+
+const Container = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-color: #202249;
+  overflow: hidden;
+  flex: 1;
+  @media (max-width: 768px) {
+    height: 75vh;
+    padding: 1rem 0;
+  }
+`

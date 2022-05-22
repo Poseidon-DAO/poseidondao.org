@@ -15,7 +15,7 @@ export default function Footer() {
             className="logo img-fluid rounded"
             src="/img/logo-transparent.png"
           />
-          <Pane display='flex' flex={1}>
+          <Pane display='flex' flex={1} maxWidth='100vw' marginBottom={2}>
               <Column>
                   <NavLink
                     href="https://opensea.io/PoseidonNftFund"
@@ -66,7 +66,7 @@ export default function Footer() {
                   </Link>
               </Column>
           </Pane>
-          <Pane flex={1} display='flex' alignItems='flex-start' justifyContent='center' flexDirection='column'>
+          <Pane flex={1} display='flex' alignItems='center' justifyContent='center' flexDirection='column'>
             <Heading marginBottom='1rem' color='#d1d1da'>Follow us:</Heading>
             <Row>
               <SocialIcon
@@ -106,6 +106,7 @@ export default function Footer() {
 
 
 const FooterContainer = styled.footer`
+  max-width: 100vw;
   padding: 50px 0;
   border-top: 2px solid #e14eca;
   display: flex;
@@ -145,6 +146,7 @@ const Column = styled.div`
   align-items: center;
   justify-content: space-between;
   min-height: 100%;
+  max-width: 50%;
   flex: 1;
   @media (max-width: 991px) {
     width: 15rem;
