@@ -41,7 +41,6 @@ const ProfilePage = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const [nftModalOpen, setNftModalOpen] = useState(false);
-
   const [selectedTab, setSelectedTab] = useState<ITab>(tabs[0]);
   const [selectedNft, setSelectedNft] = useState<INft>();
 
@@ -54,6 +53,11 @@ const ProfilePage = () => {
     [dispatch]
   );
 
+  // If we don't have th wallet enabled, we have to send them back to the landing 
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_ENABLE_WALLET) router.push('/');
+  }, [])
+  
   // Get the user balance and total supply of tokens
   useEffect(() => {
     const getTotalSupply = async () => {

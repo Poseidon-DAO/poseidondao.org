@@ -74,9 +74,11 @@ export default function IndexNavbar() {
       <Pane flex={1}>
         <Image src={Logo.src} height={logoHeight} />
       </Pane>
-      <Pane flex={1} justifyContent='flex-end' display='flex' >
-        <ConnectWallet />
-      </Pane>
+      {process.env.NEXT_PUBLIC_ENABLE_WALLET && (
+        <Pane flex={1} justifyContent='flex-end' display='flex' >
+          <ConnectWallet />
+        </Pane>
+      )}
     </Pane>
   );
 }
