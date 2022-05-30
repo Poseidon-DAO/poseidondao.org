@@ -1,24 +1,17 @@
 import ConnectWallet from "components/Wallet";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import {
-  Col,
-  Collapse,
-  Container,
-  Nav,
-  Navbar,
-  NavbarBrand,
-  NavItem,
-  Row,
-} from "reactstrap";
 import { Image, Pane } from "evergreen-ui";
-import Logo from '../../../public/img/logo-transparent.png'
+import Logo from "../../../public/img/logo-transparent.png";
+
+const defaultHeight = 5;
+const defaultPadding = 3;
 
 export default function IndexNavbar() {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const [collapseOut, setCollapseOut] = useState("");
   const [color, setColor] = useState("transparent");
-  const [logoHeight, setLogo] = useState("5rem");
+  const [logoHeight, setLogo] = useState(defaultHeight);
+  const [padding, setPadding] = useState(defaultPadding);
 
   useEffect(() => {
     window.addEventListener("scroll", changeColor);
@@ -32,14 +25,16 @@ export default function IndexNavbar() {
       document.documentElement.scrollTop > 99 ||
       document.body.scrollTop > 99
     ) {
-      setColor('#4824fa');
-      setLogo("3rem");
+      setColor("#4824fa");
+      setLogo(3);
+      setPadding(0);
     } else if (
       document.documentElement.scrollTop < 100 ||
       document.body.scrollTop < 100
     ) {
       setColor("transparent");
-      setLogo("5rem");
+      setLogo(defaultHeight);
+      setPadding(defaultPadding);
     }
   };
 
@@ -58,24 +53,26 @@ export default function IndexNavbar() {
 
   return (
     <Pane
-      height='10vh'
-      width='100vw'
+      height="10vh"
+      width="100vw"
       zIndex={100}
       top={0}
       left={0}
       right={0}
-      position='fixed'
+      position="fixed"
       backgroundColor={color}
-      paddingX='10vw'
-      display='flex'
-      justifyContent='space-between'
-      alignItems='center'
+      paddingX="10vw"
+      paddingTop={`${padding}rem`}
+      display="flex"
+      justifyContent="space-between"
+      alignItems="center"
+      transition="0.15s all ease"
     >
       <Pane flex={1}>
-        <Image src={Logo.src} height={logoHeight} />
+        <Image src={Logo.src} height={`${logoHeight}rem`} />
       </Pane>
       {process.env.NEXT_PUBLIC_ENABLE_WALLET && (
-        <Pane flex={1} justifyContent='flex-end' display='flex' >
+        <Pane flex={1} justifyContent="flex-end" display="flex">
           <ConnectWallet />
         </Pane>
       )}

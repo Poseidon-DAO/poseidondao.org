@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { MoralisProvider } from "react-moralis";
 import store from 'redux/store';
 import IndexNavbar from 'components/Navbars/IndexNavbar';
+import Footer from "components/Footer/Footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <IndexNavbar />
         <Component {...pageProps} />
         {/* <ToastContainer /> */}
+        <Footer />
       </MoralisProvider>
     </Provider>
   );
