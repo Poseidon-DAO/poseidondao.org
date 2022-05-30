@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { FormGroup, Input, Label } from "reactstrap";
+import { FormFieldLabel, TextareaField, TextInputField } from "evergreen-ui";
+import { useEffect, useState } from "react";
+import { FormGroup, Input } from "reactstrap";
 
 interface FormFieldProps {
   type: string;
@@ -9,20 +10,26 @@ interface FormFieldProps {
 }
 
 export function FormField({ required = true, onChange, type, value }: FormFieldProps) {
+  const formLabel = (copy: string, ...props: any) => <FormFieldLabel {...props} color='white'>{copy} {required && " *"}</FormFieldLabel>
+  const isServer = typeof window === "undefined";
+
   const updateValue = (value: string) => {
-    localStorage.setItem('form-'+type, value);
-    onChange(value);
+    if (!isServer) {
+      localStorage.setItem('form-'+type, value);
+      onChange(value);
+    }
   };
 
   const [isFocused, setFocused] = useState(false)
   
   const FormField = () => {
+    const formType = type.charAt(0).toUpperCase() + type.slice(1)
     switch (type) {
       case "name":
         return (
           <>
-            <Label>Name *</Label>
-            <Input
+            {formLabel(formType)}
+            <TextInputField
               type="text"
               name="name"
               id="name"
@@ -31,16 +38,15 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               onBlur={()=>setFocused(false)}
               value={value}
               placeholder="John Doe"
-              required={required}
-              onChange={(e) => updateValue(e.target.value)}
+              onChange={(e: any) => updateValue(e.target.value)}
             />
           </>
         );
       case "email":
         return (
           <>
-            <Label>Email *</Label>
-            <Input
+            {formLabel(formType)}
+            <TextInputField
               type="email"
               name="email"
               id="email"
@@ -49,8 +55,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               onFocus={() => setFocused(true)}
               onBlur={()=>setFocused(false)}
               placeholder="john.doe@gmail.com"
-              required={required}
-              onChange={(e) => updateValue(e.target.value)}
+              onChange={(e: any) => updateValue(e.target.value)}
             />
           </>
         );
@@ -59,23 +64,16 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
       case "website":
         return (
           <>
-            <Label aria-required={true}>
-              {type === "website"
-                ? "Website/Portfolio" //@ts-ignore
-                : type.charAt(0).toUpperCase() +
-                  type.slice(1) +
-                  ` URL ${required ? "*" : ""}`}
-            </Label>
-            <Input
+            {formLabel(formType, type === 'website' ? false : true)}
+            <TextInputField
               type="text"
               name={type}
               value={value}
               id={type}
-              required={required}
               style={isFocused ? focusedStyle : {}}
               onFocus={() => setFocused(true)}
               onBlur={()=>setFocused(false)}
-              onChange={(e) => updateValue(e.target.value)}
+              onChange={(e: any) => updateValue(e.target.value)}
               placeholder={
                 type === "website"
                   ? "https://www.john-doe.com"
@@ -89,17 +87,15 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
       case "textarea":
         return (
           <>
-            <Label>Bio *</Label>
-            <Input
+            {formLabel(formType, false)}
+            <TextareaField
               value={value}
-              type="textarea"
               name={type}
               id={type}
-              required={required}
               style={isFocused ? {borderBottom: '0.5px solid #4824fa'} : {}}
               onFocus={() => setFocused(true)}
               onBlur={()=>setFocused(false)}
-              onChange={(e) => updateValue(e.target.value)}
+              onChange={(e: any) => updateValue(e.target.value)}
               placeholder="Tell us about yourself"
             />
           </>
@@ -109,7 +105,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
     }
   };
   return (
-    <FormGroup style={{ textAlign: "left", marginBottom: "2rem", width: '100%' }}>
+    <FormGroup style={{ textAlign: "left", marginBottom: ".5rem", width: '100%' }}>
       {FormField()}
     </FormGroup>
   );

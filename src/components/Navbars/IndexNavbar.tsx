@@ -2,6 +2,7 @@ import ConnectWallet from "components/Wallet";
 import { useEffect, useState } from "react";
 import { Image, Pane } from "evergreen-ui";
 import Logo from "../../../public/img/logo-transparent.png";
+import { useRouter } from "next/router";
 
 const defaultHeight = 5;
 const defaultPadding = 3;
@@ -12,6 +13,7 @@ export default function IndexNavbar() {
   const [color, setColor] = useState("transparent");
   const [logoHeight, setLogo] = useState(defaultHeight);
   const [padding, setPadding] = useState(defaultPadding);
+  const router = useRouter();
 
   useEffect(() => {
     window.addEventListener("scroll", changeColor);
@@ -68,7 +70,7 @@ export default function IndexNavbar() {
       alignItems="center"
       transition="0.15s all ease"
     >
-      <Pane flex={1}>
+      <Pane flex={1} onClick={() => router.push('/')} cursor='pointer'>
         <Image src={Logo.src} height={`${logoHeight}rem`} />
       </Pane>
       {process.env.NEXT_PUBLIC_ENABLE_WALLET && (

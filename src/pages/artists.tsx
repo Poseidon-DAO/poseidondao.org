@@ -1,20 +1,26 @@
+import FullScreen from 'components/FullScreen'
 import CustomButton from "components/UI_KIT/CustomButton";
 import { useCallback, useState } from "react";
-import { Form } from "reactstrap";
 import { ButtonTypes, IArtist } from "types";
 import { FormField } from "components/UI_KIT/CustomForm/FormField";
 import { useDispatch } from "react-redux";
 import Actions from "redux/actions";
 import { submitArtist } from "apis/index";
 import { validators } from "utils/formValidators";
-import { FlexView } from "components/UI_KIT/Display";
 import LoadingModal from "components/LoadingModal";
 import { useRouter } from "next/router";
+import { Pane } from 'evergreen-ui';
+import { Form } from 'reactstrap';
 
 const ArtistForm = () => {
+  const isServer = typeof window === "undefined";
+
   const getInitialValue = (type: string) => {
-    const saved = localStorage.getItem('form-' + type);
-    return saved?.length ? saved : '';
+    if (!isServer) {
+      const saved = localStorage.getItem('form-' + type);
+      return saved?.length ? saved : '';
+    }
+    return "";
   }
   const router = useRouter();
 
@@ -63,9 +69,9 @@ const ArtistForm = () => {
   };
 
   const isButtonDisabled =
-    !name.length || !email.length || !bio.length || !twitter.length
-      ? true
-      : false;
+  !name.length || !email.length || !bio.length || !twitter.length
+  ? true
+  : false;
 
   const handleSubmit = async () => {
     if (isValid()) {
@@ -90,6 +96,7 @@ const ArtistForm = () => {
         router.push('/');
       } catch (e: any) {
         setLoading(false);
+        console.log(e);
         newToast({ text: "Oops, something went wrong!", type: "error" });
       }
     }
@@ -111,39 +118,41 @@ const ArtistForm = () => {
   };
 
   return (
-    <FlexView isTop column>
-      <h2 style = {{ textAlign:'center' }}>Artist Application</h2>
-      <Form className="form" style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: '900px',
-        flexDirection: 'column',
-      }} onSubmit={handleSubmit}>
-        <p
-          style={{ alignSelf: "flex-end", fontStyle: "italic", fontSize: ".8rem" }}
-        >
-          Fields with * are required
-        </p>
-        <FormField value={name} type="name" onChange={setName} />
-        <FormField value={email} type="email" onChange={setEmail} />
-        <FormField value={twitter} type="twitter" onChange={setTwitter} />
-        <FormField value={instagram} type="instagram" onChange={setInstagram} required={false} />
-        <FormField value={website} type="website" onChange={setWebsite} required={false} />
-        <FormField value={bio} type="textarea" onChange={setBio} />
+    <FullScreen>
+      <Pane display='flex' flexDirection='column' flex={1} alignItems='center' maxWidth='90vw' marginTop='20vh'>
+        <h2 style = {{ textAlign:'center', color: '#d1d1da' }}>Artist Application</h2>
+        <Pane style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: '900px',
+          flexDirection: 'column',
+          paddingBottom: '3rem',
+        }}>
+          <p
+            style={{ alignSelf: "flex-end", fontStyle: "italic", fontSize: ".8rem", color: '#d1d1da', marginTop: '1rem' }}
+          >
+            Fields with * are required
+          </p>
+          <FormField value={name} type="name" onChange={setName} />
+          <FormField value={email} type="email" onChange={setEmail} />
+          <FormField value={twitter} type="twitter" onChange={setTwitter} />
+          <FormField value={instagram} type="instagram" onChange={setInstagram} required={false} />
+          <FormField value={website} type="website" onChange={setWebsite} required={false} />
+          <FormField value={bio} type="textarea" onChange={setBio} />
 
-        <CustomButton
-          type={ButtonTypes.success}
-          text="Submit"
-          onClick={handleSubmit}
-          style={{ marginTop: "20px" }}
-          disabled={isButtonDisabled}
-        />
-      </Form>
-      <h5 style={{ color: "red" }}>{validation}</h5>
-      {loading && <LoadingModal />}
-    </FlexView>
+          <h5 style={{ color: "rgb(255, 69, 58)" }}>{validation}</h5>
+          <CustomButton
+            type={ButtonTypes.success}
+            text="Submit"
+            onClick={handleSubmit}
+            style={{ marginTop: "15px" }}
+          />
+        </Pane>
+        {loading && <LoadingModal />}
+      </Pane>
+    </FullScreen>
   );
 };
 export default ArtistForm;

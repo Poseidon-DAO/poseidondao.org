@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import LoopGallery from "components/LoopGallery/LoopGallery";
 import FullScreen from "components/FullScreen";
-import { Heading, Pane, Paragraph, Text } from "evergreen-ui";
+import { Heading, Pane, Paragraph, Text, toaster } from "evergreen-ui";
 import styled from "styled-components";
 import SocialMediaIcons from "components/UI_KIT/SocialMediaIcons";
 import { BsTrophy, BsSuitHeart } from "react-icons/bs";
@@ -9,6 +9,9 @@ import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { RootState } from "redux/reducers";
+import { toast, ToastContainer } from "react-toastify";
 
 const skew = 8;
 const IMAGES = [
@@ -67,12 +70,28 @@ const IMAGES = [
 
 const LandingPage = () => {
   const router = useRouter();
+  const toastData = useSelector(( state: RootState ) => state.utils.toast)
   useEffect(() => {
     document.body.classList.toggle("landing-page");
     return function cleanup() {
       document.body.classList.toggle("landing-page");
     };
   }, []);
+
+   // Display toasts set in Redux
+   useEffect(() => {
+    if (toastData.text.length) {
+      toast[toastData.type](toastData.text, {
+        position: "bottom-right",
+        autoClose: toastData.time ? toastData.time : 3000,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        hideProgressBar: true,
+      });
+      toaster.notify(toastData.text)
+    }
+  }, [toastData]);
 
   return (
     <>
@@ -177,10 +196,10 @@ const LandingPage = () => {
           <Pane flex={1} width="100%">
             <ContentWrapper>
               <Heading
-                marginBottom="2rem"
                 color="#d1d1da"
                 fontSize={40}
                 fontWeight={300}
+                marginY='2rem'
               >
                 DAO Collection
               </Heading>

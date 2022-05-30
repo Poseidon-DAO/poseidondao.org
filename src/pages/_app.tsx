@@ -15,9 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         appId={process.env.NEXT_PUBLIC_MORALIS_ID!}
         serverUrl={process.env.NEXT_PUBLIC_MORALIS_URL!}
       >
+        <ToastContainer/>
         <IndexNavbar />
         <Component {...pageProps} />
-        {/* <ToastContainer /> */}
         <Footer />
       </MoralisProvider>
     </Provider>

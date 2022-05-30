@@ -11,12 +11,12 @@ export default FullScreen;
 
 const Container = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   align-items: center;
   justify-content: center;
   background-color: #202249;
-  overflow: visible;
+  overflow: hidden;
   flex: 1;
   @media (max-width: 768px) {
     height: 75vh;
