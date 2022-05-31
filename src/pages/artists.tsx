@@ -9,9 +9,7 @@ import { submitArtist } from "apis/index";
 import { validators } from "utils/formValidators";
 import LoadingModal from "components/LoadingModal";
 import { useRouter } from "next/router";
-import { Pane } from 'evergreen-ui';
-import { Form } from 'reactstrap';
-
+import { Pane, toaster } from 'evergreen-ui';
 const ArtistForm = () => {
   const isServer = typeof window === "undefined";
 
@@ -34,12 +32,6 @@ const ArtistForm = () => {
   const [loading, setLoading] = useState(false);
 
   const [validation, setValidation] = useState("");
-  const dispatch = useDispatch();
-  const newToast = useCallback(
-    (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
-    [dispatch]
-  );
-
 
   const isValid = () => {
     setValidation("");
@@ -87,17 +79,12 @@ const ArtistForm = () => {
         setLoading(true);
         await submitArtist(artist);
         setLoading(false);
-        newToast({
-          text: "Thank you for your application. Our team will review your profile and will reach out if it meets our requirements.",
-          type: "success",
-          time: 5000
-        });
+        toaster.success("Thank you for your application. Our team will review your profile and will reach out if it meets our requirements.")
         clearState();
         router.push('/');
       } catch (e: any) {
         setLoading(false);
-        console.log(e);
-        newToast({ text: "Oops, something went wrong!", type: "error" });
+        toaster.danger("Oops, something went wrong!");
       }
     }
   };
@@ -119,7 +106,7 @@ const ArtistForm = () => {
 
   return (
     <FullScreen>
-      <Pane display='flex' flexDirection='column' flex={1} alignItems='center' maxWidth='90vw' marginTop='20vh'>
+      <Pane display='flex' flexDirection='column' flex={1} alignItems='center' maxWidth='90vw' marginTop='15vh'>
         <h2 style = {{ textAlign:'center', color: '#d1d1da' }}>Artist Application</h2>
         <Pane style={{
           display: 'flex',

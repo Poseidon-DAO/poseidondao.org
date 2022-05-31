@@ -19,7 +19,7 @@ const Container = styled.div`
   overflow: hidden;
   flex: 1;
   @media (max-width: 768px) {
-    height: 75vh;
+    min-height: 75vh;
     padding: 1rem 0;
   }
 `

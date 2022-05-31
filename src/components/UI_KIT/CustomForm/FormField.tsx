@@ -33,6 +33,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               type="text"
               name="name"
               id="name"
+              label=""
               style={isFocused ? focusedStyle : {}}
               onFocus={() => setFocused(true)}
               onBlur={()=>setFocused(false)}
@@ -48,6 +49,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
             {formLabel(formType)}
             <TextInputField
               type="email"
+              label=""
               name="email"
               id="email"
               value={value}
@@ -69,6 +71,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               type="text"
               name={type}
               value={value}
+              label=""
               id={type}
               style={isFocused ? focusedStyle : {}}
               onFocus={() => setFocused(true)}
@@ -91,6 +94,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
             <TextareaField
               value={value}
               name={type}
+              label=""
               id={type}
               style={isFocused ? {borderBottom: '0.5px solid #4824fa'} : {}}
               onFocus={() => setFocused(true)}
