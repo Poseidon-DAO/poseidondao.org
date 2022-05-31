@@ -16,6 +16,7 @@ import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import Burn from "components/ProfilePage/Burn";
 import Actions from "redux/actions";
 import { useRouter } from "next/router";
+import { toaster } from "evergreen-ui";
 
 interface ITab { 
   name: string;

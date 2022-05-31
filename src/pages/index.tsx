@@ -100,18 +100,18 @@ const LandingPage = () => {
         </Container>
       </FullScreen>
 
-      <FullScreen>
-        <Pane
-          width="100vw"
-          display="flex"
-          flexDirection="column"
-          justifyContent="space-evenly"
-        >
-          {IMAGES.map(({ skew, images }) => (
-            <LoopGallery skew={skew} imgArray={images} />
-          ))}
-        </Pane>
-      </FullScreen>
+      <Pane
+        width="100vw"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-evenly"
+        flex={1}
+        minHeight="100vh"
+      >
+        {IMAGES.map(({ skew, images }) => (
+          <LoopGallery skew={skew} imgArray={images} />
+        ))}
+      </Pane>
 
       <FullScreen>
         <Container>
@@ -177,10 +177,10 @@ const LandingPage = () => {
           <Pane flex={1} width="100%">
             <ContentWrapper>
               <Heading
-                marginBottom="2rem"
                 color="#d1d1da"
                 fontSize={40}
                 fontWeight={300}
+                marginY='2rem'
               >
                 DAO Collection
               </Heading>

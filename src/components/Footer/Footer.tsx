@@ -16,55 +16,55 @@ export default function Footer() {
             src="/img/logo-transparent.png"
           />
           <Pane display='flex' flex={1} maxWidth='100vw' marginBottom={2}>
-              <Column>
-                  <NavLink
-                    href="https://opensea.io/PoseidonNftFund"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    OpenSea
-                  </NavLink>
-                  <NavLink
-                    href="https://superrare.com/poseidonnftfund"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    SuperRare
-                  </NavLink>
-                  <NavLink
-                    href="https://foundation.app/@Poseidonnftfund"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Foundation
-                  </NavLink>
-              </Column>
-              <Column>
-                  <NavLink
-                    href="mailto:info@poseidonnft.org"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Contact Us
-                  </NavLink>
-                  <NavLink
-                    href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Blog
-                  </NavLink>
-                  <NavLink
-                    href="https://poseidongroup.ch/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Group
-                  </NavLink>
-                  <Link href="/artists">
-                    <NavLink>Artists</NavLink>
-                  </Link>
-              </Column>
+            <Column>
+                <NavLink
+                  href="https://opensea.io/PoseidonNftFund"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  OpenSea
+                </NavLink>
+                <NavLink
+                  href="https://superrare.com/poseidonnftfund"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  SuperRare
+                </NavLink>
+                <NavLink
+                  href="https://foundation.app/@Poseidonnftfund"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Foundation
+                </NavLink>
+            </Column>
+            <Column>
+                <NavLink
+                  href="mailto:info@poseidonnft.org"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Contact Us
+                </NavLink>
+                <NavLink
+                  href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Blog
+                </NavLink>
+                <NavLink
+                  href="https://poseidongroup.ch/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Group
+                </NavLink>
+                <Link href="/artists">
+                  <NavLink>Artists</NavLink>
+                </Link>
+            </Column>
           </Pane>
           <Pane flex={1} display='flex' alignItems='center' justifyContent='center' flexDirection='column'>
             <Heading marginBottom='1rem' color='#d1d1da'>Follow us:</Heading>
@@ -107,6 +107,7 @@ export default function Footer() {
 
 const FooterContainer = styled.footer`
   max-width: 100vw;
+  width: 100vw;
   padding: 50px 0;
   border-top: 2px solid #e14eca;
   display: flex;
@@ -139,6 +140,7 @@ const NavLink = styled.a`
   text-decoration: none;
   margin-bottom: 10px;
   color: #d1d1da;
+  cursor: pointer;
 `
 const Column = styled.div`
   display: flex;

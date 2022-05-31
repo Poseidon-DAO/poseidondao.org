@@ -1,13 +1,11 @@
-import { Dialog, Pane, Spinner } from "evergreen-ui";
+import { Spinner } from "evergreen-ui";
 import styled from "styled-components";
 
 export default function LoadingModal() {
     return (
-      <Pane>
-        <Dialog isShown >
-          <Spinner size={110} />
-        </Dialog>
-      </Pane>
+      <Container>
+        <Spinner size={110} color='white' />
+      </Container>
   );
 }
 
