@@ -9,6 +9,7 @@ import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
 import { useRouter } from "next/router";
+import DerivativesBackground from "../../public/img/derivatives/twitter-teaser.jpeg";
 
 const skew = 8;
 const IMAGES = [
@@ -374,7 +375,7 @@ const Icon = styled.div<{ size: number }>`
 `;
 
 const DerivativeSection = styled.div`
-  background-image: url("/img/derivatives/twitter-teaser.jpg");
+  background-image: url('/img/derivatives/twitter-teaser.jpeg');
   background-size: 100%;
   background-repeat: no-repeat;
   display: flex;

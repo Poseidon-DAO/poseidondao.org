@@ -44,7 +44,12 @@ const LoopGallery = (props: any) => {
       key={props.key}
       {...settings}
       // @ts-ignore
-      style={{ width: "100%", marginBottom: "1rem", transform: props.skew, width: '110%', marginLeft: '-5%' }}
+      style={{
+        marginBottom: "1rem",
+        transform: props.skew,
+        width: '110%',
+        marginLeft: '-5%',
+      }}
     >
       {props.imgArray.map((i: string) => (
         <Image

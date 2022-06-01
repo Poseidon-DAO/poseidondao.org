@@ -14,7 +14,7 @@ import LUPO from './in-bocca-al-lupo.jpg';
 import LIMBUS from './limbus.jpg';
 import KINGSQUEEN from './kingsqueen.png';
 import MADONNA from './madonna-of-the-sacred-heart.jpg';
-import PUNK from './punk.png'
+import PUNK from './punk.png';
 
 export const IMAGE_ARRAY = [
   APE,
