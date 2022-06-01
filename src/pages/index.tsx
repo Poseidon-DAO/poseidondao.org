@@ -175,7 +175,7 @@ const LandingPage = () => {
               </Card>
             </Pane>
           </Pane>
-          <Pane flex={1} width="100%">
+          <Pane display='flex' flex={1} width="100%" justifyContent='center'>
             <ContentWrapper>
               <Heading
                 color="#d1d1da"
@@ -325,6 +325,7 @@ const Container = styled.div`
   @media (max-width: 1200px) {
     width: 90vw;
     justify-content: center;
+    align-items: center;
   }
   @media (max-width: 992px) {
     width: 95vw;
