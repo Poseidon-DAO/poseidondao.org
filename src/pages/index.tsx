@@ -9,6 +9,7 @@ import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
 import { useRouter } from "next/router";
+import DerivativesBackground from "../../public/img/derivatives/twitter-teaser.jpeg";
 
 const skew = 8;
 const IMAGES = [
@@ -174,7 +175,7 @@ const LandingPage = () => {
               </Card>
             </Pane>
           </Pane>
-          <Pane flex={1} width="100%">
+          <Pane display='flex' flex={1} width="100%" justifyContent='center'>
             <ContentWrapper>
               <Heading
                 color="#d1d1da"
@@ -324,6 +325,7 @@ const Container = styled.div`
   @media (max-width: 1200px) {
     width: 90vw;
     justify-content: center;
+    align-items: center;
   }
   @media (max-width: 992px) {
     width: 95vw;
@@ -374,8 +376,8 @@ const Icon = styled.div<{ size: number }>`
 `;
 
 const DerivativeSection = styled.div`
-  background-image: url("/img/derivatives/twitter-teaser.jpg");
-  background-size: 100%;
+  background-image: url('/img/derivatives/twitter-teaser.jpeg');
+  background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   height: 100vh;
