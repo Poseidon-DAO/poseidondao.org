@@ -376,7 +376,7 @@ const Icon = styled.div<{ size: number }>`
 
 const DerivativeSection = styled.div`
   background-image: url('/img/derivatives/twitter-teaser.jpeg');
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   display: flex;
   height: 100vh;
