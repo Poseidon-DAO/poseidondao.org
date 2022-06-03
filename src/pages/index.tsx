@@ -8,8 +8,7 @@ import { BsTrophy, BsSuitHeart } from "react-icons/bs";
 import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
-import { useRouter } from "next/router";
-import DerivativesBackground from "../../public/img/derivatives/twitter-teaser.jpeg";
+import { Colors } from "components/UI_KIT/colors";
 
 const skew = 8;
 const IMAGES = [
@@ -67,7 +66,6 @@ const IMAGES = [
 ];
 
 const LandingPage = () => {
-  const router = useRouter();
   useEffect(() => {
     document.body.classList.toggle("landing-page");
     return function cleanup() {
@@ -147,7 +145,7 @@ const LandingPage = () => {
             </Pane>
             <Pane display="flex" alignItems="flex-end">
               <Card big left>
-                <BsSuitHeart size="25%" color="#1C8CF8" />
+                <BsSuitHeart size="25%" color={Colors.link} />
                 <Pane
                   display="flex"
                   flexDirection="column"
@@ -178,20 +176,20 @@ const LandingPage = () => {
           <Pane display='flex' flex={1} width="100%" justifyContent='center'>
             <ContentWrapper>
               <Heading
-                color="#d1d1da"
+                color={Colors.white.gray}
                 fontSize={40}
                 fontWeight={300}
                 marginY='2rem'
               >
                 DAO Collection
               </Heading>
-              <Text fontWeight={200} color="#d1d1da" textAlign="left">
+              <Text fontWeight={200} color={Colors.white.gray} textAlign="left">
                 The DAO is built on top of a massive treasury made up of
                 historical NFTs, 1-of-1 and collectibles.
                 <br />
                 <br />
               </Text>
-              <Text fontWeight={200} color="#d1d1da" textAlign="left">
+              <Text fontWeight={200} color={Colors.white.gray} textAlign="left">
                 Poseidon valued art and artists investing in the long term
                 vision of digital art.
               </Text>
@@ -203,12 +201,12 @@ const LandingPage = () => {
                 rel="noreferrer"
               >
                 <Pane display="flex" alignItems="center" cursor="pointer">
-                  <Text color="#1C8CF8" marginRight="1px">
+                  <Text color={Colors.link} marginRight="1px">
                     OpenSea Collection
                   </Text>
                   <AiOutlineRight
                     size={12}
-                    color="#1C8CF8"
+                    color={Colors.link}
                     style={{ marginTop: "1.5px" }}
                   />
                 </Pane>
@@ -219,12 +217,12 @@ const LandingPage = () => {
                 rel="noreferrer"
               >
                 <Pane display="flex" alignItems="center" cursor="pointer">
-                  <Text color="#1C8CF8" marginRight="1px">
+                  <Text color={Colors.link} marginRight="1px">
                     Superrare Collection
                   </Text>
                   <AiOutlineRight
                     size={12}
-                    color="#1C8CF8"
+                    color={Colors.link}
                     style={{ marginTop: "1.5px" }}
                   />
                 </Pane>
@@ -235,12 +233,12 @@ const LandingPage = () => {
                 rel="noreferrer"
               >
                 <Pane display="flex" alignItems="center" cursor="pointer">
-                  <Text color="#1C8CF8" marginRight="1px">
+                  <Text color={Colors.link} marginRight="1px">
                     Foundation Collection
                   </Text>
                   <AiOutlineRight
                     size={12}
-                    color="#1C8CF8"
+                    color={Colors.link}
                     style={{ marginTop: "1.5px" }}
                   />
                 </Pane>
@@ -289,12 +287,12 @@ const LandingPage = () => {
                 cursor="pointer"
                 marginTop="1rem"
               >
-                <Text color="#1C8CF8" marginRight="1px">
+                <Text color={Colors.link} marginRight="1px">
                   On Foundation
                 </Text>
                 <AiOutlineRight
                   size={12}
-                  color="#1C8CF8"
+                  color={Colors.link}
                   style={{ marginTop: "1.5px" }}
                 />
               </Pane>

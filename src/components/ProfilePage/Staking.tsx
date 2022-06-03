@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Form, FormGroup, Input } from 'reactstrap'
 import { useState } from 'react';
+import { Colors } from 'components/UI_KIT/colors';
 
 interface StakingProps {
   availableBalance: string;
@@ -66,7 +67,7 @@ const Tab = styled.div<{isSelected: boolean}>`
   justify-content: center;
   cursor: pointer;
   margin-right: 1rem;
-  background-color: ${props => props.isSelected ? '#131435' : ''};
+  background-color: ${props => props.isSelected ? Colors.blue.ocean : ''};
   &:hover {
     transform: scale(0.98);
     transition: background-color 0.5s;
@@ -93,7 +94,7 @@ const Label = styled.h6`
 `
 
 const MaxButton = styled.div<{isActive: boolean}>`
-  background: ${props => props.isActive ? "transparent" : "#e6e6e6"};
+  background: ${props => props.isActive ? "transparent" : Colors.gray.primary};
   color: ${props => props.isActive ? "white" : "black"};
   font-size: 1em;
   margin: 1em;
@@ -103,7 +104,7 @@ const MaxButton = styled.div<{isActive: boolean}>`
   border-radius: 3px;
   &:hover {
     transform: ${props => props.isActive ? 'scale(0.98)' : ''};
-    background-color: ${props => props.isActive ? '#131435' : ''};
+    background-color: ${props => props.isActive ? Colors.blue.ocean : ''};
     transition: background-color 0.1s;
     cursor: ${props => props.isActive ? 'pointer' : 'default'};
   }
@@ -112,7 +113,7 @@ const MaxButton = styled.div<{isActive: boolean}>`
 const Button = styled.div<{disabled: boolean}>`
   height: 2rem;
   width: fit-content;
-  background: ${props => props.disabled ? "transparent" : "#131435"};
+  background: ${props => props.disabled ? "transparent" : Colors.blue.ocean};
   color: ${props => props.disabled ? "white" : "grey"};
   font-size: 1em;
   margin-top: 1rem;
@@ -122,7 +123,7 @@ const Button = styled.div<{disabled: boolean}>`
   border-radius: 3px;
   &:hover {
     transform: ${props => props.disabled ? 'scale(0.98)' : ''};
-    background-color: ${props => props.disabled ? '#4824fa' : ''};
+    background-color: ${props => props.disabled ? Colors.blue.clear : ''};
     transition: background-color 0.4s;
     cursor: ${props => props.disabled ? 'pointer' : 'default'};
   }

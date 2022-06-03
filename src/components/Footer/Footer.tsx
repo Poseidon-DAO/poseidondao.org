@@ -1,3 +1,4 @@
+import { Colors } from "components/UI_KIT/colors";
 import { Heading, Pane } from "evergreen-ui";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,35 +68,35 @@ export default function Footer() {
             </Column>
           </Pane>
           <Pane flex={1} display='flex' alignItems='center' justifyContent='center' flexDirection='column'>
-            <Heading marginBottom='1rem' color='#d1d1da'>Follow us:</Heading>
+            <Heading marginBottom='1rem' color={Colors.white.gray}>Follow us:</Heading>
             <Row>
               <SocialIcon
                 className="social-icon"
                 target="_blank"
                 url="https://twitter.com/Poseidon_SF/"
-                bgColor="#4824fa"
-                fgColor="#FFF"
+                bgColor={Colors.blue.clear}
+                fgColor="white"
               />
               <SocialIcon
                 className="social-icon"
                 target="_blank"
                 url="https://discord.gg/gUsX8MpTqk"
-                bgColor="#4824fa"
-                fgColor="#fff"
+                bgColor={Colors.blue.clear}
+                fgColor="white"
               />
               <SocialIcon
                 className="social-icon"
                 target="_blank"
                 url="https://instagram.com/poseidondao"
-                bgColor="#4824fa"
-                fgColor="#fff"
+                bgColor={Colors.blue.clear}
+                fgColor="white"
               />
               <SocialIcon
                 className="social-icon"
                 target="_blank"
                 url="https://github.com/Poseidon-DAO"
-                bgColor="#4824fa"
-                fgColor="#fff"
+                bgColor={Colors.blue.clear}
+                fgColor="white"
               />
             </Row>
           </Pane>

@@ -1,3 +1,4 @@
+import { Colors } from "components/UI_KIT/colors";
 import { Text } from "evergreen-ui";
 import styled from "styled-components";
 import { roundBalance } from "utils";
@@ -16,10 +17,10 @@ export default function WalletInfo({
   return (
     <Container onClick={onClick}>
       <LeftContainer>
-        <Text color='rgba(255, 255, 255, 0.8)'>{balance ? roundBalance(balance, 4) : "0.00"} ETH</Text>
+        <Text color={Colors.white.primary}>{balance ? roundBalance(balance, 4) : "0.00"} ETH</Text>
       </LeftContainer>
       <RightContainer address={address}>
-        <Text color='rgba(255, 255, 255, 0.8)'>
+        <Text color={Colors.white.primary}>
           {address?.slice(0, 8) + "..." + address?.slice(-8)}
         </Text>
       </RightContainer>

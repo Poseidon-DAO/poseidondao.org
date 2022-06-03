@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Form, FormGroup } from 'reactstrap'
 import { useState } from 'react';
 import { IMAGE_ARRAY } from '../../../public/img/collection';
+import { Colors } from 'components/UI_KIT/colors';
 
 interface BurnProps {
   availableBalance: string;
@@ -28,8 +29,8 @@ export default function Burn({ availableBalance }: BurnProps) {
           <Label>
             Become part of the Poseidon DAO family by getting voting rights:
           </Label>
-          <p style={{ alignSelf: 'flex-end' }}>Available PDN: <span style={{ fontWeight: 400 }}>{parseFloat(Number(availableBalance).toFixed(8))}</span></p>
-          {availableToBurn !== 0 && <p style={{ alignSelf: 'flex-end' }}>You can acquire up to: <span style={{ fontWeight: 400 }}>{Number(availableToBurn)}</span> NFTs</p>}
+          <p style={{ alignSelf: 'flex-end', color: Colors.white.primary, marginBottom: '1px' }}>Available PDN: <span style={{ fontWeight: 400 }}>{parseFloat(Number(availableBalance).toFixed(8))}</span></p>
+          {availableToBurn !== 0 && <p style={{ alignSelf: 'flex-end', color: Colors.white.primary }}>You can acquire up to: <span style={{ fontWeight: 400 }}>{Number(availableToBurn)}</span> NFTs</p>}
           <div style={{ display: 'flex', alignItems: 'center', maxWidth: '100%', flexWrap: 'wrap' }}>
             {[...Array(availableToBurn)].map((props, index) => {
               const i = index + 1;
@@ -47,9 +48,9 @@ export default function Burn({ availableBalance }: BurnProps) {
           </div>
             {availableToBurn !== 0 ? 
             <Button disabled={selectedAmount !== 0} onClick={() => alert(`You selected ${selectedAmount}`)}>
-              BURN
+              <p>BURN</p>
             </Button> : 
-            <h4 style = {{ color: '#ff7070' }}>You don't have enough funds to Mint our NFTs</h4>
+            <h4 style = {{ color: Colors.red.warning }}>You don't have enough funds to Mint our NFTs</h4>
             }
         </FormGroup>
       </Form>
@@ -67,11 +68,12 @@ const Container = styled.div`
 
 const Label = styled.h4`
   color: #fff;
+  margin-bottom: .5rem;
 `
 
 const NftButton = styled.div<{isSelected: boolean, backgroundImage: string}>`
   background: transparent;
-  background: ${props => props.isSelected ? '#131435' : 'transparent'};
+  background: ${props => props.isSelected ? Colors.blue.ocean : 'transparent'};
   transform: ${props => props.isSelected ? 'scale(1.1)' : 'scale(1)'};
   color: white;
   font-size: 1em;
@@ -95,20 +97,18 @@ const NftButton = styled.div<{isSelected: boolean, backgroundImage: string}>`
 `
 
 const Button = styled.div<{disabled: boolean}>`
-  height: 2rem;
   width: fit-content;
-  background: ${props => props.disabled ? "transparent" : "#131435"};
+  background: ${props => props.disabled ? "transparent" : Colors.blue.ocean};
   color: ${props => props.disabled ? "white" : "grey"};
   font-size: 1em;
   margin-top: 1rem;
-  padding: 0.25em 1em;
-  height: '100%';
+  padding: 0.5em 1em;
   border: ${props => props.disabled ? '0.1px solid lightgrey' : 'none'};
   border-radius: 3px;
   &:hover {
     transform: ${props => props.disabled ? 'scale(0.98)' : ''};
-    background-color: ${props => props.disabled ? '#4824fa' : ''};
-    transition: background-color 0.4s;
+    background-color: ${props => props.disabled ? Colors.blue.clear : ''};
+    transition: background-color 0.2s;
     cursor: ${props => props.disabled ? 'pointer' : 'default'};
   }
 `

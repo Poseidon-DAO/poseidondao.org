@@ -2,6 +2,7 @@ import LoadingSpinner from "components/LoadingSpinner";
 import styled from "styled-components";
 import { INft } from "types";
 import Tilt from 'react-parallax-tilt';
+import { Colors } from "components/UI_KIT/colors";
 
 export default function NFTCard({nft, onClick}: {nft: INft, onClick: (nft: INft) => void}) {
   const isLoading = nft?.image.content.length;
@@ -13,7 +14,7 @@ export default function NFTCard({nft, onClick}: {nft: INft, onClick: (nft: INft)
             <Image src={nft.image.content} alt={nft.name} />
             <Content>
               <Title>{nft.name}</Title>
-              <DescriptionText>by {nft.description}</DescriptionText>
+              <DescriptionText>{nft.description}</DescriptionText>
             </Content>
           </>
         ) : (
@@ -40,7 +41,6 @@ const Card = styled.div`
   transition: box-shadow 0.5s;
   border: white solid 1px;
   will-change: transform;
-  padding: 1rem 0;
   &:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   }
@@ -66,19 +66,22 @@ const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  width: 100%;
-  padding: 5% 1rem;
+  max-width: 100%;
+  padding: 5% .5rem;
 `
 
 const Title = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
+  margin-bottom: .2rem;
   text-overflow: ellipsis;
   overflow: hidden;
+  color: ${Colors.white.primary};
 `
 
 const DescriptionText = styled.p`
   font-size: 1rem;
   margin: 0;
+  color: ${Colors.white.primary};
 `

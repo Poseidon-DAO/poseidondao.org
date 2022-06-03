@@ -10,6 +10,7 @@ import { validators } from "utils/formValidators";
 import LoadingModal from "components/LoadingModal";
 import { useRouter } from "next/router";
 import { Pane, toaster } from 'evergreen-ui';
+import { Colors } from 'components/UI_KIT/colors';
 const ArtistForm = () => {
   const isServer = typeof window === "undefined";
 
@@ -26,6 +27,7 @@ const ArtistForm = () => {
   const [email, setEmail] = useState(() => getInitialValue("email"));
   const [bio, setBio] = useState(() => getInitialValue("textarea"));
   const [website, setWebsite] = useState(() => getInitialValue("website"));
+  const [project, setProject] = useState(() => getInitialValue("project"));
   const [twitter, setTwitter] = useState(() => getInitialValue("twitter"));
   const [instagram, setInstagram] = useState(() => getInitialValue("instagram"));
 
@@ -43,6 +45,9 @@ const ArtistForm = () => {
       return false;
     } else if (!validators.lengthValidator(bio)) {
       setValidation("Bio is required");
+      return false;
+    } else if (!validators.lengthValidator(project)) {
+      setValidation("A project is required");
       return false;
     } else if (!validators.urlValidator(twitter, "twitter")) {
       setValidation("Twitter is invalid");
@@ -74,6 +79,7 @@ const ArtistForm = () => {
         website,
         twitter_url: twitter,
         instagram_url: instagram,
+        project,
       };
       try {
         setLoading(true);
@@ -96,18 +102,20 @@ const ArtistForm = () => {
     setWebsite("");
     setTwitter("");
     setInstagram("");
+    setProject("");
     localStorage.setItem('form-name', '');
     localStorage.setItem('form-email', '');
     localStorage.setItem('form-textarea', '');
     localStorage.setItem('form-website', '');
     localStorage.setItem('form-twitter', '');
     localStorage.setItem('form-instagram', '');
+    localStorage.setItem('form-project', '');
   };
 
   return (
     <FullScreen>
       <Pane display='flex' flexDirection='column' flex={1} alignItems='center' maxWidth='90vw' marginTop='15vh'>
-        <h2 style = {{ textAlign:'center', color: '#d1d1da' }}>Artist Application</h2>
+        <h2 style = {{ textAlign:'center', color: Colors.white.gray }}>Artist Application</h2>
         <Pane style={{
           display: 'flex',
           justifyContent: 'center',
@@ -118,7 +126,7 @@ const ArtistForm = () => {
           paddingBottom: '3rem',
         }}>
           <p
-            style={{ alignSelf: "flex-end", fontStyle: "italic", fontSize: ".8rem", color: '#d1d1da', marginTop: '1rem' }}
+            style={{ alignSelf: "flex-end", fontStyle: "italic", fontSize: ".8rem", color: Colors.white.gray, marginTop: '1rem' }}
           >
             Fields with * are required
           </p>
@@ -127,6 +135,7 @@ const ArtistForm = () => {
           <FormField value={twitter} type="twitter" onChange={setTwitter} />
           <FormField value={instagram} type="instagram" onChange={setInstagram} required={false} />
           <FormField value={website} type="website" onChange={setWebsite} required={false} />
+          <FormField value={project} type="project" onChange={setProject} required />
           <FormField value={bio} type="textarea" onChange={setBio} />
 
           <h5 style={{ color: "rgb(255, 69, 58)" }}>{validation}</h5>
@@ -135,6 +144,7 @@ const ArtistForm = () => {
             text="Submit"
             onClick={handleSubmit}
             style={{ marginTop: "15px" }}
+            disabled={isButtonDisabled}
           />
         </Pane>
         {loading && <LoadingModal />}
