@@ -135,7 +135,7 @@ const ArtistForm = () => {
           <FormField value={twitter} type="twitter" onChange={setTwitter} />
           <FormField value={instagram} type="instagram" onChange={setInstagram} required={false} />
           <FormField value={website} type="website" onChange={setWebsite} required={false} />
-          <FormField value={project} type="project" onChange={setProject} required={false} />
+          <FormField value={project} type="project" onChange={setProject} required />
           <FormField value={bio} type="textarea" onChange={setBio} />
 
           <h5 style={{ color: "rgb(255, 69, 58)" }}>{validation}</h5>
