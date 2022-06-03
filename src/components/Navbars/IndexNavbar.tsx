@@ -74,7 +74,7 @@ export default function IndexNavbar() {
       <Pane flex={1} onClick={() => router.push('/')} cursor='pointer'>
         <Image src={Logo.src} height={`${logoHeight}rem`} />
       </Pane>
-      {process.env.NEXT_PUBLIC_ENABLE_WALLET && (
+      {process.env.NEXT_PUBLIC_ENABLE_WALLET === 'true' && (
         <Pane flex={1} justifyContent="flex-end" display="flex">
           <ConnectWallet />
         </Pane>

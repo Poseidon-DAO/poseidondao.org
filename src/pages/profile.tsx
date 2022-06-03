@@ -56,7 +56,7 @@ const ProfilePage = () => {
 
   // If we don't have the wallet enabled, we have to send them back to the landing 
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_ENABLE_WALLET) router.push('/');
+    if (process.env.NEXT_PUBLIC_ENABLE_WALLET === 'false') router.push('/');
   }, [])
   
   // Get the user balance and total supply of tokens
