@@ -27,6 +27,7 @@ const ArtistForm = () => {
   const [email, setEmail] = useState(() => getInitialValue("email"));
   const [bio, setBio] = useState(() => getInitialValue("textarea"));
   const [website, setWebsite] = useState(() => getInitialValue("website"));
+  const [project, setProject] = useState(() => getInitialValue("project"));
   const [twitter, setTwitter] = useState(() => getInitialValue("twitter"));
   const [instagram, setInstagram] = useState(() => getInitialValue("instagram"));
 
@@ -44,6 +45,9 @@ const ArtistForm = () => {
       return false;
     } else if (!validators.lengthValidator(bio)) {
       setValidation("Bio is required");
+      return false;
+    } else if (!validators.lengthValidator(project)) {
+      setValidation("A project is required");
       return false;
     } else if (!validators.urlValidator(twitter, "twitter")) {
       setValidation("Twitter is invalid");
@@ -75,6 +79,7 @@ const ArtistForm = () => {
         website,
         twitter_url: twitter,
         instagram_url: instagram,
+        project,
       };
       try {
         setLoading(true);
@@ -97,12 +102,14 @@ const ArtistForm = () => {
     setWebsite("");
     setTwitter("");
     setInstagram("");
+    setProject("");
     localStorage.setItem('form-name', '');
     localStorage.setItem('form-email', '');
     localStorage.setItem('form-textarea', '');
     localStorage.setItem('form-website', '');
     localStorage.setItem('form-twitter', '');
     localStorage.setItem('form-instagram', '');
+    localStorage.setItem('form-project', '');
   };
 
   return (
@@ -128,6 +135,7 @@ const ArtistForm = () => {
           <FormField value={twitter} type="twitter" onChange={setTwitter} />
           <FormField value={instagram} type="instagram" onChange={setInstagram} required={false} />
           <FormField value={website} type="website" onChange={setWebsite} required={false} />
+          <FormField value={project} type="project" onChange={setProject} required={false} />
           <FormField value={bio} type="textarea" onChange={setBio} />
 
           <h5 style={{ color: "rgb(255, 69, 58)" }}>{validation}</h5>
@@ -136,6 +144,7 @@ const ArtistForm = () => {
             text="Submit"
             onClick={handleSubmit}
             style={{ marginTop: "15px" }}
+            disabled={isButtonDisabled}
           />
         </Pane>
         {loading && <LoadingModal />}

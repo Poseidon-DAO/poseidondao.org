@@ -1,5 +1,5 @@
-import { FormFieldLabel, TextareaField, TextInputField } from "evergreen-ui";
-import { useEffect, useState } from "react";
+import { FormFieldLabel, SelectField, TextareaField, TextInputField } from "evergreen-ui";
+import { useState } from "react";
 import { FormGroup, Input } from "reactstrap";
 
 interface FormFieldProps {
@@ -8,6 +8,12 @@ interface FormFieldProps {
   onChange: (event: string) => void;
   value: string;
 }
+
+const PROJECTS = [
+  "Derivatives",
+  "Genesis",
+  "Other",
+]
 
 export function FormField({ required = true, onChange, type, value }: FormFieldProps) {
   const formLabel = (copy: string, ...props: any) => <FormFieldLabel {...props} color='white'>{copy} {required && " *"}</FormFieldLabel>
@@ -41,6 +47,28 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               placeholder="John Doe"
               onChange={(e: any) => updateValue(e.target.value)}
             />
+          </>
+        );
+      case "project":
+        return (
+          <>
+            {formLabel(formType)}
+            <SelectField
+              width="100%"
+              defaultValue={'empty'}
+              style={isFocused ? focusedStyle : { backgroundColor: 'white', borderRadius: '5px' }}
+              onFocus={() => setFocused(true)}
+              onBlur={()=>setFocused(false)}
+              onChange={(e: any) => updateValue(e.target.value)}
+              appearance='default'
+            >
+              <option disabled selected value='empty'> -- select an option -- </option>
+              {PROJECTS.map((project) => (
+                <option value={project} selected>
+                  {project}
+                </option>
+              ))}
+            </SelectField>
           </>
         );
       case "email":
@@ -117,4 +145,6 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
 
 const focusedStyle = {
   border: '0.5px solid #4824fa',
+  backgroundColor: 'white', 
+  borderRadius: '5px',
 }

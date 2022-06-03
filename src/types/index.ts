@@ -48,6 +48,7 @@ export interface IArtist {
   twitter_url: string;
   instagram_url?: string;
   website?: string;
+  project: string;
 }
 
 //Redux types
