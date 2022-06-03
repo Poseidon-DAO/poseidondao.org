@@ -118,7 +118,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
       case "textarea":
         return (
           <>
-            {formLabel(formType, false)}
+            {formLabel('About You', false)}
             <TextareaField
               value={value}
               name={type}
