@@ -4,6 +4,7 @@ import { Image, Pane } from "evergreen-ui";
 import Logo from "../../../public/img/logo-transparent.png";
 import { useRouter } from "next/router";
 import { Colors } from "components/UI_KIT/colors";
+import { WALLET_ENABLED } from "config";
 
 const defaultHeight = 5;
 const defaultPadding = 3;
@@ -74,7 +75,7 @@ export default function IndexNavbar() {
       <Pane flex={1} onClick={() => router.push('/')} cursor='pointer'>
         <Image src={Logo.src} height={`${logoHeight}rem`} />
       </Pane>
-      {process.env.NEXT_PUBLIC_ENABLE_WALLET === 'true' && (
+      {WALLET_ENABLED && (
         <Pane flex={1} justifyContent="flex-end" display="flex">
           <ConnectWallet />
         </Pane>

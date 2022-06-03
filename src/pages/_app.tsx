@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Actions from 'redux/actions';
 import { RootState } from 'redux/reducers';
 import { NetworkTypes } from 'types';
+import { WALLET_ENABLED } from 'config';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -99,19 +100,21 @@ function App({ Component, pageProps }: AppProps) {
 
   // Initialize web3 through Moralis on load
   useEffect(() => {
-    const enableWeb3 = async () => {
-      try {
-        await Moralis.enableWeb3();
-      }
-      catch (e) {
-        newToast({
-          text: "Please install Metamask",
-          type: "error",
-        });
-      }
-    };
-    enableWeb3();
-    onWeb3Enabled();
+    if (WALLET_ENABLED) {
+      const enableWeb3 = async () => {
+        try {
+          await Moralis.enableWeb3();
+        }
+        catch (e) {
+          newToast({
+            text: "Please install Metamask",
+            type: "error",
+          });
+        }
+      };
+      enableWeb3();
+      onWeb3Enabled();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -187,6 +190,7 @@ function App({ Component, pageProps }: AppProps) {
       });
     }
   }, [toastData]);
+
   return <Component {...pageProps} />
 }
 

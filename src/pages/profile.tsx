@@ -17,6 +17,7 @@ import Actions from "redux/actions";
 import { useRouter } from "next/router";
 import { Heading, Text, Badge } from "evergreen-ui";
 import { Colors } from "components/UI_KIT/colors";
+import { WALLET_ENABLED } from "config";
 
 interface ITab { 
   name: string;
@@ -56,7 +57,7 @@ const ProfilePage = () => {
 
   // If we don't have the wallet enabled, we have to send them back to the landing 
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_ENABLE_WALLET === 'false') router.push('/');
+    if (!WALLET_ENABLED) router.push('/');
   }, [])
   
   // Get the user balance and total supply of tokens

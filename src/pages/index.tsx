@@ -8,8 +8,6 @@ import { BsTrophy, BsSuitHeart } from "react-icons/bs";
 import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
-import { useRouter } from "next/router";
-import DerivativesBackground from "../../public/img/derivatives/twitter-teaser.jpeg";
 import { Colors } from "components/UI_KIT/colors";
 
 const skew = 8;
@@ -68,7 +66,6 @@ const IMAGES = [
 ];
 
 const LandingPage = () => {
-  const router = useRouter();
   useEffect(() => {
     document.body.classList.toggle("landing-page");
     return function cleanup() {
