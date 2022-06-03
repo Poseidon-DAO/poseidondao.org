@@ -2,7 +2,6 @@ import AvatarDisplay from "components/UI_KIT/Avatar";
 import { FlexView } from "components/UI_KIT/Display";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { Badge } from "reactstrap";
 import { RootState } from "redux/reducers";
 import styled from "styled-components";
 import { INft } from "types";
@@ -16,7 +15,8 @@ import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import Burn from "components/ProfilePage/Burn";
 import Actions from "redux/actions";
 import { useRouter } from "next/router";
-import { toaster } from "evergreen-ui";
+import { Heading, Text, Badge } from "evergreen-ui";
+import { Colors } from "components/UI_KIT/colors";
 
 interface ITab { 
   name: string;
@@ -122,23 +122,30 @@ const ProfilePage = () => {
           <AvatarDisplay size={'6vw'} />
           <HeaderData>
             <div style = {{ height: '50%' }}>
-              <h2 style= {{marginBottom: 1, fontWeight: 700}}>Your Account</h2>
+              <Heading size='xxl' style= {{ marginBottom: 1, fontWeight: 700, color: Colors.white.primary }}>Your Account</Heading>
             </div>
             {address && (
             <AddressInfo>
-              <p style={{fontSize: '1.2rem', textOverflow:'ellipsis', whiteSpace: 'nowrap', overflow:'hidden', maxWidth: '80vw' }}>
-                {address?.slice(0, 6) + "..." + address?.slice(-4)}
-              </p>
+              <Text style={{
+                fontSize: '1.2rem',
+                textOverflow:'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow:'hidden',
+                maxWidth: '80vw',
+                color: Colors.white.primary,
+              }}>
+                {address?.slice(0, 6) + "..." + address?.slice(-6)}
+              </Text>
               <Badges>
                 <Badge
-                  color="info"
                   style={{ cursor: "pointer"}}
                   onClick={copyAdress}
+                  color='green'
                 >
                   Copy
                 </Badge>
                 <Badge
-                  color="secondary"
+                  color="neutral"
                   style={{ cursor: "pointer", marginLeft: '1rem'}}
                   onClick={()=> window.open(`https://etherscan.io/address/${address}`, "_blank")}
                 >
@@ -153,7 +160,7 @@ const ProfilePage = () => {
           <Tabs>
             {tabs.map(el => (
               <Tab key={el.id} isSelected={selectedTab.name === el.name} onClick={() => setSelectedTab(el)}>
-                <h4 style={{margin: 0}}>
+                <h4 style={{ margin: 0, color: Colors.white.primary }}>
                   {el.name}
                 </h4>
               </Tab>
@@ -181,6 +188,7 @@ const Container = styled.div`
 
 const Header = styled.div`
   display: flex;
+  align-items: center;
 `
 const HeaderData = styled.div`
   display: flex;
@@ -242,7 +250,7 @@ const Tab = styled.div<{isSelected: boolean}>`
   padding: .5rem;
   align-items: center;
   border-radius: 1px;
-  background-color: ${props => props.isSelected ? '#131435' : ''};
+  background-color: ${props => props.isSelected ? Colors.blue.ocean : ''};
   border-bottom: ${props => props.isSelected ? '0.5px solid #4824fa' : 'none'};
   &:hover {
     background-color: #4824FA;

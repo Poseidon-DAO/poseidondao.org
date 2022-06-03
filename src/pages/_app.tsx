@@ -139,9 +139,9 @@ function App({ Component, pageProps }: AppProps) {
 
   //Trigger toast on chain id change
   useEffect(() => {
-    if (isAuthenticated && chainId.length && chainId !== process.env.REACT_APP_CHAIN_ID) {
+    if (isAuthenticated && chainId.length && chainId !== process.env.NEXT_PUBLIC_CHAIN_ID) {
       newToast({
-        text: "Please switch to " + process.env.REACT_APP_CHAIN,
+        text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
         type: "warning",
       });
     } // eslint-disable-next-line react-hooks/exhaustive-deps

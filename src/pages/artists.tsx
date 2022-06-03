@@ -10,6 +10,7 @@ import { validators } from "utils/formValidators";
 import LoadingModal from "components/LoadingModal";
 import { useRouter } from "next/router";
 import { Pane, toaster } from 'evergreen-ui';
+import { Colors } from 'components/UI_KIT/colors';
 const ArtistForm = () => {
   const isServer = typeof window === "undefined";
 
@@ -107,7 +108,7 @@ const ArtistForm = () => {
   return (
     <FullScreen>
       <Pane display='flex' flexDirection='column' flex={1} alignItems='center' maxWidth='90vw' marginTop='15vh'>
-        <h2 style = {{ textAlign:'center', color: '#d1d1da' }}>Artist Application</h2>
+        <h2 style = {{ textAlign:'center', color: Colors.white.gray }}>Artist Application</h2>
         <Pane style={{
           display: 'flex',
           justifyContent: 'center',
@@ -118,7 +119,7 @@ const ArtistForm = () => {
           paddingBottom: '3rem',
         }}>
           <p
-            style={{ alignSelf: "flex-end", fontStyle: "italic", fontSize: ".8rem", color: '#d1d1da', marginTop: '1rem' }}
+            style={{ alignSelf: "flex-end", fontStyle: "italic", fontSize: ".8rem", color: Colors.white.gray, marginTop: '1rem' }}
           >
             Fields with * are required
           </p>

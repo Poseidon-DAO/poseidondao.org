@@ -1,3 +1,4 @@
+import { Colors } from 'components/UI_KIT/colors'
 import { Pane } from 'evergreen-ui'
 import React from 'react'
 import { SocialIcon } from 'react-social-icons'
@@ -9,14 +10,14 @@ export default function SocialMediaIcons() {
       <SocialIcon 
         url='https://twitter.com/Poseidon_SF/' 
         target="_blank" 
-        bgColor="#4824fa"
+        bgColor={Colors.blue.clear}
         fgColor="#FFF"
         style={style}
       />
       <SocialIcon 
         url="https://discord.gg/gUsX8MpTqk" 
         target="_blank" 
-        bgColor="#4824fa"
+        bgColor={Colors.blue.clear}
         fgColor="#FFF"
         style={style}
       />
@@ -24,7 +25,7 @@ export default function SocialMediaIcons() {
         type='instagram'
         url="https://instagram.com/poseidondao"
         target="_blank" 
-        bgColor="#4824fa"
+        bgColor={Colors.blue.clear}
         fgColor="#FFF"
         style={style}
       />
@@ -32,7 +33,7 @@ export default function SocialMediaIcons() {
         type='github' 
         url="https://github.com/Poseidon-DAO" 
         target="_blank" 
-        bgColor="#4824fa"
+        bgColor={Colors.blue.clear}
         fgColor="#FFF"
         style={style}
       />
