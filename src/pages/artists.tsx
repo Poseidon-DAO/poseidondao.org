@@ -9,7 +9,7 @@ import { submitArtist } from "apis/index";
 import { validators } from "utils/formValidators";
 import LoadingModal from "components/LoadingModal";
 import { useRouter } from "next/router";
-import { Pane, toaster } from 'evergreen-ui';
+import { Pane } from 'evergreen-ui';
 import { Colors } from 'components/UI_KIT/colors';
 const ArtistForm = () => {
   const isServer = typeof window === "undefined";
@@ -30,7 +30,11 @@ const ArtistForm = () => {
   const [project, setProject] = useState(() => getInitialValue("project"));
   const [twitter, setTwitter] = useState(() => getInitialValue("twitter"));
   const [instagram, setInstagram] = useState(() => getInitialValue("instagram"));
-
+  const dispatch = useDispatch();
+  const newToast = useCallback(
+    (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
+    [dispatch]
+  );
   const [loading, setLoading] = useState(false);
 
   const [validation, setValidation] = useState("");
@@ -85,12 +89,17 @@ const ArtistForm = () => {
         setLoading(true);
         await submitArtist(artist);
         setLoading(false);
-        toaster.success("Thank you for your application. Our team will review your profile and will reach out if it meets our requirements.")
+        setLoading(false);
+        newToast({
+          text: "Thank you for your application. Our team will review your profile and will reach out if it meets our requirements.",
+          type: "success",
+          time: 5000
+        });
         clearState();
         router.push('/');
       } catch (e: any) {
         setLoading(false);
-        toaster.danger("Oops, something went wrong!");
+        newToast({ text: "Oops, something went wrong!", type: "error" });
       }
     }
   };
