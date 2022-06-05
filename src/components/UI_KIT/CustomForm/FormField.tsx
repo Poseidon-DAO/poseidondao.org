@@ -1,6 +1,11 @@
-import { FormFieldLabel, SelectField, TextareaField, TextInputField } from "evergreen-ui";
+import {
+  FormFieldLabel,
+  SelectField,
+  TextareaField,
+  TextInputField,
+} from "evergreen-ui";
 import { useState } from "react";
-import { FormGroup, Input } from "reactstrap";
+import { FormGroup } from "reactstrap";
 
 interface FormFieldProps {
   type: string;
@@ -9,27 +14,32 @@ interface FormFieldProps {
   value: string;
 }
 
-const PROJECTS = [
-  "Derivatives",
-  "Genesis",
-  "Other",
-]
+const PROJECTS = ["Derivatives", "Genesis", "Other"];
 
-export function FormField({ required = true, onChange, type, value }: FormFieldProps) {
-  const formLabel = (copy: string, ...props: any) => <FormFieldLabel {...props} color='white'>{copy} {required && " *"}</FormFieldLabel>
+export function FormField({
+  required = true,
+  onChange,
+  type,
+  value,
+}: FormFieldProps) {
+  const formLabel = (copy: string, ...props: any) => (
+    <FormFieldLabel {...props} color="white">
+      {copy} {required && " *"}
+    </FormFieldLabel>
+  );
   const isServer = typeof window === "undefined";
 
   const updateValue = (value: string) => {
     if (!isServer) {
-      localStorage.setItem('form-'+type, value);
+      localStorage.setItem("form-" + type, value);
       onChange(value);
     }
   };
 
-  const [isFocused, setFocused] = useState(false)
-  
+  const [isFocused, setFocused] = useState(false);
+
   const FormField = () => {
-    const formType = type.charAt(0).toUpperCase() + type.slice(1)
+    const formType = type.charAt(0).toUpperCase() + type.slice(1);
     switch (type) {
       case "name":
         return (
@@ -42,7 +52,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               label=""
               style={isFocused ? focusedStyle : {}}
               onFocus={() => setFocused(true)}
-              onBlur={()=>setFocused(false)}
+              onBlur={() => setFocused(false)}
               value={value}
               placeholder="John Doe"
               onChange={(e: any) => updateValue(e.target.value)}
@@ -55,14 +65,21 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
             {formLabel(formType)}
             <SelectField
               width="100%"
-              defaultValue={'empty'}
-              style={isFocused ? focusedStyle : { backgroundColor: 'white', borderRadius: '5px' }}
+              defaultValue={"empty"}
+              style={
+                isFocused
+                  ? focusedStyle
+                  : { backgroundColor: "white", borderRadius: "5px" }
+              }
               onFocus={() => setFocused(true)}
-              onBlur={()=>setFocused(false)}
+              onBlur={() => setFocused(false)}
               onChange={(e: any) => updateValue(e.target.value)}
-              appearance='default'
+              appearance="default"
             >
-              <option disabled selected value='empty'> -- select an option -- </option>
+              <option disabled selected value="empty">
+                {" "}
+                -- select an option --{" "}
+              </option>
               {PROJECTS.map((project) => (
                 <option value={project} selected>
                   {project}
@@ -83,7 +100,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               value={value}
               style={isFocused ? focusedStyle : {}}
               onFocus={() => setFocused(true)}
-              onBlur={()=>setFocused(false)}
+              onBlur={() => setFocused(false)}
               placeholder="john.doe@gmail.com"
               onChange={(e: any) => updateValue(e.target.value)}
             />
@@ -94,7 +111,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
       case "website":
         return (
           <>
-            {formLabel(formType, type === 'website' ? false : true)}
+            {formLabel(formType, type === "website" ? false : true)}
             <TextInputField
               type="text"
               name={type}
@@ -103,7 +120,7 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
               id={type}
               style={isFocused ? focusedStyle : {}}
               onFocus={() => setFocused(true)}
-              onBlur={()=>setFocused(false)}
+              onBlur={() => setFocused(false)}
               onChange={(e: any) => updateValue(e.target.value)}
               placeholder={
                 type === "website"
@@ -118,15 +135,15 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
       case "textarea":
         return (
           <>
-            {formLabel('About You', false)}
+            {formLabel("About You", false)}
             <TextareaField
               value={value}
               name={type}
               label=""
               id={type}
-              style={isFocused ? {borderBottom: '0.5px solid #4824fa'} : {}}
+              style={isFocused ? { borderBottom: "0.5px solid #4824fa" } : {}}
               onFocus={() => setFocused(true)}
-              onBlur={()=>setFocused(false)}
+              onBlur={() => setFocused(false)}
               onChange={(e: any) => updateValue(e.target.value)}
               placeholder="Tell us about yourself"
             />
@@ -137,14 +154,16 @@ export function FormField({ required = true, onChange, type, value }: FormFieldP
     }
   };
   return (
-    <FormGroup style={{ textAlign: "left", marginBottom: ".5rem", width: '100%' }}>
+    <FormGroup
+      style={{ textAlign: "left", marginBottom: ".5rem", width: "100%" }}
+    >
       {FormField()}
     </FormGroup>
   );
 }
 
 const focusedStyle = {
-  border: '0.5px solid #4824fa',
-  backgroundColor: 'white', 
-  borderRadius: '5px',
-}
+  border: "0.5px solid #4824fa",
+  backgroundColor: "white",
+  borderRadius: "5px",
+};

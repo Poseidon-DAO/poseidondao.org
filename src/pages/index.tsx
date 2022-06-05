@@ -173,13 +173,13 @@ const LandingPage = () => {
               </Card>
             </Pane>
           </Pane>
-          <Pane display='flex' flex={1} width="100%" justifyContent='center'>
+          <Pane display="flex" flex={1} width="100%" justifyContent="center">
             <ContentWrapper>
               <Heading
                 color={Colors.white.gray}
                 fontSize={40}
                 fontWeight={300}
-                marginY='2rem'
+                marginY="2rem"
               >
                 DAO Collection
               </Heading>
@@ -300,6 +300,52 @@ const LandingPage = () => {
           </ContentWrapper>
         </Container>
       </DerivativeSection>
+
+      <GenesisSection>
+        <Container style={{ justifyContent: "end" }}>
+          <ContentWrapper>
+            <Heading
+              marginBottom="2rem"
+              color="black"
+              fontSize={40}
+              fontWeight={300}
+              lineHeight="40px"
+            >
+              Genesis Collection
+            </Heading>
+            <Paragraph color="black">
+              The purpose of the derivatives collection is to combine different
+              artistic styles with unique pieces of high commercial value but
+              little artistic content, valuing both the starting work thanks to
+              the collaboration of excellent artists as well as the DAO itself
+              and future token holders. Niro Perrone, Gio' Roman and Bert One
+              are just some of the artists the DAO partnered with for
+              derivatives project.
+            </Paragraph>
+            <Link
+              href="https://foundation.app/collection/psdg"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Pane
+                display="flex"
+                alignItems="center"
+                cursor="pointer"
+                marginTop="1rem"
+              >
+                <Text color={Colors.link} marginRight="1px">
+                  On Foundation
+                </Text>
+                <AiOutlineRight
+                  size={12}
+                  color={Colors.link}
+                  style={{ marginTop: "1.5px" }}
+                />
+              </Pane>
+            </Link>
+          </ContentWrapper>
+        </Container>
+      </GenesisSection>
     </>
   );
 };
@@ -315,6 +361,7 @@ const ContentWrapper = styled.div`
     align-items: center;
   }
 `;
+
 const Container = styled.div`
   display: flex;
   width: 80%;
@@ -356,7 +403,7 @@ const Link = styled.a`
 
 const CardText = styled.p`
   font-size: 18px;
-  color: #8e88a9;
+  color: white;
   margin: 0;
   line-height: 1.5;
   @media (max-width: 992px) {
@@ -374,7 +421,19 @@ const Icon = styled.div<{ size: number }>`
 `;
 
 const DerivativeSection = styled.div`
-  background-image: url('/img/derivatives/twitter-teaser.jpeg');
+  background-image: url("/img/derivatives/twitter-teaser.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const GenesisSection = styled.div`
+  background-image: url("/img/genesis/banner.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;

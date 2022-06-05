@@ -47,18 +47,21 @@ const LoopGallery = (props: any) => {
       style={{
         marginBottom: "1rem",
         transform: props.skew,
-        width: '110%',
-        marginLeft: '-5%',
+        width: "110%",
+        marginLeft: "-5%",
       }}
     >
       {props.imgArray.map((i: string) => (
-        <Image
-          key={i}
-          alt="..."
-          width={180}
-          height={180}
-          src={`/img/collection/${i}`}
-        />
+        <div style={{ overflow: "hidden" }}>
+          <Image
+            key={i}
+            alt="..."
+            width={180}
+            height={180}
+            src={`/img/collection/${i}`}
+            style={{ borderRadius: "0.5rem" }}
+          />
+        </div>
       ))}
     </Slider>
   );

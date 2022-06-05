@@ -15,7 +15,6 @@ const Container = styled.div`
   width: 100vw;
   align-items: center;
   justify-content: center;
-  background-color: #202249;
   overflow: hidden;
   flex: 1;
   @media (max-width: 768px) {
