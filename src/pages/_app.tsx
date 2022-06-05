@@ -1,17 +1,18 @@
-import 'styles/globals.css'
-import type { AppProps } from 'next/app'
+import "styles/globals.css";
+import type { AppProps } from "next/app";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { MoralisProvider, useMoralis } from "react-moralis";
-import store from 'redux/store';
-import IndexNavbar from 'components/Navbars/IndexNavbar';
+import store from "redux/store";
+import IndexNavbar from "components/Navbars/IndexNavbar";
 import Footer from "components/Footer/Footer";
-import { useCallback, useEffect, useState } from 'react';
-import Actions from 'redux/actions';
-import { RootState } from 'redux/reducers';
-import { NetworkTypes } from 'types';
-import { WALLET_ENABLED } from 'config';
+import { useCallback, useEffect, useState } from "react";
+import Actions from "redux/actions";
+import { RootState } from "redux/reducers";
+import { NetworkTypes } from "types";
+import { WALLET_ENABLED } from "config";
+import styled from "styled-components";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         appId={process.env.NEXT_PUBLIC_MORALIS_ID!}
         serverUrl={process.env.NEXT_PUBLIC_MORALIS_URL!}
       >
-        <ToastContainer/>
+        <ToastContainer />
         <IndexNavbar />
         <App Component={Component} {...pageProps} />
         <Footer />
@@ -30,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 function App({ Component, pageProps }: AppProps) {
-    const toastData = useSelector((state: RootState) => state.utils.toast);
+  const toastData = useSelector((state: RootState) => state.utils.toast);
   const [chainId, setChainId] = useState<string>("");
   const { Moralis, isAuthenticated, account, logout } = useMoralis();
   const dispatch = useDispatch();
@@ -104,8 +105,7 @@ function App({ Component, pageProps }: AppProps) {
       const enableWeb3 = async () => {
         try {
           await Moralis.enableWeb3();
-        }
-        catch (e) {
+        } catch (e) {
           newToast({
             text: "Please install Metamask",
             type: "error",
@@ -142,7 +142,11 @@ function App({ Component, pageProps }: AppProps) {
 
   //Trigger toast on chain id change
   useEffect(() => {
-    if (isAuthenticated && chainId.length && chainId !== process.env.NEXT_PUBLIC_CHAIN_ID) {
+    if (
+      isAuthenticated &&
+      chainId.length &&
+      chainId !== process.env.NEXT_PUBLIC_CHAIN_ID
+    ) {
       newToast({
         text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
         type: "warning",
@@ -191,7 +195,17 @@ function App({ Component, pageProps }: AppProps) {
     }
   }, [toastData]);
 
-  return <Component {...pageProps} />
+  return (
+    <Dots>
+      <Component {...pageProps} />
+    </Dots>
+  );
 }
 
-export default MyApp
+export default MyApp;
+
+const Dots = styled.div`
+  background-image: url("/img/dots.png");
+  background-repeat: repeat repeat;
+  background-size: contain;
+`;
