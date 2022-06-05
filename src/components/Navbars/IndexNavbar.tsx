@@ -72,9 +72,7 @@ export default function IndexNavbar() {
       alignItems="center"
       transition="0.15s all ease"
     >
-      <Pane flex={1} onClick={() => router.push('/')} cursor='pointer'>
-        <Image src={Logo.src} height={`${logoHeight}rem`} />
-      </Pane>
+      <Image src={Logo.src} height={`${logoHeight}rem`} onClick={() => router.push('/')} cursor='pointer' />
       {WALLET_ENABLED && (
         <Pane flex={1} justifyContent="flex-end" display="flex">
           <ConnectWallet />
