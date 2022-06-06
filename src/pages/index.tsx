@@ -87,6 +87,7 @@ const LandingPage = () => {
               fontSize={40}
               fontWeight={300}
               lineHeight="40px"
+              marginTop={isMobile ? '5rem' : '0'}
             >
               Artists & Collectors DAO <br />
             </Heading>
@@ -189,13 +190,13 @@ const LandingPage = () => {
               >
                 DAO Collection
               </Heading>
-              <Text fontWeight={200} color={Colors.white.gray} textAlign="left">
+              <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX='0.5rem'>
                 The DAO is built on top of a massive treasury made up of
                 historical NFTs, 1-of-1 and collectibles.
                 <br />
                 <br />
               </Text>
-              <Text fontWeight={200} color={Colors.white.gray} textAlign="left">
+              <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX='0.5rem'>
                 Poseidon valued art and artists investing in the long term
                 vision of digital art.
               </Text>
@@ -266,7 +267,7 @@ const LandingPage = () => {
             >
               Derivatives Collection
             </Heading>
-            <Paragraph color="white">
+            <Paragraph color="white" paddingX='0.5rem'>
               The purpose of the derivatives collection is to combine different
               artistic styles with unique pieces of high commercial value but
               little artistic content, valuing both the starting work thanks to
@@ -276,7 +277,7 @@ const LandingPage = () => {
               derivatives project.
             </Paragraph>
             <br />
-            <Paragraph color="white">
+            <Paragraph color="white" paddingX='0.5rem'>
               To make collectors and art lovers of all budgets participate as
               much as possible in the project, to all those who make bids during
               the auction, for each bid, they will be given in airdrop the
@@ -319,7 +320,7 @@ const LandingPage = () => {
             >
               Genesis Collection
             </Heading>
-            <Paragraph color={isMobile ? "white" : "black"}>
+            <Paragraph color={isMobile ? "white" : "black"} paddingX='0.5rem'>
               The purpose of the derivatives collection is to combine different
               artistic styles with unique pieces of high commercial value but
               little artistic content, valuing both the starting work thanks to
