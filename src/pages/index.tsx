@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import LoopGallery from "components/LoopGallery/LoopGallery";
 import FullScreen from "components/FullScreen";
 import { Heading, Pane, Paragraph, Text } from "evergreen-ui";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import SocialMediaIcons from "components/UI_KIT/SocialMediaIcons";
 import { BsTrophy, BsSuitHeart } from "react-icons/bs";
 import { IoRocketOutline } from "react-icons/io5";
@@ -79,6 +79,10 @@ const LandingPage = () => {
   return (
     <>
       <FullScreen>
+        <Background>
+          <Shape1 />
+          <Shape2 />
+        </Background>
         <Container>
           <ContentWrapper>
             <Heading
@@ -91,7 +95,7 @@ const LandingPage = () => {
             >
               Artists & Collectors DAO <br />
             </Heading>
-            <Paragraph color="white">
+            <Paragraph color="white" paddingX='0.5rem'>
               Poseidon DAO brings NFTs to the next step, enabling their
               evolution. The DAO is built on top of the knowledge of a huge
               collective of artists and collectors, in order to create a
@@ -450,5 +454,63 @@ const GenesisSection = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+
+const wobble = keyframes`
+  0% {
+    border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
+  }
+  50% {
+    border-radius: 47% 53% 86% 14% / 53% 36% 64% 47%;
+  }
+  100% {
+    border-radius: 56% 44% 71% 29% / 67% 23% 77% 33%;
+  }
+}`;
+
+const wobble2 = keyframes`
+  0% {
+    border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
+  }
+  50% {
+    border-radius: 65% 35% 33% 67% / 49% 21% 79% 51%;
+  }
+  100% {
+    border-radius: 76% 24% 33% 67% / 41% 69% 31% 59%;
+  }
+}`;
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+`
+
+const Shape1 = styled.div`
+  height: 50vh;
+  width: 40vw; 
+  background-color: grey;
+  opacity: 0.2;
+  border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
+  position: absolute;
+  top: 30;
+  right: 30;
+  left: 40%;
+  animation: ${wobble} 5s ease-in-out alternate infinite;
+`
+const Shape2 = styled.div`
+  height: 50vh;
+  width: 40vw; 
+  background-color: grey;
+  opacity: 0.2;
+  border-radius: 14% 86% 48% 52% / 25% 21% 79% 75%;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  animation: ${wobble2} 5s ease-in-out alternate infinite;
+`
 
 export default LandingPage;
