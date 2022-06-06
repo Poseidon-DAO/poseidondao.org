@@ -28,11 +28,21 @@ const LoopGallery = (props: any) => {
         },
         {
           breakpoint: 600,
-          settings: {},
+          settings: {
+            infinite: true,
+            speed: 2000,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          },
         },
         {
           breakpoint: 480,
-          settings: {},
+          settings: {
+            infinite: true,
+            speed: 2000,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          },
         },
       ],
     }),
@@ -47,24 +57,24 @@ const LoopGallery = (props: any) => {
       style={{
         marginBottom: "1rem",
         transform: props.skew,
-        width: "110%",
-        marginLeft: "-5%",
+        width: props.isMobile ? '100vw' : "110%",
+        height: "fit-content",
+        marginLeft: props.isMobile ? '0' :  "-5%",
       }}
     >
       {props.imgArray.map((i: string) => (
-        <div style={{ overflow: "hidden" }}>
+        <div style={{ height: '100%', width: '100%', }}>
           <Image
             key={i}
             alt="..."
-            width={180}
-            height={180}
+            width={props.isMobile ? 500 : 180}
+            height={props.isMobile ? 500 : 180}
             src={`/img/collection/${i}`}
-            style={{ borderRadius: "0.5rem" }}
           />
         </div>
       ))}
     </Slider>
-  );
+  )
 };
 
 export default LoopGallery;

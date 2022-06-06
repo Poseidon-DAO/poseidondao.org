@@ -9,6 +9,7 @@ import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
 import { Colors } from "components/UI_KIT/colors";
+import { useIsMobile } from "customHooks";
 
 const skew = 8;
 const IMAGES = [
@@ -73,6 +74,8 @@ const LandingPage = () => {
     };
   }, []);
 
+  const isMobile = useIsMobile()
+
   return (
     <>
       <FullScreen>
@@ -103,13 +106,16 @@ const LandingPage = () => {
         width="100vw"
         display="flex"
         flexDirection="column"
-        justifyContent="space-evenly"
+        justifyContent="center"
         flex={1}
-        minHeight="100vh"
+        overflow='hidden'
+        minHeight={isMobile ? "70vh" : "100vh"}
       >
-        {IMAGES.map(({ skew, images }) => (
+        {!isMobile ? IMAGES.map(({ skew, images }) => (
           <LoopGallery skew={skew} imgArray={images} />
-        ))}
+        )) : (
+          <LoopGallery imgArray={[...IMAGES[0].images, ...IMAGES[1].images, ...IMAGES[2].images]} isMobile />
+        )}
       </Pane>
 
       <FullScreen>
@@ -306,14 +312,14 @@ const LandingPage = () => {
           <ContentWrapper>
             <Heading
               marginBottom="2rem"
-              color="black"
+              color={isMobile ? "white" : "black"}
               fontSize={40}
               fontWeight={300}
               lineHeight="40px"
             >
               Genesis Collection
             </Heading>
-            <Paragraph color="black">
+            <Paragraph color={isMobile ? "white" : "black"}>
               The purpose of the derivatives collection is to combine different
               artistic styles with unique pieces of high commercial value but
               little artistic content, valuing both the starting work thanks to
