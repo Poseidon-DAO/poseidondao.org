@@ -21,56 +21,59 @@ export default function Footer() {
           flex={1}
           maxWidth="100vw"
           marginBottom={2}
-          marginLeft="5rem"
         >
           <Column>
-            <NavLink
-              href="https://opensea.io/PoseidonNftFund"
-              target="_blank"
-              rel="noreferrer"
-            >
-              OpenSea
-            </NavLink>
-            <NavLink
-              href="https://superrare.com/poseidonnftfund"
-              target="_blank"
-              rel="noreferrer"
-            >
-              SuperRare
-            </NavLink>
-            <NavLink
-              href="https://foundation.app/@Poseidonnftfund"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Foundation
-            </NavLink>
+            <ColumnContent>
+              <NavLink
+                href="https://opensea.io/PoseidonNftFund"
+                target="_blank"
+                rel="noreferrer"
+              >
+                OpenSea
+              </NavLink>
+              <NavLink
+                href="https://superrare.com/poseidonnftfund"
+                target="_blank"
+                rel="noreferrer"
+              >
+                SuperRare
+              </NavLink>
+              <NavLink
+                href="https://foundation.app/@Poseidonnftfund"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Foundation
+              </NavLink>
+            </ColumnContent>
           </Column>
           <Column>
-            <NavLink
-              href="mailto:info@poseidonnft.org"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Contact Us
-            </NavLink>
-            <NavLink
-              href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Blog
-            </NavLink>
-            <NavLink
-              href="https://poseidongroup.ch/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Group
-            </NavLink>
-            <Link href="/artists">
-              <NavLink>Artists</NavLink>
-            </Link>
+            <ColumnContent>
+              <NavLink
+                href="mailto:info@poseidonnft.org"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Contact Us
+              </NavLink>
+              <NavLink
+                href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Blog
+              </NavLink>
+              <NavLink
+                href="https://poseidongroup.ch/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Group
+              </NavLink>
+              <Link href="/artists">
+                <NavLink>Artists</NavLink>
+              </Link>
+            </ColumnContent>
           </Column>
         </Pane>
         <Pane
@@ -159,7 +162,7 @@ const NavLink = styled.a`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   min-height: 100%;
   max-width: 50%;
@@ -170,6 +173,12 @@ const Column = styled.div`
     margin: 1rem 0;
   }
 `;
+
+const ColumnContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`
 
 const Row = styled.div`
   display: flex;

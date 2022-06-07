@@ -1,12 +1,14 @@
 import { Colors } from 'components/UI_KIT/colors'
+import { useIsMobile } from 'customHooks'
 import { Pane } from 'evergreen-ui'
 import React from 'react'
 import { SocialIcon } from 'react-social-icons'
 
 export default function SocialMediaIcons() {
-  const style = { marginRight: '1rem' }
+  const isMobile = useIsMobile()
+  const style = { marginRight: isMobile ? 0 : '1rem' }
   return (
-    <Pane display='flex' marginTop='1rem'>
+    <Pane display='flex' marginTop='1rem' justifyContent='space-between' width={isMobile ? '90%' : 'fit-content'}>
       <SocialIcon 
         url='https://twitter.com/Poseidon_SF/' 
         target="_blank" 
