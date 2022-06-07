@@ -27,7 +27,7 @@ const LoopGallery = (props: any) => {
           settings: {},
         },
         {
-          breakpoint: 600,
+          breakpoint: 768,
           settings: {
             infinite: true,
             speed: 2000,
@@ -48,7 +48,6 @@ const LoopGallery = (props: any) => {
     }),
     [props]
   );
-
   return (
     <Slider
       key={props.key}
