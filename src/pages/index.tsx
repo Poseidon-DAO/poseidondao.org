@@ -80,8 +80,8 @@ const LandingPage = () => {
     <>
       <FullScreen>
         <Background>
-          <Shape1 />
-          <Shape2 />
+          <Shape1 isMobile={isMobile} />
+          <Shape2 isMobile={isMobile}/>
         </Background>
         <Container>
           <ContentWrapper>
@@ -95,7 +95,7 @@ const LandingPage = () => {
             >
               Artists & Collectors DAO <br />
             </Heading>
-            <Paragraph color="white" paddingX='0.5rem'>
+            <Paragraph color="white" paddingX={isMobile ? '0.5rem' : 0}>
               Poseidon DAO brings NFTs to the next step, enabling their
               evolution. The DAO is built on top of the knowledge of a huge
               collective of artists and collectors, in order to create a
@@ -193,13 +193,13 @@ const LandingPage = () => {
               >
                 DAO Collection
               </Heading>
-              <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX='0.5rem'>
+              <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX={isMobile ? '0.5rem' : 0}>
                 The DAO is built on top of a massive treasury made up of
                 historical NFTs, 1-of-1 and collectibles.
                 <br />
                 <br />
               </Text>
-              <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX='0.5rem'>
+              <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX={isMobile ? '0.5rem' : 0}>
                 Poseidon valued art and artists investing in the long term
                 vision of digital art.
               </Text>
@@ -270,7 +270,7 @@ const LandingPage = () => {
             >
               Derivatives Collection
             </Heading>
-            <Paragraph color="white" paddingX='0.5rem'>
+            <Paragraph color="white" paddingX={isMobile ? '0.5rem' : 0}>
               The purpose of the derivatives collection is to combine different
               artistic styles with unique pieces of high commercial value but
               little artistic content, valuing both the starting work thanks to
@@ -280,7 +280,7 @@ const LandingPage = () => {
               derivatives project.
             </Paragraph>
             <br />
-            <Paragraph color="white" paddingX='0.5rem'>
+            <Paragraph color="white" paddingX={isMobile ? '0.5rem' : 0}>
               To make collectors and art lovers of all budgets participate as
               much as possible in the project, to all those who make bids during
               the auction, for each bid, they will be given in airdrop the
@@ -323,7 +323,7 @@ const LandingPage = () => {
             >
               Genesis Collection
             </Heading>
-            <Paragraph color={isMobile ? "white" : "black"} paddingX='0.5rem'>
+            <Paragraph color={isMobile ? "white" : "black"} paddingX={isMobile ? '0.5rem' : 0}>
               The purpose of the derivatives collection is to combine different
               artistic styles with unique pieces of high commercial value but
               little artistic content, valuing both the starting work thanks to
@@ -420,15 +420,6 @@ const CardText = styled.p`
     font-size: 14px;
   }
 `;
-const Icon = styled.div<{ size: number }>`
-  width: ${(props) => props.size};
-  height: ${(props) => props.size};
-  background-color: #1c8cf8;
-  @media (max-width: 992px) {
-    width: ${(props) => props.size * 0.9};
-    height: ${(props) => props.size * 0.9};
-  }
-`;
 
 const DerivativeSection = styled.div`
   background-image: url("/img/derivatives/twitter-teaser.jpeg");
@@ -483,33 +474,35 @@ const Background = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100vw;
   height: 100vh;
   z-index: -1;
+  max-width: 100vw;
 `
 
-const Shape1 = styled.div`
-  height: 50vh;
-  width: 40vw; 
+const Shape1 = styled.div<{ isMobile: boolean }>`
+  height: ${props => props.isMobile ? "15rem" : "30rem"};
+  width: ${props => props.isMobile ? "60vw" : "40vw"}; 
   background-color: grey;
   opacity: 0.2;
   border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
   position: absolute;
-  top: 30;
-  right: 30;
-  left: 40%;
+  top: 10%;
+  left: ${props => props.isMobile ? "35%" : "40%"};
   animation: ${wobble} 5s ease-in-out alternate infinite;
 `
-const Shape2 = styled.div`
-  height: 50vh;
-  width: 40vw; 
+const Shape2 = styled.div<{ isMobile: boolean }>`
+  height: ${props => props.isMobile ? "15rem" : "30rem"};
+  width:  ${props => props.isMobile ? "50vw" : "40vw"}; 
   background-color: grey;
   opacity: 0.2;
   border-radius: 14% 86% 48% 52% / 25% 21% 79% 75%;
   position: absolute;
   top: 30%;
-  left: 50%;
-  animation: ${wobble2} 5s ease-in-out alternate infinite;
+  left: ${props => props.isMobile ? "30%" : "50%"};
+  animation: ${wobble2} 7s ease-in-out alternate infinite;
 `
 
 export default LandingPage;
