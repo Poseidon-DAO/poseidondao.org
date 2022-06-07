@@ -113,7 +113,6 @@ const LandingPage = () => {
         flexDirection="column"
         justifyContent="center"
         flex={1}
-        overflow='hidden'
         minHeight={isMobile ? "70vh" : "100vh"}
       >
         {!isMobile ? IMAGES.map(({ skew, images }) => (
