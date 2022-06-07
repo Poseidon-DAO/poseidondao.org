@@ -63,14 +63,16 @@ const LoopGallery = (props: any) => {
       }}
     >
       {props.imgArray.map((i: string) => (
-        <div style={{ height: '100%', width: '100%', }}>
-          <Image
-            key={i}
-            alt="..."
-            width={props.isMobile ? 500 : 180}
-            height={props.isMobile ? 500 : 180}
-            src={`/img/collection/${i}`}
-          />
+        <div>
+          <div style={{ height: props.isMobile ? 500 : 180, minWidth: '100vw', display: 'flex', justifyContent: 'center' }}>
+            <Image
+              key={i}
+              alt="..."
+              width={props.isMobile ? 500 : 180}
+              height={props.isMobile ? 500 : 180}
+              src={`/img/collection/${i}`}
+            />
+          </div>
         </div>
       ))}
     </Slider>
