@@ -11,7 +11,8 @@ const urlValidator = (url: string, provider?: string) => {
 };
 
 const lengthValidator = (name: string, minLength = 2, maxLength = 30) => {
-  return name.length >= minLength && name.length <= maxLength ? true : false;
+  const trimmed = name.trim();
+  return trimmed.length >= minLength && trimmed.length <= maxLength;
 };
 
 const emailValidator = (email: string) => {
