@@ -132,10 +132,28 @@ export function FormField({
             />
           </>
         );
-      case "textarea":
+      case "samples":
         return (
           <>
-            {formLabel("About You", false)}
+            {formLabel("NFT proposals", false)}
+            <TextInputField
+              type="text"
+              name={type}
+              value={value}
+              label=""
+              id={type}
+              style={isFocused ? focusedStyle : {}}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              onChange={(e: any) => updateValue(e.target.value)}
+              placeholder="Please provide a link to a public Drive/Dropbox like folder with files"
+            />
+          </>
+        );
+      case "bio":
+        return (
+          <>
+            {formLabel("Bio", false)}
             <TextareaField
               value={value}
               name={type}
@@ -146,6 +164,23 @@ export function FormField({
               onBlur={() => setFocused(false)}
               onChange={(e: any) => updateValue(e.target.value)}
               placeholder="Tell us about yourself"
+            />
+          </>
+        );
+      case "exhibitions":
+        return (
+          <>
+            {formLabel("Exhibitions", false)}
+            <TextareaField
+              value={value}
+              name={type}
+              label=""
+              id={type}
+              style={isFocused ? { borderBottom: "0.5px solid #4824fa" } : {}}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              onChange={(e: any) => updateValue(e.target.value)}
+              placeholder="Tell us about your exhibitions if you had any"
             />
           </>
         );

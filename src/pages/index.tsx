@@ -343,12 +343,12 @@ const LandingPage = () => {
                 cursor="pointer"
                 marginTop="1rem"
               >
-                <Text color={Colors.link} marginRight="1px">
+                <Text color={Colors.blue.ocean} marginRight="1px">
                   On Foundation
                 </Text>
                 <AiOutlineRight
                   size={12}
-                  color={Colors.link}
+                  color={Colors.blue.ocean}
                   style={{ marginTop: "1.5px" }}
                 />
               </Pane>

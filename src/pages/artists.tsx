@@ -27,7 +27,11 @@ const ArtistForm = () => {
 
   const [name, setName] = useState(() => getInitialValue("name"));
   const [email, setEmail] = useState(() => getInitialValue("email"));
-  const [bio, setBio] = useState(() => getInitialValue("textarea"));
+  const [bio, setBio] = useState(() => getInitialValue("bio"));
+  const [exhibitions, setExhibitions] = useState(() =>
+    getInitialValue("exhibitions")
+  );
+  const [samples, setSamples] = useState(() => getInitialValue("samples"));
   const [website, setWebsite] = useState(() => getInitialValue("website"));
   const [project, setProject] = useState(() => getInitialValue("project"));
   const [twitter, setTwitter] = useState(() => getInitialValue("twitter"));
@@ -45,14 +49,20 @@ const ArtistForm = () => {
 
   const isValid = () => {
     setValidation("");
-    if (!validators.lengthValidator(name, 3)) {
+    if (!validators.lengthValidator(name, 3, 70)) {
       setValidation("Name is invalid");
       return false;
     } else if (!validators.emailValidator(email)) {
       setValidation("Email is invalid");
       return false;
-    } else if (!validators.lengthValidator(bio)) {
+    } else if (!validators.lengthValidator(bio, 2, 2000)) {
       setValidation("Bio is required");
+      return false;
+    } else if (!validators.lengthValidator(exhibitions, 2, 2000)) {
+      setValidation("Exhibitions is required");
+      return false;
+    } else if (!validators.urlValidator(samples)) {
+      setValidation("Samples is required");
       return false;
     } else if (!validators.lengthValidator(project)) {
       setValidation("A project is required");
@@ -84,6 +94,8 @@ const ArtistForm = () => {
         name,
         email,
         bio,
+        exhibitions,
+        samples,
         website,
         twitter_url: twitter,
         instagram_url: instagram,
@@ -112,13 +124,17 @@ const ArtistForm = () => {
     setName("");
     setEmail("");
     setBio("");
+    setExhibitions("");
+    setSamples("");
     setWebsite("");
     setTwitter("");
     setInstagram("");
     setProject("");
     localStorage.setItem("form-name", "");
     localStorage.setItem("form-email", "");
-    localStorage.setItem("form-textarea", "");
+    localStorage.setItem("form-bio", "");
+    localStorage.setItem("form-exhibitions", "");
+    localStorage.setItem("form-samples", "");
     localStorage.setItem("form-website", "");
     localStorage.setItem("form-twitter", "");
     localStorage.setItem("form-instagram", "");
@@ -177,7 +193,19 @@ const ArtistForm = () => {
             onChange={setProject}
             required
           />
-          <FormField value={bio} type="textarea" onChange={setBio} />
+          <FormField value={bio} type="bio" onChange={setBio} required />
+          <FormField
+            value={exhibitions}
+            type="exhibitions"
+            onChange={setExhibitions}
+            required={false}
+          />
+          <FormField
+            value={samples}
+            type="samples"
+            onChange={setSamples}
+            required={false}
+          />
 
           <h5 style={{ color: Colors.red.primary }}>{validation}</h5>
           <CustomButton
