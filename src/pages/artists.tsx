@@ -58,11 +58,11 @@ const ArtistForm = () => {
     } else if (!validators.lengthValidator(bio, 2, 2000)) {
       setValidation("Bio is required");
       return false;
-    } else if (!validators.lengthValidator(exhibitions, 2, 2000)) {
-      setValidation("Exhibitions is required");
+    } else if (exhibitions.length && !validators.lengthValidator(exhibitions, 2, 2000)) {
+      setValidation("Exhibitions is invalid");
       return false;
-    } else if (!validators.urlValidator(samples)) {
-      setValidation("Samples is required");
+    } else if (samples.length && !validators.urlValidator(samples)) {
+      setValidation("Samples is invalid");
       return false;
     } else if (!validators.lengthValidator(project)) {
       setValidation("A project is required");
