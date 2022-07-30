@@ -100,7 +100,7 @@ const LandingPage = () => {
               evolution. The DAO is built on top of the knowledge of a huge
               collective of artists and collectors, in order to create a
               decentralized entity that can lead NFTs and crypto art to another
-              level.
+              level
             </Paragraph>
             <SocialMediaIcons />
           </ContentWrapper>
@@ -195,13 +195,13 @@ const LandingPage = () => {
               </Heading>
               <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX={isMobile ? '0.5rem' : 0}>
                 The DAO is built on top of a massive treasury made up of
-                historical NFTs, 1-of-1 and collectibles.
+                historical NFTs, 1-of-1 and collectibles
                 <br />
                 <br />
               </Text>
               <Text fontWeight={200} color={Colors.white.gray} textAlign="left" paddingX={isMobile ? '0.5rem' : 0}>
                 Poseidon valued art and artists investing in the long term
-                vision of digital art.
+                vision of digital art
               </Text>
               <br />
               <br />
@@ -277,14 +277,14 @@ const LandingPage = () => {
               the collaboration of excellent artists as well as the DAO itself
               and future token holders. Niro Perrone, Gio' Roman and Bert One
               are just some of the artists the DAO partnered with for
-              derivatives project.
+              derivatives project
             </Paragraph>
             <br />
             <Paragraph color="white" paddingX={isMobile ? '0.5rem' : 0}>
               To make collectors and art lovers of all budgets participate as
               much as possible in the project, to all those who make bids during
               the auction, for each bid, they will be given in airdrop the
-              governance tokens of the DAO.
+              governance tokens of the DAO
             </Paragraph>
             <Link
               href="https://foundation.app/collection/posder"
@@ -330,7 +330,7 @@ const LandingPage = () => {
               the collaboration of excellent artists as well as the DAO itself
               and future token holders. Niro Perrone, Gio' Roman and Bert One
               are just some of the artists the DAO partnered with for
-              derivatives project.
+              derivatives project
             </Paragraph>
             <Link
               href="https://foundation.app/collection/psdg"
