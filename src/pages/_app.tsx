@@ -13,6 +13,7 @@ import { RootState } from "redux/reducers";
 import { NetworkTypes } from "types";
 import { WALLET_ENABLED } from "config";
 import styled from "styled-components";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -196,9 +197,19 @@ function App({ Component, pageProps }: AppProps) {
   }, [toastData]);
 
   return (
-    <Dots>
-      <Component {...pageProps} />
-    </Dots>
+    <>
+      <Head>
+        <title>Poseidon DAO</title>
+        <meta
+          name="viewport"
+          // content="minimum-scale=1, initial-scale=1, width=device-width"
+          content="viewport-fit=cover"
+        />
+      </Head>
+      <Dots>
+        <Component {...pageProps} />
+      </Dots>
+    </>
   );
 }
 
