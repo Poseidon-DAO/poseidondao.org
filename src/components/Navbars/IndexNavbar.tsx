@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
 
-const defaultHeight = 5;
+const defaultHeight = 4;
 const defaultPadding = 3;
 
 export default function IndexNavbar() {
@@ -30,7 +30,7 @@ export default function IndexNavbar() {
       document.body.scrollTop > 99
     ) {
       setColor(Colors.blue.clear);
-      setLogo(3);
+      setLogo(2.5);
       setPadding(0);
     } else if (
       document.documentElement.scrollTop < 100 ||

@@ -10,8 +10,9 @@ export default function Footer() {
     <FooterContainer>
       <Content>
         <Image
-          height={100}
+          height={75}
           width={150}
+          // layout='fill'
           alt="..."
           className="logo img-fluid rounded"
           src="/img/logo-transparent.png"
