@@ -1,13 +1,24 @@
 import LoadingSpinner from "components/LoadingSpinner";
 import styled from "styled-components";
 import { INft } from "types";
-import Tilt from 'react-parallax-tilt';
+import Tilt from "react-parallax-tilt";
 import { Colors } from "components/UI_KIT/colors";
 
-export default function NFTCard({nft, onClick}: {nft: INft, onClick: (nft: INft) => void}) {
+export default function NFTCard({
+  nft,
+  onClick,
+}: {
+  nft: INft;
+  onClick: (nft: INft) => void;
+}) {
   const isLoading = nft?.image.content.length;
   return (
-    <Tilt tiltMaxAngleX={5} tiltMaxAngleY={5} scale={1.01} transitionEasing={'cubic-bezier(0.2,.98,.52,.99)'}>
+    <Tilt
+      tiltMaxAngleX={5}
+      tiltMaxAngleY={5}
+      scale={1.01}
+      transitionEasing={"cubic-bezier(0.2,.98,.52,.99)"}
+    >
       <Card onClick={() => onClick(nft)}>
         {isLoading ? (
           <>
@@ -18,11 +29,11 @@ export default function NFTCard({nft, onClick}: {nft: INft, onClick: (nft: INft)
             </Content>
           </>
         ) : (
-          <LoadingSpinner/>
+          <LoadingSpinner />
         )}
       </Card>
     </Tilt>
-  )
+  );
 }
 
 const Card = styled.div`
@@ -33,11 +44,11 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   margin-bottom: 1rem;
   cursor: pointer;
   background-position: center center;
-  box-shadow: inset 0 0 1rem 0 rgba(0, 0, 0, .2);
+  box-shadow: inset 0 0 1rem 0 rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.5s;
   border: white solid 1px;
   will-change: transform;
@@ -52,7 +63,7 @@ const Card = styled.div`
     right: 0;
     bottom: 0;
     background: inherit;
-    box-shadow: inset 0 0 50px 0 rgba(255, 255, 255, .2);
+    box-shadow: inset 0 0 50px 0 rgba(255, 255, 255, 0.2);
     filter: blur(5px);
   }
 `;
@@ -61,27 +72,27 @@ const Image = styled.img`
   width: 100%;
   height: 50%;
   object-fit: contain;
-`
+`;
 const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   max-width: 100%;
-  padding: 5% .5rem;
-`
+  padding: 5% 0.5rem;
+`;
 
 const Title = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
   text-overflow: ellipsis;
   overflow: hidden;
   color: ${Colors.white.primary};
-`
+`;
 
 const DescriptionText = styled.p`
   font-size: 1rem;
   margin: 0;
   color: ${Colors.white.primary};
-`
+`;

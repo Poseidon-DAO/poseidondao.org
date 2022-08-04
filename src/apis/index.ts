@@ -8,4 +8,4 @@ export const submitArtist = (artist: IArtist) => {
 
 export const fetchNftData = (url: string) => {
   return fetch(url).then(checkError).then(toJson);
-}
+};

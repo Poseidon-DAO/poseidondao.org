@@ -6,7 +6,7 @@ import { RootState } from "redux/reducers";
 import { ButtonTypes } from "types";
 import { roundBalance } from "utils";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import useCopyAddress from "utils/useCopyAddress";
 import { useCallback } from "react";
 import Actions from "redux/actions";
@@ -28,7 +28,7 @@ export default function UserModal({
   const copyAddress = useCopyAddress();
   const dispatch = useDispatch();
   const router = useRouter();
-  const isProfile = router.pathname.includes("/profile")
+  const isProfile = router.pathname.includes("/profile");
   const chainID = useSelector((state: RootState) => state.wallet.wallet.id);
   const newToast = useCallback(
     (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
@@ -44,7 +44,7 @@ export default function UserModal({
   };
 
   const userBody = (
-    <Pane display='flex' width='100%'>
+    <Pane display="flex" width="100%">
       <Pane style={{ height: "5rem", width: "20%" }}>
         <AvatarDisplay size={50} />
       </Pane>
@@ -52,31 +52,34 @@ export default function UserModal({
         <Pane>
           <Heading>Address:</Heading>
           <Text>{user?.accounts[0]}</Text>
-          {!isProfile && process.env.NEXT_PUBLIC_CHAIN_ID === chainID ?
-            <Link href ="/profile" style = {{ color: 'white', textDecoration: 'none' }}>
+          {!isProfile && process.env.NEXT_PUBLIC_CHAIN_ID === chainID ? (
+            <Link
+              href="/profile"
+              style={{ color: "white", textDecoration: "none" }}
+            >
               <Badge
                 color="green"
                 style={{ cursor: "pointer", marginRight: 5 }}
                 onClick={onClose}
-                >
+              >
                 Profile
               </Badge>
             </Link>
-          : 
+          ) : (
             <Badge
               color="green"
               style={{ cursor: "pointer", marginRight: 5 }}
               onClick={wrongChainModal}
-              >
+            >
               Profile
             </Badge>
-          }
+          )}
           <Badge
             color="neutral"
             style={{ cursor: "pointer" }}
             onClick={copyAddress}
           >
-              Copy Address
+            Copy Address
           </Badge>
         </Pane>
         <Pane>
@@ -92,7 +95,7 @@ export default function UserModal({
           />
         </LogoutContainer>
       </Content>
-  </Pane>
+    </Pane>
   );
 
   return user?.accounts?.length ? (

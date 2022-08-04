@@ -10,7 +10,12 @@ interface ProviderProps {
 export default function Provider({ icon, name, onClick }: ProviderProps) {
   return (
     <Container className="provider" onClick={() => onClick(name)}>
-      <Image src={icon} alt={name} style={{ objectFit: "cover" }} height='100%' />
+      <Image
+        src={icon}
+        alt={name}
+        style={{ objectFit: "cover" }}
+        height="100%"
+      />
     </Container>
   );
 }
@@ -22,7 +27,7 @@ const scaleUp = keyframes`
   100% {
     transform: scale(1.1);
   }
-`
+`;
 
 const Container = styled.div`
   height: 10rem;
@@ -35,4 +40,4 @@ const Container = styled.div`
     box-shadow: inset;
     animation: ${scaleUp} 0.1s ease 0s 1 normal forwards;
   }
-`
+`;

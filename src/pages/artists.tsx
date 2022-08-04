@@ -58,7 +58,10 @@ const ArtistForm = () => {
     } else if (!validators.lengthValidator(bio, 2, 2000)) {
       setValidation("Bio is required");
       return false;
-    } else if (exhibitions.length && !validators.lengthValidator(exhibitions, 2, 2000)) {
+    } else if (
+      exhibitions.length &&
+      !validators.lengthValidator(exhibitions, 2, 2000)
+    ) {
       setValidation("Exhibitions is invalid");
       return false;
     } else if (samples.length && !validators.urlValidator(samples)) {

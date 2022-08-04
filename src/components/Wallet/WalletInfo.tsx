@@ -17,7 +17,9 @@ export default function WalletInfo({
   return (
     <Container onClick={onClick}>
       <LeftContainer>
-        <Text color={Colors.white.primary}>{balance ? roundBalance(balance, 4) : "0.00"} ETH</Text>
+        <Text color={Colors.white.primary}>
+          {balance ? roundBalance(balance, 4) : "0.00"} ETH
+        </Text>
       </LeftContainer>
       <RightContainer address={address}>
         <Text color={Colors.white.primary}>

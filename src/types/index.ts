@@ -78,7 +78,7 @@ export interface INftFetch {
   frozen: number;
 }
 
-export interface INft extends INftFetch { 
+export interface INft extends INftFetch {
   name: string;
   description: string;
   image: any;

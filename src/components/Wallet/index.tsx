@@ -71,18 +71,20 @@ export default function ConnectWallet() {
           balance={wallet.balance}
           onClick={handleOpenUserModal}
         />
-      ) : !showUserModal && (
-        <Button
-          color="white"
-          onClick={handleWalletConnect}
-          appearance='primary'
-          backgroundColor='rgba(9,9,121,0.35)'
-          border='none'
-          width={150}
-          height={40}
-        >
-          CONNECT
-        </Button>
+      ) : (
+        !showUserModal && (
+          <Button
+            color="white"
+            onClick={handleWalletConnect}
+            appearance="primary"
+            backgroundColor="rgba(9,9,121,0.35)"
+            border="none"
+            width={150}
+            height={40}
+          >
+            CONNECT
+          </Button>
+        )
       )}
       <ConectWalletModal isOpen={connectModal} onClose={closeConnectModal} />
       <UserModal
@@ -93,4 +95,3 @@ export default function ConnectWallet() {
     </>
   );
 }
-

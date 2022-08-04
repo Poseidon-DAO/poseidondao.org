@@ -8,7 +8,9 @@ function* getNftData(action: IReduxAction) {
     getNfts(action.payload);
   } catch (error: any) {
     if (error.message) {
-      yield put(Actions.WalletActions.UpdateNfts.failed("Error updating the NFTs"));
+      yield put(
+        Actions.WalletActions.UpdateNfts.failed("Error updating the NFTs")
+      );
     }
   }
 }

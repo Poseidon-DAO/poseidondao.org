@@ -17,12 +17,7 @@ export default function Footer() {
           className="logo img-fluid rounded"
           src="/img/logo-transparent.png"
         />
-        <Pane
-          display="flex"
-          flex={1}
-          maxWidth="100vw"
-          marginBottom={2}
-        >
+        <Pane display="flex" flex={1} maxWidth="100vw" marginBottom={2}>
           <Column>
             <ColumnContent>
               <NavLink
@@ -179,7 +174,7 @@ const ColumnContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-`
+`;
 
 const Row = styled.div`
   display: flex;

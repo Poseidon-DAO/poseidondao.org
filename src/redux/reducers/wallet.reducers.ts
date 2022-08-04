@@ -32,17 +32,17 @@ const WalletReducer = (
       return {
         ...state,
         nfts: payload,
-      }
+      };
     case Actions.WalletActions.UPDATE_NFTS.FAILED:
       return {
         ...state,
         failed: true,
-      }
+      };
     case Actions.AuthActions.LOGOUT:
-      console.log("This case")
+      console.log("This case");
       return {
         ...initialState,
-      }
+      };
     default:
       return state;
   }
