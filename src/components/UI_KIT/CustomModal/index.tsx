@@ -20,11 +20,11 @@ export default function CustomModal({
 }: ICustomModalProps) {
   return (
     <Pane>
-      <Dialog 
-        isShown={isOpen} 
-        title={header} 
-        hasFooter={false} 
-        shouldCloseOnEscapePress 
+      <Dialog
+        isShown={isOpen}
+        title={header}
+        hasFooter={false}
+        shouldCloseOnEscapePress
         shouldCloseOnOverlayClick
         onCloseComplete={onClose}
       >
@@ -44,7 +44,7 @@ export default function CustomModal({
           </Pane>
         )}
         {footer && (
-          <Pane marginY='2rem' justifyContent='flex-end' display='flex'>
+          <Pane marginY="2rem" justifyContent="flex-end" display="flex">
             {footer}
           </Pane>
         )}

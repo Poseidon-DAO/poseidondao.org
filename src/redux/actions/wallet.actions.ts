@@ -11,11 +11,11 @@ export const UpdateChain = (payload: any) => ({
 
 export const fetchNfts = (payload: any) => ({
   type: FETCH_NFTS,
-  payload
-})
+  payload,
+});
 
 export const UpdateNfts = {
   request: (payload: any) => ({ type: UPDATE_NFTS.REQUEST, payload }),
   success: (payload: any) => ({ type: UPDATE_NFTS.SUCCESS, payload }),
   failed: (payload: any) => ({ type: UPDATE_NFTS.FAILED, payload }),
-}
+};

@@ -5,8 +5,8 @@ export default function LoadingSpinner() {
   return (
     <LoadingContainer>
       <Spinner size={110} />
-  </LoadingContainer>
-  )
+    </LoadingContainer>
+  );
 }
 
 const LoadingContainer = styled.div`
@@ -15,4 +15,4 @@ const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;

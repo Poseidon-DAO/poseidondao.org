@@ -15,31 +15,31 @@ export default function WalletProvidersModal({
   onClose,
 }: WalletProvidersModalProps) {
   return (
-      <CustomModal
-        isOpen={isOpen}
-        header="Connect your wallet"
-        onClose={onClose}
-        body={
-          <>
-            <Provider
-              icon={metamaskIcon.src}
-              name={ProviderTypes.metamask}
-              onClick={() => onClose(ProviderTypes.metamask)}
-            />
-            <Provider
-              icon={walletConnectIcon.src}
-              name={ProviderTypes.walletConnect}
-              onClick={() => onClose(ProviderTypes.walletConnect)}
-            />
-          </>
-        }
-        footer={
-          <CustomButton
-            type={ButtonTypes.danger}
-            onClick={() => onClose()}
-            text="Cancel"
+    <CustomModal
+      isOpen={isOpen}
+      header="Connect your wallet"
+      onClose={onClose}
+      body={
+        <>
+          <Provider
+            icon={metamaskIcon.src}
+            name={ProviderTypes.metamask}
+            onClick={() => onClose(ProviderTypes.metamask)}
           />
-        }
-      />
+          <Provider
+            icon={walletConnectIcon.src}
+            name={ProviderTypes.walletConnect}
+            onClick={() => onClose(ProviderTypes.walletConnect)}
+          />
+        </>
+      }
+      footer={
+        <CustomButton
+          type={ButtonTypes.danger}
+          onClick={() => onClose()}
+          text="Cancel"
+        />
+      }
+    />
   );
 }

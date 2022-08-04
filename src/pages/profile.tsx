@@ -1,7 +1,7 @@
 import AvatarDisplay from "components/UI_KIT/Avatar";
 import { FlexView } from "components/UI_KIT/Display";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import styled from "styled-components";
 import { INft } from "types";
@@ -19,35 +19,35 @@ import { Heading, Text, Badge } from "evergreen-ui";
 import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
 
-interface ITab { 
+interface ITab {
   name: string;
   id: number;
 }
 
 const tabs: ITab[] = [
-  {name: "Collectibles", id: 0 },
+  { name: "Collectibles", id: 0 },
   // {name: "Staking", id: 1 },
   // {name: "Tokens", id: 2 },
-  {name: "Burn", id: 3 },
-  {name: "Governance", id: 4 },
-]
-
+  { name: "Burn", id: 3 },
+  { name: "Governance", id: 4 },
+];
 
 const useFakeFunds = true;
 
-
 const ProfilePage = () => {
   const nfts = useSelector((state: RootState) => state.wallet.nfts);
-  const address = useSelector((state: RootState) => state.wallet.wallet.address);
+  const address = useSelector(
+    (state: RootState) => state.wallet.wallet.address
+  );
   const copyAdress = useCopyAddress();
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [nftModalOpen, setNftModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<ITab>(tabs[0]);
   const [selectedNft, setSelectedNft] = useState<INft>();
 
-  const [supply, setSupply] = useState("")
-  const [userBalance, setUserBalance] = useState("")
+  const [supply, setSupply] = useState("");
+  const [userBalance, setUserBalance] = useState("");
   const { account, Moralis } = useMoralis();
 
   const newToast = useCallback(
@@ -55,45 +55,52 @@ const ProfilePage = () => {
     [dispatch]
   );
 
-  // If we don't have the wallet enabled, we have to send them back to the landing 
+  // If we don't have the wallet enabled, we have to send them back to the landing
   useEffect(() => {
-    if (!WALLET_ENABLED) router.push('/');
-  }, [])
-  
+    if (!WALLET_ENABLED) router.push("/");
+  }, []);
+
   // Get the user balance and total supply of tokens
   useEffect(() => {
     const getTotalSupply = async () => {
-        const options = ERC20Options(account!!, SMART_CONTRACT_FUNCTIONS.TOTAL_SUPPLY);
-        console.log(options)
-        const supply = await Moralis.executeFunction(options);
-        setSupply(supply.toString())
-    }
+      const options = ERC20Options(
+        account!!,
+        SMART_CONTRACT_FUNCTIONS.TOTAL_SUPPLY
+      );
+      console.log(options);
+      const supply = await Moralis.executeFunction(options);
+      setSupply(supply.toString());
+    };
     const getBalance = async () => {
-      const options = ERC20Options(account!!, SMART_CONTRACT_FUNCTIONS.GET_BALANCE, { account });
+      const options = ERC20Options(
+        account!!,
+        SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
+        { account }
+      );
       const balance = await Moralis.executeFunction(options);
       if (!useFakeFunds) {
-        setUserBalance(balance.toString())
-      }else {
-        setUserBalance('120000')
+        setUserBalance(balance.toString());
+      } else {
+        setUserBalance("120000");
       }
-    }
+    };
 
-    if (account !== null){
+    if (account !== null) {
       try {
         getTotalSupply();
         getBalance();
-      } catch(e) {
+      } catch (e) {
         newToast({
           text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
           type: "warning",
         });
       }
     }
-  }, [account, Moralis, newToast])
+  }, [account, Moralis, newToast]);
 
   useEffect(() => {
-    if (!address) router.push("/")
-  },[address, router])
+    if (!address) router.push("/");
+  }, [address, router]);
 
   const handleNFTModal = (nft: INft) => {
     setNftModalOpen(true);
@@ -102,107 +109,132 @@ const ProfilePage = () => {
 
   const TabContent = () => {
     switch (selectedTab.id) {
-      case 0: 
-        return <NFTList list={nfts} handleNFTModal={handleNFTModal}/>;
-      case 1: 
+      case 0:
+        return <NFTList list={nfts} handleNFTModal={handleNFTModal} />;
+      case 1:
         return <Staking availableBalance={userBalance} />;
-      case 2: 
-        return <Tokens totalSupply={supply} balance={userBalance} account={account!!}/>;
-      case 3: 
-        return <Burn availableBalance={userBalance} account={account!!}/>;
-      default: 
+      case 2:
+        return (
+          <Tokens
+            totalSupply={supply}
+            balance={userBalance}
+            account={account!!}
+          />
+        );
+      case 3:
+        return <Burn availableBalance={userBalance} account={account!!} />;
+      default:
         return null;
     }
   };
-
 
   return (
     <FlexView>
       <Container>
         <Header>
-          <AvatarDisplay size={'6vw'} />
+          <AvatarDisplay size={"6vw"} />
           <HeaderData>
-            <div style = {{ height: '50%' }}>
-              <Heading size='xxl' style= {{ marginBottom: 1, fontWeight: 700, color: Colors.white.primary }}>Your Account</Heading>
+            <div style={{ height: "50%" }}>
+              <Heading
+                size="xxl"
+                style={{
+                  marginBottom: 1,
+                  fontWeight: 700,
+                  color: Colors.white.primary,
+                }}
+              >
+                Your Account
+              </Heading>
             </div>
             {address && (
-            <AddressInfo>
-              <Text style={{
-                fontSize: '1.2rem',
-                textOverflow:'ellipsis',
-                whiteSpace: 'nowrap',
-                overflow:'hidden',
-                maxWidth: '80vw',
-                color: Colors.white.primary,
-              }}>
-                {address?.slice(0, 6) + "..." + address?.slice(-6)}
-              </Text>
-              <Badges>
-                <Badge
-                  style={{ cursor: "pointer"}}
-                  onClick={copyAdress}
-                  color='green'
+              <AddressInfo>
+                <Text
+                  style={{
+                    fontSize: "1.2rem",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    maxWidth: "80vw",
+                    color: Colors.white.primary,
+                  }}
                 >
-                  Copy
-                </Badge>
-                <Badge
-                  color="neutral"
-                  style={{ cursor: "pointer", marginLeft: '1rem'}}
-                  onClick={()=> window.open(`https://etherscan.io/address/${address}`, "_blank")}
-                >
-                  View on Etherscan
-                </Badge>
-              </Badges>
-            </AddressInfo>
+                  {address?.slice(0, 6) + "..." + address?.slice(-6)}
+                </Text>
+                <Badges>
+                  <Badge
+                    style={{ cursor: "pointer" }}
+                    onClick={copyAdress}
+                    color="green"
+                  >
+                    Copy
+                  </Badge>
+                  <Badge
+                    color="neutral"
+                    style={{ cursor: "pointer", marginLeft: "1rem" }}
+                    onClick={() =>
+                      window.open(
+                        `https://etherscan.io/address/${address}`,
+                        "_blank"
+                      )
+                    }
+                  >
+                    View on Etherscan
+                  </Badge>
+                </Badges>
+              </AddressInfo>
             )}
           </HeaderData>
         </Header>
         <ContentContainer>
           <Tabs>
-            {tabs.map(el => (
-              <Tab key={el.id} isSelected={selectedTab.name === el.name} onClick={() => setSelectedTab(el)}>
+            {tabs.map((el) => (
+              <Tab
+                key={el.id}
+                isSelected={selectedTab.name === el.name}
+                onClick={() => setSelectedTab(el)}
+              >
                 <h4 style={{ margin: 0, color: Colors.white.primary }}>
                   {el.name}
                 </h4>
               </Tab>
             ))}
           </Tabs>
-          <Content>
-            {TabContent()}
-          </Content>
+          <Content>{TabContent()}</Content>
         </ContentContainer>
       </Container>
-      <CustomModal isOpen={nftModalOpen} onClose={() => setNftModalOpen(false)} header={selectedNft?.name} body={
-        <Modal>
-        </Modal>
-      }/>
+      <CustomModal
+        isOpen={nftModalOpen}
+        onClose={() => setNftModalOpen(false)}
+        header={selectedNft?.name}
+        body={<Modal></Modal>}
+      />
     </FlexView>
-  )
-}
+  );
+};
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 90vw;
-`
+`;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 const HeaderData = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 1rem;
-`
+`;
 const Badges = styled.div`
   display: flex;
   margin-left: 1rem;
   @media (max-width: 768px) {
     margin-left: 0;
   }
-`
+`;
 
 const ContentContainer = styled.div`
   display: flex;
@@ -212,7 +244,7 @@ const ContentContainer = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
-`
+`;
 
 const Content = styled.div`
   display: flex;
@@ -241,20 +273,21 @@ const AddressInfo = styled.div`
     align-items: flex-start;
     height: auto;
   }
-`
+`;
 
-const Tab = styled.div<{isSelected: boolean}>`
+const Tab = styled.div<{ isSelected: boolean }>`
   height: 3rem;
   margin-top: 1rem;
   display: flex;
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   align-items: center;
   border-radius: 1px;
-  background-color: ${props => props.isSelected ? Colors.blue.ocean : ''};
-  border-bottom: ${props => props.isSelected ? '0.5px solid #4824fa' : 'none'};
+  background-color: ${(props) => (props.isSelected ? Colors.blue.ocean : "")};
+  border-bottom: ${(props) =>
+    props.isSelected ? "0.5px solid #4824fa" : "none"};
   &:hover {
-    background-color: #4824FA;
+    background-color: #4824fa;
     cursor: pointer;
   }
   &:active {
@@ -285,7 +318,7 @@ const Tabs = styled.div`
     padding-bottom: 1rem;
     margin-top: 0;
   }
-`
+`;
 
 const Modal = styled.div`
   width: 40%;
@@ -300,5 +333,5 @@ const Modal = styled.div`
     width: 90%;
     height: auto;
   }
-`
+`;
 export default ProfilePage;

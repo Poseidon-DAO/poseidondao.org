@@ -1,1 +1,1 @@
-export * from './nftCard.view'
+export * from "./nftCard.view";

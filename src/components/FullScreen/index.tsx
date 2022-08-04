@@ -1,13 +1,10 @@
 import styled from "styled-components";
 
 const FullScreen = ({ children }: { children: React.ReactNode }) => (
-  <Container>
-    {children}
-  </Container>
+  <Container>{children}</Container>
 );
 
 export default FullScreen;
-
 
 const Container = styled.div`
   display: flex;
@@ -21,4 +18,4 @@ const Container = styled.div`
     min-height: 75vh;
     padding: 1rem 0;
   }
-`
+`;

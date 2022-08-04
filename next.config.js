@@ -9,6 +9,6 @@ const nextConfig = {
       "images.unsplash.com",
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
