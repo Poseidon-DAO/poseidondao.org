@@ -61,7 +61,7 @@ export default function Burn({ availableBalance, ratio, onBurn }: BurnProps) {
         setShowSuccess(false);
         setSuccessfulTransaction("");
         clearAmounts();
-        // onBurn();
+        onBurn();
       }, 4000);
     }
   }, [showSuccess]);

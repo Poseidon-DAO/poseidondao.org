@@ -75,6 +75,7 @@ const ProfilePage = () => {
   const fetchNfts = async () => {
     setLoadingNfts(true);
     const chain = await Moralis.getChainId();
+
     const res = await Moralis.Web3API.account.getNFTs({
       address: account,
       chain,
@@ -90,16 +91,19 @@ const ProfilePage = () => {
       SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
       { account }
     );
+    if (useFakeFunds) {
+      setUserBalance("120000");
+      return;
+    }
     const balance = await Moralis.executeFunction(options);
+
     if (!balance) {
       setUserBalance(0);
+      return;
     }
-    if (!useFakeFunds) {
-      const newBalance = (parseInt(balance._hex) / 10 ** 26) * 100000;
-      setUserBalance(newBalance.toFixed(0));
-    } else {
-      setUserBalance("120000");
-    }
+    const newBalance = (parseInt(balance._hex) / 10 ** 26) * 100000;
+
+    setUserBalance(newBalance.toFixed(0));
   };
 
   // Get the user balance, total tokens, nft list and ratio of nft conversion
