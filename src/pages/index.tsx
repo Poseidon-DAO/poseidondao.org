@@ -117,7 +117,7 @@ const LandingPage = () => {
       >
         {!isMobile ? (
           IMAGES.map(({ skew, images }) => (
-            <LoopGallery skew={skew} imgArray={images} />
+            <LoopGallery skew={skew} key={images[0]} imgArray={images} />
           ))
         ) : (
           <LoopGallery

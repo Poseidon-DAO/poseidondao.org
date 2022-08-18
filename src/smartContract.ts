@@ -1,8 +1,8 @@
 import { keccak256 } from "@ethersproject/keccak256";
 import { toUtf8Bytes } from "@ethersproject/strings";
 
-export const ERC20Address = "0x1993e340B90eA07c9f646B60C0e9B5148253902e";
-export const multiSigAddress = "0xA342A3106D77859C8d5100A5aDcE39F4159caaf4";
+export const ERC20Address = process.env.NEXT_PUBLIC_ERC20PDN;
+export const multiSigAddress = process.env.NEXT_PUBLIC_MULTI_SIG_ADDRESS;
 
 const ERC20Abi = [
   {
@@ -34,11 +34,94 @@ const ERC20Abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: "uint8",
-        name: "version",
-        type: "uint8",
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
       },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "AccessibilitySettingsAddress",
+        type: "address",
+      },
+    ],
+    name: "DAOConnectionEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "ERC1155address",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "ERC1155ID",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "ratio",
+        type: "uint256",
+      },
+    ],
+    name: "ERC1155SetEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "limits",
+        type: "uint256[]",
+      },
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "values",
+        type: "uint256[]",
+      },
+    ],
+    name: "ERC1155ThresholdSetEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "limits",
+        type: "uint256[]",
+      },
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "values",
+        type: "uint256[]",
+      },
+    ],
+    name: "ERC20ThresholdSetEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: "uint8", name: "version", type: "uint8" },
     ],
     name: "Initialized",
     type: "event",
@@ -49,15 +132,24 @@ const ERC20Abi = [
       {
         indexed: true,
         internalType: "address",
-        name: "from",
+        name: "oldOwner",
         type: "address",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "to",
+        name: "newOwner",
         type: "address",
       },
+    ],
+    name: "OwnerChangeEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
       {
         indexed: false,
         internalType: "uint256",
@@ -70,62 +162,132 @@ const ERC20Abi = [
   },
   {
     inputs: [],
-    name: "accountabilityAddress",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
+    name: "ERC1155Address",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "spender",
-        type: "address",
-      },
+      { internalType: "uint256[]", name: "_limits", type: "uint256[]" },
+      { internalType: "uint256[]", name: "_values", type: "uint256[]" },
+    ],
+    name: "ERC1155ThresholdSettings",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "ERC1155limitsThresholds",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "ERC1155limitsValues",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "_limits", type: "uint256[]" },
+      { internalType: "uint256[]", name: "_values", type: "uint256[]" },
+    ],
+    name: "ERC20ThresholdSettings",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "ERC20limitsThresholds",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "ERC20limitsValues",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "ID_ERC1155",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
     ],
     name: "allowance",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "spender",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "approve",
-    outputs: [
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address[]", name: "_addresses", type: "address[]" },
       {
         internalType: "bool",
-        name: "",
+        name: "_areThresholdsConfirmedAgain",
         type: "bool",
       },
     ],
+    name: "batchRewarding",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "burn",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "burnAndReceiveNFT",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_newOwner", type: "address" }],
+    name: "changeOwnerWithMultisigDAO",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "confirmThresholds",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -133,123 +295,73 @@ const ERC20Abi = [
     inputs: [
       {
         internalType: "address",
-        name: "account",
+        name: "_accessibilitySettingsAddress",
         type: "address",
       },
     ],
-    name: "balanceOf",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-    ],
-    name: "burn",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    name: "connectToDAO",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [],
     name: "decimals",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "spender",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "subtractedValue",
-        type: "uint256",
-      },
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "subtractedValue", type: "uint256" },
     ],
     name: "decreaseAllowance",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "spender",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "addedValue",
-        type: "uint256",
-      },
+      { internalType: "address", name: "_address", type: "address" },
+      { internalType: "address", name: "_ERC1155Address", type: "address" },
+      { internalType: "uint256", name: "_IDERC1155", type: "uint256" },
+    ],
+    name: "getAmountRewarding",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "getERC1155ThresholdValue",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "getERC20ThresholdValue",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "addedValue", type: "uint256" },
     ],
     name: "increaseAllowance",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "_accountabilityAddress",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "_name",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_symbol",
-        type: "string",
-      },
-      {
-        internalType: "uint256",
-        name: "_decimals",
-        type: "uint256",
-      },
+      { internalType: "string", name: "_name", type: "string" },
+      { internalType: "string", name: "_symbol", type: "string" },
+      { internalType: "uint256", name: "_totalSupply", type: "uint256" },
+      { internalType: "uint256", name: "_decimals", type: "uint256" },
     ],
     name: "initialize",
     outputs: [],
@@ -257,123 +369,87 @@ const ERC20Abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_totalSupply",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_decimals",
-        type: "uint256",
-      },
-    ],
-    name: "mint",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "name",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
+    name: "isConfirmedAgain",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
-    name: "symbol",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "ratio",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address[]", name: "_addresses", type: "address[]" },
+      { internalType: "uint256[]", name: "_amounts", type: "uint256[]" },
+      { internalType: "uint256", name: "_decimals", type: "uint256" },
     ],
+    name: "runAirdrop",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_ERC1155Address", type: "address" },
+      { internalType: "uint256", name: "_ID_ERC1155", type: "uint256" },
+      { internalType: "uint256", name: "_ratio", type: "uint256" },
+    ],
+    name: "setERC1155",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "totalSupply",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "transfer",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "transferFrom",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -399,22 +475,30 @@ const ERC20Abi = [
 
 const getTopicHash = (string: string) => keccak256(toUtf8Bytes(string));
 
+interface ExecuteFunctionOptions {
+  contractAddress: string;
+  abi: object;
+  functionName: string;
+  msgValue?: string;
+  params?: Record<string, any>;
+}
+
 export const ERC20Options = (
   address: string,
   functionName: string,
   args?: any
-) => {
+): ExecuteFunctionOptions => {
   const params = { ...args, _address: address };
   return {
-    chain: process.env.NEXT_PUBLIC_CHAIN,
-    contractAddress: ERC20Address,
+    // chain: process.env.NEXT_PUBLIC_CHAIN,
+    contractAddress: ERC20Address ?? "",
     functionName: functionName,
     abi: ERC20Abi,
     params,
   };
 };
 
-export const multiSigEventsOptions = (name: string) => {
+export const ERC20OptionsEventsOptions = (name: string) => {
   const abi = ERC20Abi.filter((abi) => abi.name === name)[0];
   const inputs = abi.inputs.map((a) => a.internalType).join(",");
   const topic = getTopicHash(`${name}(${inputs})`);
@@ -427,14 +511,45 @@ export const multiSigEventsOptions = (name: string) => {
   };
 };
 
+export const ERC20VariableOptions = (
+  address: string,
+  functionName: string,
+  args?: any
+) => {
+  const params = { ...args, _address: address };
+  return {
+    chain: process.env.NEXT_PUBLIC_CHAIN,
+    contractAddress: ERC20Address,
+    functionName: functionName,
+    abi: [
+      {
+        name: "ratio",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: functionName,
+            type: "uint256",
+          },
+        ],
+      },
+    ],
+  };
+};
+
 //Add here the functions or events we want to use
 const TOTAL_SUPPLY = "totalSupply";
 const GET_BALANCE = "balanceOf";
+const RATIO = "ratio";
+const GET_REWARDS = "getAmountRewarding";
+const BURN = "burnAndReceiveNFT";
 
 const SMART_CONTRACT_FUNCTIONS = {
   // Functions:
   TOTAL_SUPPLY,
+  RATIO,
+  GET_REWARDS,
   GET_BALANCE,
+  BURN,
   // Events:
 };
 

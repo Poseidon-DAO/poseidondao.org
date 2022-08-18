@@ -39,7 +39,6 @@ const WalletReducer = (
         failed: true,
       };
     case Actions.AuthActions.LOGOUT:
-      console.log("This case");
       return {
         ...initialState,
       };

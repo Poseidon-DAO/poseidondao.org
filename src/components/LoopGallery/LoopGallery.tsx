@@ -62,7 +62,7 @@ const LoopGallery = (props: any) => {
       }}
     >
       {props.imgArray.map((i: string) => (
-        <div>
+        <div key={i}>
           <div
             style={{
               height: props.isMobile ? 500 : 180,
@@ -72,7 +72,6 @@ const LoopGallery = (props: any) => {
             }}
           >
             <Image
-              key={i}
               alt="..."
               width={props.isMobile ? 500 : 180}
               height={props.isMobile ? 500 : 180}

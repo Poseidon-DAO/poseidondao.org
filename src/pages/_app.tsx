@@ -48,10 +48,6 @@ function App({ Component, pageProps }: AppProps) {
     (payload: string) => dispatch(Actions.AuthActions.Balance(payload)),
     [dispatch]
   );
-  const fetchNfts = useCallback(
-    (payload: any) => dispatch(Actions.WalletActions.fetchNfts(payload)),
-    [dispatch]
-  );
   const storeLogout = useCallback(
     () => dispatch(Actions.AuthActions.Logout()),
     [dispatch]
@@ -106,6 +102,7 @@ function App({ Component, pageProps }: AppProps) {
       const enableWeb3 = async () => {
         try {
           await Moralis.enableWeb3();
+          await Moralis.initPlugins();
         } catch (e) {
           newToast({
             text: "Please install Metamask",
@@ -165,13 +162,8 @@ function App({ Component, pageProps }: AppProps) {
             //@ts-ignore
             chain: chainId,
           });
-          const nftList = await Moralis.Web3API.account.getNFTs({
-            address: account,
-            //@ts-ignore
-            chain: chainId,
-          });
+
           updateBalance(Moralis.Units.FromWei(balances.balance));
-          fetchNfts(nftList.result);
         } catch (e) {
           updateBalance("0");
         }
