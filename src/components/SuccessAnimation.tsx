@@ -1,17 +1,12 @@
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 import animation from "../assets/lottie/success.json";
 
 export default function SuccessAnimation(): React.ReactElement {
   return (
     <Lottie
-      options={{
-        loop: false,
-        autoplay: true,
-        animationData: animation,
-        rendererSettings: {
-          preserveAspectRatio: "xMidYMid slice",
-        },
-      }}
+      animationData={animation}
+      loop={false}
+      autoplay
       height={400}
       width={400}
     />

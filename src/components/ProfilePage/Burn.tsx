@@ -12,8 +12,6 @@ import SuccessAnimation from "components/SuccessAnimation";
 
 const MAX_ELEMENTS_CAP = 10;
 
-type chainList = "eth" | "0x1" | "rinkeby" | "0x4";
-
 interface BurnProps {
   availableBalance: number;
   ratio: number;

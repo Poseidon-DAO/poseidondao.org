@@ -1,9 +1,6 @@
 // @ts-nocheck
 import AvatarDisplay from "components/UI_KIT/Avatar";
 import { FlexView } from "components/UI_KIT/Display";
-import { keccak256 } from "@ethersproject/keccak256";
-import { toUtf8Bytes } from "@ethersproject/strings";
-import Decimal from "decimal.js-light";
 
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,10 +13,7 @@ import NFTList from "components/ProfilePage/NFTList";
 import Staking from "components/ProfilePage/Staking";
 import Tokens from "components/ProfilePage/Tokens";
 import { useMoralis } from "react-moralis";
-import SMART_CONTRACT_FUNCTIONS, {
-  ERC20Options,
-  ERC20VariableOptions,
-} from "smartContract";
+import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import Burn from "components/ProfilePage/Burn";
 import Actions from "redux/actions";
 import { useRouter } from "next/router";
@@ -39,8 +33,6 @@ const tabs: ITab[] = [
   { name: "Burn", id: 3 },
   { name: "Governance", id: 4 },
 ];
-
-const useFakeFunds = false;
 
 const ProfilePage = () => {
   const address = useSelector(
@@ -91,7 +83,7 @@ const ProfilePage = () => {
       SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
       { account }
     );
-    if (useFakeFunds) {
+    if (process.env.NEXT_PUBLIC_USE_FAKE_FUNDS === "true") {
       setUserBalance("120000");
       return;
     }
