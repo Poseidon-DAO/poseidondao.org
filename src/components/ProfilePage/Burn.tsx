@@ -167,7 +167,7 @@ export default function Burn({ availableBalance, ratio }: BurnProps) {
             paddingRight: "1rem",
           }}
           intent="info"
-          title="Thank you! You will see a notification when the transaction has completed."
+          title="Thank you! You will see a notification when the transaction is confirmed."
           marginBottom={32}
         />
       )}
