@@ -10,7 +10,7 @@ import { INft } from "types";
 import useCopyAddress from "utils/useCopyAddress";
 import CustomModal from "components/UI_KIT/CustomModal";
 import NFTList from "components/ProfilePage/NFTList";
-import Staking from "components/ProfilePage/Staking";
+import Balance from "components/ProfilePage/Balance";
 import Tokens from "components/ProfilePage/Tokens";
 import { useMoralis } from "react-moralis";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
@@ -28,10 +28,10 @@ interface ITab {
 
 const tabs: ITab[] = [
   { name: "Collectibles", id: 0 },
-  // {name: "Staking", id: 1 },
+  { name: "Burn", id: 1 },
+  { name: "Balance", id: 2 },
   // {name: "Tokens", id: 2 },
-  { name: "Burn", id: 3 },
-  { name: "Governance", id: 4 },
+  // { name: "Balance", id: 4 },
 ];
 
 const ProfilePage = () => {
@@ -41,6 +41,9 @@ const ProfilePage = () => {
   const copyAdress = useCopyAddress();
   const dispatch = useDispatch();
   const router = useRouter();
+  const transactionSuccessful = useSelector(
+    (state: RootState) => state.wallet.transaction_success
+  );
   const [nftModalOpen, setNftModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<ITab>(tabs[0]);
   const [selectedNft, setSelectedNft] = useState<INft>();
@@ -131,8 +134,8 @@ const ProfilePage = () => {
   }, [account, Moralis, newToast]);
 
   useEffect(() => {
-    if (!address) router.push("/");
-  }, [address, router]);
+    if (!account) router.push("/");
+  }, [account, router]);
 
   const handleNFTModal = (nft: INft) => {
     setNftModalOpen(true);
@@ -144,6 +147,12 @@ const ProfilePage = () => {
     fetchNfts();
   };
 
+  useEffect(() => {
+    if (transactionSuccessful) {
+      onBurn();
+    }
+  }, []);
+
   const TabContent = () => {
     switch (selectedTab.id) {
       case 0:
@@ -151,23 +160,9 @@ const ProfilePage = () => {
           <NFTList handleNFTModal={handleNFTModal} loading={loadingNfts} />
         );
       case 1:
-        return <Staking availableBalance={userBalance} />;
+        return <Burn availableBalance={userBalance} ratio={ratioConversion} />;
       case 2:
-        return (
-          <Tokens
-            totalSupply={supply}
-            balance={userBalance}
-            account={account!!}
-          />
-        );
-      case 3:
-        return (
-          <Burn
-            availableBalance={userBalance}
-            ratio={ratioConversion}
-            onBurn={onBurn}
-          />
-        );
+        return <Balance availableBalance={userBalance} />;
       default:
         return null;
     }

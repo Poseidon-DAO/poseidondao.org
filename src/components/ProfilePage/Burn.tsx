@@ -1,79 +1,40 @@
 import styled from "styled-components";
 import { Form, FormGroup } from "reactstrap";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { IMAGE_ARRAY } from "../../../public/img/collection";
 import { Colors } from "components/UI_KIT/colors";
 import Decimal from "decimal.js-light";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
-import { useMoralis, useMoralisQuery } from "react-moralis";
-import { Alert, Heading } from "evergreen-ui";
-import LoadingModal from "components/LoadingModal";
-import SuccessAnimation from "components/SuccessAnimation";
+import { useMoralis } from "react-moralis";
+import { Heading } from "evergreen-ui";
+import { useDispatch } from "react-redux";
+import Actions from "redux/actions";
 
 const MAX_ELEMENTS_CAP = 10;
 
 interface BurnProps {
   availableBalance: number;
   ratio: number;
-  onBurn: () => void;
 }
 
-export default function Burn({ availableBalance, ratio, onBurn }: BurnProps) {
+export default function Burn({ availableBalance, ratio }: BurnProps) {
   const [selectedAmount, setSelectedAmount] = useState(0);
   const [hoverImage, setHoverImage] = useState(-1);
   const balance = new Decimal(availableBalance);
-  const availableToBurn = balance.div(ratio).toNumber();
-  const [loadingBurn, setLoadingBurn] = useState(false);
-  const [successfulTransaction, setSuccessfulTransaction] = useState("");
-  const [queryCounter, setQueryCounter] = useState(0);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const { data, fetch } = useMoralisQuery(
-    "burnAndReceiveNFT",
-    (query) => query.equalTo("transaction_hash", successfulTransaction),
-    [successfulTransaction.length, queryCounter]
+  const availableToBurn =
+    balance != null && ratio != null ? balance.div(ratio).toNumber() : 0;
+  const dispatch = useDispatch();
+  const setSuccessfulTransaction = useCallback(
+    (hash: string) =>
+      dispatch(Actions.WalletActions.setSuccessfulHashTransaction(hash)),
+    [dispatch]
   );
 
   const { account, Moralis } = useMoralis();
 
-  useEffect(() => {
-    if (successfulTransaction.length) setQueryCounter(queryCounter + 1);
-  }, [successfulTransaction.length]);
-
-  useEffect(() => {
-    if (successfulTransaction.length) {
-      if (!data.length && queryCounter > 0) {
-        setTimeout(() => {
-          fetch();
-        }, 2000);
-      } else {
-        setQueryCounter(0);
-        setLoadingBurn(false);
-        setShowSuccess(true);
-      }
-    }
-  }, [data, queryCounter]);
-
-  useEffect(() => {
-    if (showSuccess) {
-      setTimeout(() => {
-        setShowSuccess(false);
-        setSuccessfulTransaction("");
-        clearAmounts();
-        onBurn();
-      }, 4000);
-    }
-  }, [showSuccess]);
-
   const clearAmounts = () => {
     setSelectedAmount(0);
     setHoverImage(-1);
-  };
-
-  const navigateToHash = () => {
-    if (successfulTransaction.length) {
-      const url = `https://${process.env.NEXT_PUBLIC_CHAIN}.etherscan.io/tx/${successfulTransaction}`;
-      window.open(url, "_blank", "noopener,noreferrer");
-    }
   };
 
   const renderNftButton = (i: number) => {
@@ -102,9 +63,9 @@ export default function Burn({ availableBalance, ratio, onBurn }: BurnProps) {
       _amount: new Decimal(selectedAmount).mul(ratio).toNumber(),
     });
     const burn = await Moralis.executeFunction(options);
-    setLoadingBurn(true);
     if (burn.hash) {
       setSuccessfulTransaction(burn.hash);
+      clearAmounts();
     }
   };
 
@@ -173,37 +134,6 @@ export default function Burn({ availableBalance, ratio, onBurn }: BurnProps) {
           )}
         </FormGroup>
       </Form>
-      {loadingBurn && (
-        <LoadingModal
-          white
-          text="Please wait while we confirm your if transaction came through."
-        />
-      )}
-      {showSuccess && (
-        <>
-          <SuccessContainer>
-            <SuccessAnimation />
-          </SuccessContainer>
-          <Alert
-            style={{
-              position: "fixed",
-              bottom: "10px",
-              zIndex: 100,
-              right: "10px",
-              maxWidth: "40%",
-              cursor: "pointer",
-              paddingRight: "1rem",
-            }}
-            intent="success"
-            title={`Successfully burned ${selectedAmount} NFTs, transaction hash: ${successfulTransaction.slice(
-              0,
-              6
-            )}...${successfulTransaction.slice(-6)}`}
-            marginBottom={32}
-            onClick={navigateToHash}
-          />
-        </>
-      )}
     </Container>
   );
 }

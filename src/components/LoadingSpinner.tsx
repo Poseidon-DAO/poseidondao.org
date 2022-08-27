@@ -1,10 +1,10 @@
 import { Spinner } from "evergreen-ui";
 import styled from "styled-components";
 
-export default function LoadingSpinner() {
+export default function LoadingSpinner({ size }: { size?: number }) {
   return (
     <LoadingContainer>
-      <Spinner size={110} />
+      <Spinner size={size ?? 110} />
     </LoadingContainer>
   );
 }

@@ -5,6 +5,8 @@ import { INft, IReduxAction, IWallet } from "types";
 export interface IWalletState extends ApiReducerState {
   wallet: IWallet;
   nfts: INft[];
+  currentTransaction: string;
+  transaction_success: boolean;
 }
 
 const initialState = {
@@ -15,6 +17,8 @@ const initialState = {
     balance: "",
     id: "",
   },
+  currentTransaction: "",
+  transaction_success: false,
   nfts: [],
 };
 
@@ -41,6 +45,23 @@ const WalletReducer = (
     case Actions.AuthActions.LOGOUT:
       return {
         ...initialState,
+      };
+    case Actions.WalletActions.CLEAR_TRANSACTION_HASH:
+      return {
+        ...state,
+        currentTransaction: "",
+        transaction_success: true,
+      };
+    case Actions.WalletActions.SET_TRANSACTION_HASH:
+      return {
+        ...state,
+        currentTransaction: payload,
+        transaction_success: false,
+      };
+    case Actions.WalletActions.CLEAR_TRANSACTION_SUCCESS:
+      return {
+        ...state,
+        transaction_success: false,
       };
     default:
       return state;

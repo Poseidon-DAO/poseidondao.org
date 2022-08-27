@@ -7,8 +7,10 @@ export default function SuccessAnimation(): React.ReactElement {
       animationData={animation}
       loop={false}
       autoplay
-      height={400}
-      width={400}
+      style={{
+        height: 40,
+        width: 40,
+      }}
     />
   );
 }
