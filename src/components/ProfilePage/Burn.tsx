@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Form, FormGroup } from "reactstrap";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IMAGE_ARRAY } from "../../../public/img/collection";
 import { Colors } from "components/UI_KIT/colors";
 import Decimal from "decimal.js-light";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import { useMoralis } from "react-moralis";
-import { Heading } from "evergreen-ui";
+import { Alert, Heading } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import Actions from "redux/actions";
 
@@ -20,6 +20,8 @@ interface BurnProps {
 export default function Burn({ availableBalance, ratio }: BurnProps) {
   const [selectedAmount, setSelectedAmount] = useState(0);
   const [hoverImage, setHoverImage] = useState(-1);
+  const [showPendingToast, setShowPendingToast] = useState(false);
+  const [error, setError] = useState(false);
   const balance = new Decimal(availableBalance);
   const availableToBurn =
     balance != null && ratio != null ? balance.div(ratio).toNumber() : 0;
@@ -64,10 +66,29 @@ export default function Burn({ availableBalance, ratio }: BurnProps) {
     });
     const burn = await Moralis.executeFunction(options);
     if (burn.hash) {
+      setShowPendingToast(true);
       setSuccessfulTransaction(burn.hash);
       clearAmounts();
+    } else {
+      setError(true);
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (showPendingToast) {
+      setTimeout(() => {
+        setShowPendingToast(false);
+      }, 5000);
+    }
+  }, [showPendingToast]);
 
   return (
     <Container>
@@ -134,6 +155,22 @@ export default function Burn({ availableBalance, ratio }: BurnProps) {
           )}
         </FormGroup>
       </Form>
+      {showPendingToast && (
+        <Alert
+          style={{
+            position: "fixed",
+            bottom: "10px",
+            zIndex: 100,
+            right: "10px",
+            maxWidth: "40%",
+            cursor: "pointer",
+            paddingRight: "1rem",
+          }}
+          intent="info"
+          title="Thank you! You will see a notification when the transaction has completed."
+          marginBottom={32}
+        />
+      )}
     </Container>
   );
 }
