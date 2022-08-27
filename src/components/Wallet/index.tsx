@@ -16,7 +16,6 @@ export default function ConnectWallet() {
   const { isAuthenticated, authenticate, logout, user } = useMoralis();
 
   const userData = useSelector((state: RootState) => state.auth.user);
-  const wallet = useSelector((state: RootState) => state.wallet.wallet);
 
   const login = useCallback(
     (payload: any) => dispatch(Actions.AuthActions.Login.success(payload)),
@@ -68,7 +67,6 @@ export default function ConnectWallet() {
       {isAuthenticated && userData.accounts && !showUserModal ? (
         <WalletInfo
           address={userData.accounts[0]}
-          balance={wallet.balance}
           onClick={handleOpenUserModal}
         />
       ) : (

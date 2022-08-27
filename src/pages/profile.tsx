@@ -1,5 +1,7 @@
+// @ts-nocheck
 import AvatarDisplay from "components/UI_KIT/Avatar";
 import { FlexView } from "components/UI_KIT/Display";
+
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
@@ -8,7 +10,7 @@ import { INft } from "types";
 import useCopyAddress from "utils/useCopyAddress";
 import CustomModal from "components/UI_KIT/CustomModal";
 import NFTList from "components/ProfilePage/NFTList";
-import Staking from "components/ProfilePage/Staking";
+import Balance from "components/ProfilePage/Balance";
 import Tokens from "components/ProfilePage/Tokens";
 import { useMoralis } from "react-moralis";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
@@ -26,29 +28,34 @@ interface ITab {
 
 const tabs: ITab[] = [
   { name: "Collectibles", id: 0 },
-  // {name: "Staking", id: 1 },
+  { name: "Burn", id: 1 },
+  { name: "Balance", id: 2 },
   // {name: "Tokens", id: 2 },
-  { name: "Burn", id: 3 },
-  { name: "Governance", id: 4 },
+  // { name: "Balance", id: 4 },
 ];
 
-const useFakeFunds = true;
-
 const ProfilePage = () => {
-  const nfts = useSelector((state: RootState) => state.wallet.nfts);
   const address = useSelector(
     (state: RootState) => state.wallet.wallet.address
   );
   const copyAdress = useCopyAddress();
   const dispatch = useDispatch();
   const router = useRouter();
+  const transactionSuccessful = useSelector(
+    (state: RootState) => state.wallet.transaction_success
+  );
   const [nftModalOpen, setNftModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<ITab>(tabs[0]);
   const [selectedNft, setSelectedNft] = useState<INft>();
-
   const [supply, setSupply] = useState("");
   const [userBalance, setUserBalance] = useState("");
+  const [ratioConversion, setRatioConversion] = useState(0);
   const { account, Moralis } = useMoralis();
+  const [loadingNfts, setLoadingNfts] = useState(false);
+  const setNfts = useCallback(
+    (payload: any) => dispatch(Actions.WalletActions.fetchNfts(payload)),
+    [dispatch]
+  );
 
   const newToast = useCallback(
     (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
@@ -60,35 +67,63 @@ const ProfilePage = () => {
     if (!WALLET_ENABLED) router.push("/");
   }, []);
 
-  // Get the user balance and total supply of tokens
+  const fetchNfts = async () => {
+    setLoadingNfts(true);
+    const chain = await Moralis.getChainId();
+
+    const res = await Moralis.Web3API.account.getNFTs({
+      address: account,
+      chain,
+    });
+
+    setNfts(res.result);
+    setLoadingNfts(false);
+  };
+
+  const getBalance = async () => {
+    const options = ERC20Options(
+      account!!,
+      SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
+      { account }
+    );
+    if (process.env.NEXT_PUBLIC_USE_FAKE_FUNDS === "true") {
+      setUserBalance("120000");
+      return;
+    }
+    const balance = await Moralis.executeFunction(options);
+
+    if (!balance) {
+      setUserBalance(0);
+      return;
+    }
+    const newBalance = (parseInt(balance._hex) / 10 ** 26) * 100000;
+
+    setUserBalance(newBalance.toFixed(0));
+  };
+
+  // Get the user balance, total tokens, nft list and ratio of nft conversion
   useEffect(() => {
     const getTotalSupply = async () => {
       const options = ERC20Options(
         account!!,
         SMART_CONTRACT_FUNCTIONS.TOTAL_SUPPLY
       );
-      console.log(options);
+
       const supply = await Moralis.executeFunction(options);
       setSupply(supply.toString());
     };
-    const getBalance = async () => {
-      const options = ERC20Options(
-        account!!,
-        SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
-        { account }
-      );
-      const balance = await Moralis.executeFunction(options);
-      if (!useFakeFunds) {
-        setUserBalance(balance.toString());
-      } else {
-        setUserBalance("120000");
-      }
+    const getRatio = async () => {
+      const options = ERC20Options(account!!, SMART_CONTRACT_FUNCTIONS.RATIO);
+      const ratio = await Moralis.executeFunction(options);
+      setRatioConversion(parseInt(ratio));
     };
 
     if (account !== null) {
       try {
         getTotalSupply();
         getBalance();
+        getRatio();
+        fetchNfts();
       } catch (e) {
         newToast({
           text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
@@ -99,30 +134,35 @@ const ProfilePage = () => {
   }, [account, Moralis, newToast]);
 
   useEffect(() => {
-    if (!address) router.push("/");
-  }, [address, router]);
+    if (!account) router.push("/");
+  }, [account, router]);
 
   const handleNFTModal = (nft: INft) => {
     setNftModalOpen(true);
     setSelectedNft(nft);
   };
 
+  const onBurn = () => {
+    getBalance();
+    fetchNfts();
+  };
+
+  useEffect(() => {
+    if (transactionSuccessful) {
+      onBurn();
+    }
+  }, []);
+
   const TabContent = () => {
     switch (selectedTab.id) {
       case 0:
-        return <NFTList list={nfts} handleNFTModal={handleNFTModal} />;
-      case 1:
-        return <Staking availableBalance={userBalance} />;
-      case 2:
         return (
-          <Tokens
-            totalSupply={supply}
-            balance={userBalance}
-            account={account!!}
-          />
+          <NFTList handleNFTModal={handleNFTModal} loading={loadingNfts} />
         );
-      case 3:
-        return <Burn availableBalance={userBalance} account={account!!} />;
+      case 1:
+        return <Burn availableBalance={userBalance} ratio={ratioConversion} />;
+      case 2:
+        return <Balance availableBalance={userBalance} />;
       default:
         return null;
     }
@@ -160,7 +200,7 @@ const ProfilePage = () => {
                 >
                   {address?.slice(0, 6) + "..." + address?.slice(-6)}
                 </Text>
-                <Badges>
+                <Badges style={{ marginTop: 5 }}>
                   <Badge
                     style={{ cursor: "pointer" }}
                     onClick={copyAdress}

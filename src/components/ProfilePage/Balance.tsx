@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { Form, FormGroup, Input } from "reactstrap";
 import { useState } from "react";
 import { Colors } from "components/UI_KIT/colors";
+import { Heading, Paragraph } from "evergreen-ui";
 
 interface StakingProps {
   availableBalance: string;
 }
 
-export default function Staking({ availableBalance }: StakingProps) {
+export default function Balance({ availableBalance }: StakingProps) {
   const [isStake, setIsStake] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [amount, setAmount] = useState("");
@@ -18,15 +19,13 @@ export default function Staking({ availableBalance }: StakingProps) {
   };
   return (
     <Container>
+      <Heading color="white" marginBottom={10}>
+        This is your current PDN balance:
+      </Heading>
+      <Paragraph color="white" marginBottom={20}>
+        {availableBalance} PDN
+      </Paragraph>
       <Form>
-        <div style={{ display: "flex", marginBottom: "2rem" }}>
-          <Tab isSelected={isStake} onClick={() => handleChangeTab(true)}>
-            <TabBadge>Stake</TabBadge>
-          </Tab>
-          <Tab isSelected={!isStake} onClick={() => handleChangeTab(false)}>
-            <TabBadge>Unstake</TabBadge>
-          </Tab>
-        </div>
         <FormGroup>
           <Label color="secondary">Amount</Label>
           <div style={{ display: "flex", alignItems: "center" }}>

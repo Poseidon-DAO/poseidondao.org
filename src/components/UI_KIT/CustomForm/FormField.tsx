@@ -81,7 +81,7 @@ export function FormField({
                 -- select an option --{" "}
               </option>
               {PROJECTS.map((project) => (
-                <option value={project} selected>
+                <option value={project} selected key={project}>
                   {project}
                 </option>
               ))}

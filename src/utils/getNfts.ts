@@ -30,15 +30,15 @@ export async function getNfts(nftList: INftFetch[]) {
   const nftData: INft[] = [];
   if (!nftList.length) return;
 
-  await Promise.allSettled(
+  await Promise.all(
     nftList.map((item) =>
       fetchNftData(item.token_uri)
         .then(async (response: INft) => {
           const nft = await transformImg(response, item);
           if (nft) nftData.push(nft);
-          store.dispatch(Actions.WalletActions.UpdateNfts.success(nftData));
         })
         .catch((e) => console.log(e))
     )
   );
+  store.dispatch(Actions.WalletActions.UpdateNfts.success(nftData));
 }
