@@ -1,5 +1,5 @@
 import { Colors } from "components/UI_KIT/colors";
-import { useIsMobile } from "customHooks";
+import { useIsMobile } from "hooks/useIsMobile";
 import { Pane } from "evergreen-ui";
 import React from "react";
 import { SocialIcon } from "react-social-icons";

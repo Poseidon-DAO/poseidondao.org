@@ -10,7 +10,7 @@ import { INft } from "types";
 import useCopyAddress from "utils/useCopyAddress";
 import CustomModal from "components/UI_KIT/CustomModal";
 import NFTList from "components/ProfilePage/NFTList";
-import Balance from "components/ProfilePage/Balance";
+import Transfer from "components/ProfilePage/Transfer";
 import Tokens from "components/ProfilePage/Tokens";
 import { useMoralis } from "react-moralis";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
@@ -29,7 +29,7 @@ interface ITab {
 const tabs: ITab[] = [
   { name: "Collectibles", id: 0 },
   { name: "Burn", id: 1 },
-  { name: "Balance", id: 2 },
+  { name: "Transfer Tokens", id: 2 },
   // {name: "Tokens", id: 2 },
   // { name: "Balance", id: 4 },
 ];
@@ -162,7 +162,7 @@ const ProfilePage = () => {
       case 1:
         return <Burn availableBalance={userBalance} ratio={ratioConversion} />;
       case 2:
-        return <Balance availableBalance={userBalance} />;
+        return <Transfer availableBalance={userBalance} />;
       default:
         return null;
     }

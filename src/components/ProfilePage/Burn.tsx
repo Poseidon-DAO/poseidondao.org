@@ -206,6 +206,7 @@ const NftButton = styled.div<{ isSelected: boolean }>`
   color: white;
   font-size: 1em;
   margin: 1em;
+  margin-left: 0rem;
   height: 150px;
   width: 120px;
   display: flex;

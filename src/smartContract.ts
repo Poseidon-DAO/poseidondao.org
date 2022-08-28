@@ -484,7 +484,7 @@ interface ExecuteFunctionOptions {
 }
 
 export const ERC20Options = (
-  address: string,
+  address: string | null,
   functionName: string,
   args?: any
 ): ExecuteFunctionOptions => {
@@ -542,6 +542,7 @@ const GET_BALANCE = "balanceOf";
 const RATIO = "ratio";
 const GET_REWARDS = "getAmountRewarding";
 const BURN = "burnAndReceiveNFT";
+const TRANSFER = "transfer";
 
 const SMART_CONTRACT_FUNCTIONS = {
   // Functions:
@@ -550,6 +551,7 @@ const SMART_CONTRACT_FUNCTIONS = {
   GET_REWARDS,
   GET_BALANCE,
   BURN,
+  TRANSFER,
   // Events:
 };
 
