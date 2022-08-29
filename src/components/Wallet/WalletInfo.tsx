@@ -3,10 +3,11 @@ import SuccessAnimation from "components/SuccessAnimation";
 import { Colors } from "components/UI_KIT/colors";
 import { Alert, Text } from "evergreen-ui";
 import { useCallback, useEffect, useState } from "react";
-import { useMoralisQuery } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
 import { RootState } from "redux/reducers";
+import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import styled from "styled-components";
 import { roundBalance } from "utils";
 
@@ -19,6 +20,8 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
   const transactionHashToFetch = useSelector(
     (state: RootState) => state.wallet.currentTransaction
   );
+
+  const { account, Moralis } = useMoralis();
 
   const balance = useSelector(
     (state: RootState) => state.wallet.wallet.balance
@@ -34,6 +37,16 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
     [dispatch]
   );
 
+  const updateBalance = useCallback(
+    (payload: number) => dispatch(Actions.AuthActions.Balance(payload)),
+    [dispatch]
+  );
+
+  const setNfts = useCallback(
+    (payload: any) => dispatch(Actions.WalletActions.fetchNfts(payload)),
+    [dispatch]
+  );
+
   const { data, fetch } = useMoralisQuery(
     "burnAndReceiveNFT",
     (query) => query.equalTo("transaction_hash", transactionHashToFetch),
@@ -45,6 +58,42 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
       const url = `https://${process.env.NEXT_PUBLIC_CHAIN}.etherscan.io/tx/${storedHash}`;
       window.open(url, "_blank", "noopener,noreferrer");
     }
+  };
+
+  const getBalance = async () => {
+    const options = ERC20Options(
+      account!!,
+      SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
+      { account }
+    );
+
+    const newBalance = await Moralis.executeFunction(options);
+    if (!newBalance) {
+      updateBalance(0);
+      return;
+    }
+
+    //@ts-ignore
+    const newBalanceFormatted = (parseInt(balance._hex) / 10 ** 26) * 100000;
+
+    updateBalance(parseInt(newBalanceFormatted.toFixed(0)));
+  };
+
+  const fetchNfts = async () => {
+    const chain = await Moralis.getChainId();
+
+    const res = await Moralis.Web3API.account.getNFTs({
+      address: account!!,
+      //@ts-ignore
+      chain,
+    });
+
+    setNfts(res.result);
+  };
+
+  const fetchBalanceAndNfts = () => {
+    getBalance();
+    fetchNfts();
   };
 
   useEffect(() => {
@@ -71,6 +120,7 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
 
   useEffect(() => {
     if (showSuccess) {
+      fetchBalanceAndNfts();
       setTimeout(() => {
         setShowSuccess(false);
         clearTransaction();
@@ -89,7 +139,7 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
         <Container onClick={onClick}>
           <LeftContainer>
             <Text color={Colors.white.primary}>
-              {balance ? roundBalance(balance, 4) : "0.00"} ETH
+              {balance ? roundBalance(balance, 4) : "0.00"} PDN
             </Text>
           </LeftContainer>
           <MiddleContainer address={address}>

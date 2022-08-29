@@ -25,6 +25,9 @@ export default function UserModal({
   onLogout,
 }: UserModalProps) {
   const user = useSelector((state: RootState) => state.auth.user);
+  const userBalance = useSelector(
+    (state: RootState) => state.wallet.wallet.balance
+  );
   const copyAddress = useCopyAddress();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -84,7 +87,7 @@ export default function UserModal({
         </Pane>
         <Pane>
           <Heading>Balance:</Heading>
-          <Text>{roundBalance(user?.balance, 6)} ETH</Text>
+          <Text>{userBalance} PDN</Text>
         </Pane>
         <LogoutContainer>
           <CustomButton

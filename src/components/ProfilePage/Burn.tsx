@@ -7,24 +7,30 @@ import Decimal from "decimal.js-light";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import { useMoralis } from "react-moralis";
 import { Alert, Heading } from "evergreen-ui";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
+import { RootState } from "redux/reducers";
 
 const MAX_ELEMENTS_CAP = 10;
 
 interface BurnProps {
-  availableBalance: number;
   ratio: number;
 }
 
-export default function Burn({ availableBalance, ratio }: BurnProps) {
+export default function Burn({ ratio }: BurnProps) {
   const [selectedAmount, setSelectedAmount] = useState(0);
   const [hoverImage, setHoverImage] = useState(-1);
   const [showPendingToast, setShowPendingToast] = useState(false);
   const [error, setError] = useState(false);
-  const balance = new Decimal(availableBalance);
+  const userBalance = useSelector(
+    (state: RootState) => state.wallet.wallet.balance
+  );
+  const balance = new Decimal(userBalance);
   const availableToBurn =
-    balance != null && ratio != null ? balance.div(ratio).toNumber() : 0;
+    balance != null && ratio != null && ratio != 0
+      ? balance.div(ratio).toNumber()
+      : 0;
+
   const dispatch = useDispatch();
   const setSuccessfulTransaction = useCallback(
     (hash: string) =>

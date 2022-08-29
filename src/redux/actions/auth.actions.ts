@@ -10,6 +10,6 @@ export const Login = {
   failed: (payload: any) => ({ type: LOGIN.FAILED, payload }),
 };
 
-export const Balance = (payload: string) => ({ type: GET_BALANCE, payload });
+export const Balance = (payload: number) => ({ type: GET_BALANCE, payload });
 
 export const Logout = () => ({ type: LOGOUT });
