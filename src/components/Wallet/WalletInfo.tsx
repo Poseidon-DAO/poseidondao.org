@@ -40,11 +40,6 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
     [dispatch]
   );
 
-  const updateBalance = useCallback(
-    (payload: number) => dispatch(Actions.AuthActions.Balance(payload)),
-    [dispatch]
-  );
-
   const { data, fetch } = useMoralisQuery(
     "burnAndReceiveNFT",
     (query) => query.equalTo("transaction_hash", transactionHashToFetch),
@@ -106,7 +101,7 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
         <Container onClick={onClick}>
           <LeftContainer>
             <Text color={Colors.white.primary}>
-              {balance ? roundBalance(balance, 4) : "0.00"} PDN
+              {balance ? formatLongNumber(parseInt(balance)) : "0.00"} PDN
             </Text>
           </LeftContainer>
           <MiddleContainer address={address}>

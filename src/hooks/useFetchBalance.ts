@@ -3,7 +3,6 @@ import { useMoralis } from "react-moralis";
 import { useDispatch } from "react-redux";
 import Actions from "redux/actions";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
-import { formatLongNumber } from "utils";
 
 export default function useFetchBalance() {
   const dispatch = useDispatch();
@@ -27,10 +26,9 @@ export default function useFetchBalance() {
       return;
     }
 
-    const newBalanceFormatted = //@ts-ignore
-      (parseInt(newBalance._hex) / 10 ** 26) * 100000000;
-    formatLongNumber(newBalance as unknown as number);
-    updateBalance(parseInt(newBalanceFormatted.toFixed(0)));
+    const newBalanceConverted = //@ts-ignore
+      ((parseInt(newBalance._hex) / 10 ** 26) * 100000000).toFixed(0);
+    updateBalance(parseInt(newBalanceConverted));
   };
 
   return { fetchBalance };

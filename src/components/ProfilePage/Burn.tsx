@@ -10,6 +10,7 @@ import { Alert, Heading } from "evergreen-ui";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
 import { RootState } from "redux/reducers";
+import { formatLongNumber } from "utils";
 
 const MAX_ELEMENTS_CAP = 10;
 
@@ -111,7 +112,9 @@ export default function Burn({ ratio }: BurnProps) {
             }}
           >
             Available PDN:{" "}
-            <span style={{ fontWeight: 400 }}>{balance.toString()}</span>
+            <span style={{ fontWeight: 400 }}>
+              {formatLongNumber(balance.toNumber())}
+            </span>
           </p>
           {availableToBurn !== 0 && (
             <p style={{ alignSelf: "flex-end", color: Colors.white.primary }}>

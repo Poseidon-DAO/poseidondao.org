@@ -4,7 +4,7 @@ import AvatarDisplay from "../UI_KIT/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import { ButtonTypes } from "types";
-import { roundBalance } from "utils";
+import { formatLongNumber, roundBalance } from "utils";
 import { useRouter } from "next/router";
 import useCopyAddress from "utils/useCopyAddress";
 import { useCallback } from "react";
@@ -71,7 +71,7 @@ export default function UserModal({
         </Pane>
         <Pane>
           <Heading>Balance:</Heading>
-          <Text>{userBalance} PDN</Text>
+          <Text>{formatLongNumber(parseInt(userBalance))} PDN</Text>
         </Pane>
         <ButtonsContainer>
           {!isProfile && isInRightChain ? (

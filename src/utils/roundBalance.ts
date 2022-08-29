@@ -3,5 +3,9 @@ export function roundBalance(balance: string, decimals: number = 2) {
 }
 
 export function formatLongNumber(number: number) {
-  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const formatted = number
+    .toFixed(0)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return formatted;
 }

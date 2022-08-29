@@ -37,9 +37,7 @@ const ProfilePage = () => {
   const copyAdress = useCopyAddress();
   const dispatch = useDispatch();
   const router = useRouter();
-  const transactionSuccessful =
-    useSelector((state: RootState) => state.wallet.transaction_success) ===
-    true;
+
   const userBalance = useSelector(
     (state: RootState) => state.wallet.wallet.balance
   );
@@ -57,7 +55,9 @@ const ProfilePage = () => {
 
   // If we don't have the wallet enabled, we have to send them back to the landing
   useEffect(() => {
-    if (!WALLET_ENABLED) router.push("/");
+    if (!WALLET_ENABLED) {
+      router.push("/");
+    }
   }, []);
 
   // Get the user balance, total tokens, nft list and ratio of nft conversion
@@ -81,10 +81,6 @@ const ProfilePage = () => {
       }
     }
   }, [account, Moralis]);
-
-  useEffect(() => {
-    if (!account) router.push("/");
-  }, [account, router]);
 
   const handleNFTModal = (nft: INft) => {
     setNftModalOpen(true);
