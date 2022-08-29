@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTransfer } from "hooks/useTransfer";
 import TransactionForm from "components/TransactionForm";
-import { Text } from "evergreen-ui";
+import { Alert, Text } from "evergreen-ui";
 
 export default function Transfer({
   availableBalance,
@@ -14,10 +14,6 @@ export default function Transfer({
     address: "",
   });
   const [transactionState, setTransactionState] = useState("");
-
-  function handleSnackbarClose() {
-    setTransactionState("");
-  }
 
   function handleTransactionSuccess(resetForm: () => void) {
     setTransactionState("success");
@@ -40,6 +36,12 @@ export default function Transfer({
     }
   }
 
+  useEffect(() => {
+    if (transactionState != "") {
+      setTimeout(() => setTransactionState(""), 4000);
+    }
+  }, [transactionState]);
+
   return (
     <Container>
       <Text size="large" style={{ marginBottom: 5, color: "white" }}>
@@ -54,6 +56,38 @@ export default function Transfer({
         loading={isFetching || isLoading}
         buttonProps={{ title: "Transfer", variant: "contained" }}
       />
+      {transactionState === "success" && (
+        <Alert
+          style={{
+            position: "fixed",
+            bottom: "10px",
+            zIndex: 100,
+            right: "10px",
+            maxWidth: "40%",
+            cursor: "pointer",
+            paddingRight: "1rem",
+          }}
+          intent="success"
+          title="Successfully transferred your tokens"
+          marginBottom={32}
+        />
+      )}
+      {transactionState === "error" && (
+        <Alert
+          style={{
+            position: "fixed",
+            bottom: "10px",
+            zIndex: 100,
+            right: "10px",
+            maxWidth: "40%",
+            cursor: "pointer",
+            paddingRight: "1rem",
+          }}
+          intent="error"
+          title="Something went wrong when transfering your tokens!"
+          marginBottom={32}
+        />
+      )}
     </Container>
   );
 }

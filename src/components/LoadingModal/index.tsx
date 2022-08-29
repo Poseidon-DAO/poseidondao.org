@@ -1,4 +1,3 @@
-import SuccessAnimation from "components/SuccessAnimation";
 import { Paragraph, Spinner } from "evergreen-ui";
 import styled from "styled-components";
 

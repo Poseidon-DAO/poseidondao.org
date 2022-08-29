@@ -1,4 +1,4 @@
-import { TextInputField, Tooltip } from "evergreen-ui";
+import { TextInputField } from "evergreen-ui";
 import { useIsMobile } from "hooks/useIsMobile";
 import { useState } from "react";
 import { Form, FormGroup, Label } from "reactstrap";
@@ -116,7 +116,12 @@ function TransactionForm({
           </Badge>
         </div>
       </FormGroup>
-      <Button disabled={amount.length < 1 || address.length < 1}>SEND</Button>
+      <Button
+        disabled={amount.length < 1 || address.length < 1}
+        onClick={handleSubmit}
+      >
+        SEND
+      </Button>
     </Form>
   );
 }
