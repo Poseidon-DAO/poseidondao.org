@@ -1,0 +1,37 @@
+import { useCallback } from "react";
+import { useMoralis } from "react-moralis";
+import { useDispatch } from "react-redux";
+import Actions from "redux/actions";
+import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
+import { formatLongNumber } from "utils";
+
+export default function useFetchBalance() {
+  const dispatch = useDispatch();
+  const { Moralis, account } = useMoralis();
+
+  const updateBalance = useCallback(
+    (payload: any) => dispatch(Actions.AuthActions.setBalance(payload)),
+    [dispatch]
+  );
+
+  const fetchBalance = async () => {
+    const options = ERC20Options(
+      account!!,
+      SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
+      { account }
+    );
+
+    const newBalance = await Moralis.executeFunction(options);
+    if (!newBalance) {
+      updateBalance(0);
+      return;
+    }
+
+    const newBalanceFormatted = //@ts-ignore
+      (parseInt(newBalance._hex) / 10 ** 26) * 100000000;
+    formatLongNumber(newBalance as unknown as number);
+    updateBalance(parseInt(newBalanceFormatted.toFixed(0)));
+  };
+
+  return { fetchBalance };
+}

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTransfer } from "hooks/useTransfer";
 import TransactionForm from "components/TransactionForm";
 import { Alert, Text } from "evergreen-ui";
+import { useDispatch } from "react-redux";
+import Actions from "redux/actions";
 
 export default function Transfer({
   availableBalance,
@@ -14,9 +16,15 @@ export default function Transfer({
     address: "",
   });
   const [transactionState, setTransactionState] = useState("");
+  const dispatch = useDispatch();
+  const updateBalance = useCallback(
+    (payload: any) => dispatch(Actions.AuthActions.setBalance(payload)),
+    [dispatch]
+  );
 
-  function handleTransactionSuccess(resetForm: () => void) {
+  function handleTransactionSuccess(transferData: any, resetForm: () => void) {
     setTransactionState("success");
+    updateBalance(+availableBalance - transferData.amount);
     resetForm();
   }
 
@@ -28,7 +36,7 @@ export default function Transfer({
     try {
       await transfer({
         ...transferData,
-        onSuccess: () => handleTransactionSuccess(resetForm),
+        onSuccess: () => handleTransactionSuccess(transferData, resetForm),
         onError: handleTransactionFailure,
       });
     } catch (err) {

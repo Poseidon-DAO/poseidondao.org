@@ -1,4 +1,3 @@
-// @ts-nocheck
 import AvatarDisplay from "components/UI_KIT/Avatar";
 import { FlexView } from "components/UI_KIT/Display";
 
@@ -41,7 +40,9 @@ const ProfilePage = () => {
   const transactionSuccessful =
     useSelector((state: RootState) => state.wallet.transaction_success) ===
     true;
-  const userBalance = useSelector((state: RootState) => state.auth.balance);
+  const userBalance = useSelector(
+    (state: RootState) => state.wallet.wallet.balance
+  );
 
   const [nftModalOpen, setNftModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<ITab>(tabs[0]);
@@ -63,14 +64,15 @@ const ProfilePage = () => {
   useEffect(() => {
     const getRatio = async () => {
       const options = ERC20Options(account!!, SMART_CONTRACT_FUNCTIONS.RATIO);
-      const ratio = await Moralis.executeFunction(options);
+      const ratio = (await Moralis.executeFunction(
+        options
+      )) as unknown as string;
       setRatioConversion(parseInt(ratio));
     };
 
     if (account != null) {
       try {
         getRatio();
-        fetchNfts();
       } catch (e) {
         newToast({
           text: "Something went wrong...",
@@ -89,24 +91,12 @@ const ProfilePage = () => {
     setSelectedNft(nft);
   };
 
-  const onBurn = () => {
-    console.log("Inside on burn");
-    getBalance();
-    fetchNfts();
-  };
-
-  useEffect(() => {
-    if (transactionSuccessful) {
-      onBurn();
-    }
-  }, []);
-
   const TabContent = () => {
     switch (selectedTab.id) {
       case 0:
         return <NFTList handleNFTModal={handleNFTModal} />;
       case 1:
-        return <Burn availableBalance={userBalance} ratio={ratioConversion} />;
+        return <Burn ratio={ratioConversion} />;
       case 2:
         return <Transfer availableBalance={userBalance} />;
       default:

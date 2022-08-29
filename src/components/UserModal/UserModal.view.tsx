@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import { ButtonTypes } from "types";
 import { roundBalance } from "utils";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import useCopyAddress from "utils/useCopyAddress";
 import { useCallback } from "react";
@@ -84,11 +83,15 @@ export default function UserModal({
                 cursor: "pointer",
                 marginRight: 5,
               }}
-              onClick={() => router.push("/profile")}
               text="Your Profile"
+              onClick={() => {
+                router.push("/profile");
+                onClose();
+              }}
             />
           ) : (
             <CustomButton
+              onClick={wrongChainModal}
               type={ButtonTypes.success}
               style={{
                 width: "25%",
@@ -97,7 +100,6 @@ export default function UserModal({
                 marginRight: 5,
                 border: "none",
               }}
-              onClick={wrongChainModal}
               text="Your Profile"
             />
           )}

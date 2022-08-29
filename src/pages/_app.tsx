@@ -14,7 +14,8 @@ import { NetworkTypes } from "types";
 import { WALLET_ENABLED } from "config";
 import styled from "styled-components";
 import Head from "next/head";
-import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
+import useFetchBalance from "hooks/useFetchBalance";
+import useFetchNfts from "hooks/useFetchNfts";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -37,6 +38,8 @@ function App({ Component, pageProps }: AppProps) {
   const [chainId, setChainId] = useState<string>("");
   const { Moralis, isAuthenticated, account, logout } = useMoralis();
   const dispatch = useDispatch();
+  const { fetchBalance } = useFetchBalance();
+  const { fetchNfts } = useFetchNfts();
   const newToast = useCallback(
     (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
     [dispatch]
@@ -155,31 +158,9 @@ function App({ Component, pageProps }: AppProps) {
 
   // Fetch address balance and NFTs on address change
   useEffect(() => {
-    const getBalance = async () => {
-      const options = ERC20Options(
-        account!!,
-        SMART_CONTRACT_FUNCTIONS.GET_BALANCE,
-        { account }
-      );
-      if (process.env.NEXT_PUBLIC_USE_FAKE_FUNDS === "true") {
-        updateBalance(120000);
-        return;
-      }
-
-      const balance = await Moralis.executeFunction(options);
-
-      if (!balance) {
-        updateBalance(0);
-        return;
-      }
-      //@ts-ignore
-      const newBalance = (parseInt(balance._hex) / 10 ** 26) * 100000;
-
-      updateBalance(parseInt(newBalance.toFixed(0)));
-    };
-
     if (account && chainId.length && isAuthenticated) {
-      getBalance();
+      fetchBalance();
+      fetchNfts();
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, isAuthenticated, chainId]);
 
