@@ -38,12 +38,17 @@ export default function UserModal({
     [dispatch]
   );
 
+  const isInRightChain = process.env.NEXT_PUBLIC_CHAIN_ID === chainID;
   const wrongChainModal = () => {
-    newToast({
-      type: "warning",
-      text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
-      duration: 5000,
-    });
+    if (!isInRightChain) {
+      newToast({
+        type: "warning",
+        text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
+        duration: 5000,
+      });
+      return;
+    }
+    onClose();
   };
 
   const userBody = (
@@ -55,48 +60,56 @@ export default function UserModal({
         <Pane>
           <Heading>Address:</Heading>
           <Text>{user?.accounts[0]}</Text>
-          {!isProfile && process.env.NEXT_PUBLIC_CHAIN_ID === chainID ? (
-            <Link
-              href="/profile"
-              style={{ color: "white", textDecoration: "none" }}
-            >
-              <Badge
-                color="green"
-                style={{ cursor: "pointer", marginRight: 5 }}
-                onClick={onClose}
-              >
-                Profile
-              </Badge>
-            </Link>
-          ) : (
+          <Pane>
             <Badge
-              color="green"
-              style={{ cursor: "pointer", marginRight: 5 }}
-              onClick={wrongChainModal}
+              color="neutral"
+              style={{ cursor: "pointer" }}
+              onClick={copyAddress}
             >
-              Profile
+              Copy Address
             </Badge>
-          )}
-          <Badge
-            color="neutral"
-            style={{ cursor: "pointer" }}
-            onClick={copyAddress}
-          >
-            Copy Address
-          </Badge>
+          </Pane>
         </Pane>
         <Pane>
           <Heading>Balance:</Heading>
           <Text>{userBalance} PDN</Text>
         </Pane>
-        <LogoutContainer>
+        <ButtonsContainer>
+          {!isProfile && isInRightChain ? (
+            <CustomButton
+              type={ButtonTypes.success}
+              style={{
+                width: "25%",
+                justifySelf: "flex-end",
+                cursor: "pointer",
+                marginRight: 5,
+              }}
+              onClick={() => router.push("/profile")}
+              text="Your Profile"
+            />
+          ) : (
+            <CustomButton
+              type={ButtonTypes.success}
+              style={{
+                width: "25%",
+                justifySelf: "flex-end",
+                cursor: "pointer",
+                marginRight: 5,
+                border: "none",
+              }}
+              onClick={wrongChainModal}
+              text="Your Profile"
+            />
+          )}
           <CustomButton
             onClick={onLogout}
             type={ButtonTypes.danger}
-            style={{ width: "25%", justifySelf: "flex-end", cursor: "pointer" }}
             text="Disconnect"
+            style={{
+              border: "none",
+            }}
           />
-        </LogoutContainer>
+        </ButtonsContainer>
       </Content>
     </Pane>
   );
@@ -119,7 +132,7 @@ const Content = styled.div`
   justify-content: space-between;
 `;
 
-const LogoutContainer = styled.div`
+const ButtonsContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: flex-end;
