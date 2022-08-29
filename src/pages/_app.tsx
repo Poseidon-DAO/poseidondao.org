@@ -49,7 +49,7 @@ function App({ Component, pageProps }: AppProps) {
     [dispatch]
   );
   const updateBalance = useCallback(
-    (payload: number) => dispatch(Actions.AuthActions.Balance(payload)),
+    (payload: number) => dispatch(Actions.AuthActions.setBalance(payload)),
     [dispatch]
   );
   const storeLogout = useCallback(
