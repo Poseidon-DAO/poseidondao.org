@@ -87,6 +87,7 @@ function TransactionForm({
       <FormGroup style={{ margin: "1rem 0rem" }}>
         <Label style={{ color: "white" }}>Address:</Label>
         <TextInputField
+          label=""
           type="text"
           value={address}
           onChange={(e: any) => setAddress(e.target.value)}
@@ -106,6 +107,7 @@ function TransactionForm({
         >
           <TextInputField
             type="number"
+            label=""
             value={amount}
             onChange={(e: any) => setAmount(e.target.value)}
             placeholder="7"

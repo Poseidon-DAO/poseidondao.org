@@ -38,6 +38,8 @@ export default function UserModal({
   );
 
   const isInRightChain = process.env.NEXT_PUBLIC_CHAIN_ID === chainID;
+
+  console.log("IsInRightchain", process.env.NEXT_PUBLIC_CHAIN_ID, chainID);
   const wrongChainModal = () => {
     if (!isInRightChain) {
       newToast({

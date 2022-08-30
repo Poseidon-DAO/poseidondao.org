@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useTransfer } from "hooks/useTransfer";
 import TransactionForm from "components/TransactionForm";
-import { Alert, Text } from "evergreen-ui";
+import { Alert } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import Actions from "redux/actions";
 
@@ -52,9 +52,7 @@ export default function Transfer({
 
   return (
     <Container>
-      <Text size="large" style={{ marginBottom: 5, color: "white" }}>
-        Transfer tokens
-      </Text>
+      <Label>Transfer tokens</Label>
 
       <TransactionForm
         column
@@ -88,10 +86,9 @@ export default function Transfer({
             zIndex: 100,
             right: "10px",
             maxWidth: "40%",
-            cursor: "pointer",
             paddingRight: "1rem",
           }}
-          intent="error"
+          intent="warning"
           title="Something went wrong when transfering your tokens!"
           marginBottom={32}
         />
@@ -106,4 +103,9 @@ const Container = styled.div`
   @media (max-width: 768px) {
     width: 90vw;
   }
+`;
+
+const Label = styled.h4`
+  color: #fff;
+  margin-bottom: 0.5rem;
 `;

@@ -48,10 +48,6 @@ function App({ Component, pageProps }: AppProps) {
     (payload: any) => dispatch(Actions.WalletActions.UpdateChain(payload)),
     [dispatch]
   );
-  const updateBalance = useCallback(
-    (payload: number) => dispatch(Actions.AuthActions.setBalance(payload)),
-    [dispatch]
-  );
   const storeLogout = useCallback(
     () => dispatch(Actions.AuthActions.Logout()),
     [dispatch]
@@ -130,7 +126,7 @@ function App({ Component, pageProps }: AppProps) {
 
   //Update chain of change in wallet
   useEffect(() => {
-    if (chainId.length && userData.balance && account) {
+    if (chainId.length && userData.balance != null && account) {
       //@ts-ignore
       const chainName = NetworkTypes[chainId];
       updateChain({

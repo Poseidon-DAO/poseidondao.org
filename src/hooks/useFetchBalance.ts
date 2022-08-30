@@ -20,8 +20,10 @@ export default function useFetchBalance() {
       { account }
     );
 
-    const newBalance = await Moralis.executeFunction(options);
-    if (!newBalance) {
+    const newBalance = (await Moralis.executeFunction(
+      options
+    )) as unknown as number;
+    if (!newBalance || newBalance === 0) {
       updateBalance(0);
       return;
     }

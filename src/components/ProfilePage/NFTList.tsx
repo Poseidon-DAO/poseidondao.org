@@ -3,6 +3,7 @@ import { INft } from "types";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
+import { Colors } from "components/UI_KIT/colors";
 
 export default function NFTList({
   handleNFTModal,
@@ -14,17 +15,23 @@ export default function NFTList({
 
   return (
     <Container>
-      {list.map((nft, i) => (
-        <div
-          key={i}
-          style={{
-            width: "16rem",
-            marginBottom: "1rem",
-          }}
-        >
-          <NFTCard nft={nft} onClick={() => handleNFTModal(nft)} />
-        </div>
-      ))}
+      {list.length === 0 ? (
+        <p style={{ alignSelf: "flex-end", color: Colors.white.primary }}>
+          You have no items.
+        </p>
+      ) : (
+        list.map((nft, i) => (
+          <div
+            key={i}
+            style={{
+              width: "16rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <NFTCard nft={nft} onClick={() => handleNFTModal(nft)} />
+          </div>
+        ))
+      )}
       {[...Array(emptySpaces)].map(() => (
         <div style={{ width: "16rem", height: "24rem" }} />
       ))}

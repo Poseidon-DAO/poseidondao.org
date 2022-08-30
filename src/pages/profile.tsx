@@ -108,7 +108,7 @@ const ProfilePage = () => {
           <HeaderData>
             <div style={{ height: "50%" }}>
               <Heading
-                size="xxl"
+                size={600}
                 style={{
                   marginBottom: 1,
                   fontWeight: 700,
