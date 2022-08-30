@@ -7,24 +7,32 @@ import Decimal from "decimal.js-light";
 import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import { useMoralis } from "react-moralis";
 import { Alert, Heading } from "evergreen-ui";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
+import { RootState } from "redux/reducers";
+import { formatLongNumber } from "utils";
 
 const MAX_ELEMENTS_CAP = 10;
 
 interface BurnProps {
-  availableBalance: number;
   ratio: number;
 }
 
-export default function Burn({ availableBalance, ratio }: BurnProps) {
+export default function Burn({ ratio }: BurnProps) {
   const [selectedAmount, setSelectedAmount] = useState(0);
   const [hoverImage, setHoverImage] = useState(-1);
   const [showPendingToast, setShowPendingToast] = useState(false);
   const [error, setError] = useState(false);
-  const balance = new Decimal(availableBalance);
+  const userBalance = useSelector(
+    (state: RootState) => state.wallet.wallet.balance
+  );
+
+  const balance = new Decimal(userBalance ?? "0");
   const availableToBurn =
-    balance != null && ratio != null ? balance.div(ratio).toNumber() : 0;
+    balance != null && ratio != null && ratio != 0
+      ? balance.div(ratio).toNumber()
+      : 0;
+
   const dispatch = useDispatch();
   const setSuccessfulTransaction = useCallback(
     (hash: string) =>
@@ -105,54 +113,80 @@ export default function Burn({ availableBalance, ratio }: BurnProps) {
             }}
           >
             Available PDN:{" "}
-            <span style={{ fontWeight: 400 }}>{balance.toString()}</span>
+            <span style={{ fontWeight: 400 }}>
+              {formatLongNumber(balance.toNumber())}
+            </span>
           </p>
-          {availableToBurn !== 0 && (
+          {Math.floor(availableToBurn) !== 0 && (
             <p style={{ alignSelf: "flex-end", color: Colors.white.primary }}>
               You can acquire up to:{" "}
               <span style={{ fontWeight: 400 }}>{Number(availableToBurn)}</span>{" "}
               NFTs
             </p>
           )}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              maxWidth: "100%",
-              flexWrap: "wrap",
-            }}
-          >
-            {availableToBurn !== 0 &&
-              [...Array(Math.min(MAX_ELEMENTS_CAP, availableToBurn))].map(
-                (_, index) => {
-                  const i = index + 1;
-                  if (i > 10 && i < 30) {
-                    if (i % 5 === 0) return renderNftButton(i);
-                    else return false;
-                  } else if (i > 30) {
-                    if (i % 10 === 0) return renderNftButton(i);
-                    else return false;
-                  } else return renderNftButton(i);
-                }
-              )}
+          <div>
+            {Math.floor(availableToBurn) !== 0 ? (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    maxWidth: "100%",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {[
+                    ...Array(
+                      Math.min(MAX_ELEMENTS_CAP, Math.floor(availableToBurn))
+                    ),
+                  ].map((_, index) => {
+                    const i = index + 1;
+                    if (i > 10 && i < 30) {
+                      if (i % 5 === 0) return renderNftButton(i);
+                      else return false;
+                    } else if (i > 30) {
+                      if (i % 10 === 0) return renderNftButton(i);
+                      else return false;
+                    } else return renderNftButton(i);
+                  })}
+
+                  <Heading color="white">
+                    You are going to burn: {selectedAmount * ratio} PDN
+                  </Heading>
+                  <Heading color="white">
+                    Receiving: {selectedAmount} NFTs
+                  </Heading>
+                </div>
+                <div>
+                  {availableToBurn !== 0 ? (
+                    <Button
+                      disabled={selectedAmount !== 0}
+                      onClick={burnNFTS}
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <p>BURN</p>
+                    </Button>
+                  ) : (
+                    <h4
+                      style={{ color: Colors.red.warning, marginTop: "1rem" }}
+                    >
+                      You don't have enough funds to Mint our NFTs
+                    </h4>
+                  )}
+                </div>
+              </>
+            ) : (
+              <p
+                style={{
+                  alignSelf: "flex-end",
+                  color: Colors.white.primary,
+                  marginTop: "2rem",
+                }}
+              >
+                You don't have enough PDN to burn.
+              </p>
+            )}
           </div>
-          <Heading color="white">
-            You are going to burn: {selectedAmount * ratio} PDN
-          </Heading>
-          <Heading color="white">Receiving: {selectedAmount} NFTs</Heading>
-          {availableToBurn !== 0 ? (
-            <Button
-              disabled={selectedAmount !== 0}
-              onClick={burnNFTS}
-              style={{ marginBottom: "1rem" }}
-            >
-              <p>BURN</p>
-            </Button>
-          ) : (
-            <h4 style={{ color: Colors.red.warning, marginTop: "1rem" }}>
-              You don't have enough funds to Mint our NFTs
-            </h4>
-          )}
         </FormGroup>
       </Form>
       {showPendingToast && (
@@ -206,6 +240,7 @@ const NftButton = styled.div<{ isSelected: boolean }>`
   color: white;
   font-size: 1em;
   margin: 1em;
+  margin-left: 0rem;
   height: 150px;
   width: 120px;
   display: flex;

@@ -58,6 +58,11 @@ const WalletReducer = (
         currentTransaction: payload,
         transaction_success: false,
       };
+    case Actions.AuthActions.GET_BALANCE:
+      return {
+        ...state,
+        wallet: { ...state.wallet, balance: payload },
+      };
     case Actions.WalletActions.CLEAR_TRANSACTION_SUCCESS:
       return {
         ...state,

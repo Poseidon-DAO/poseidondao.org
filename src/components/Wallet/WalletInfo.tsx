@@ -2,13 +2,16 @@ import LoadingSpinner from "components/LoadingSpinner";
 import SuccessAnimation from "components/SuccessAnimation";
 import { Colors } from "components/UI_KIT/colors";
 import { Alert, Text } from "evergreen-ui";
+import useFetchBalance from "hooks/useFetchBalance";
+import useFetchNfts from "hooks/useFetchNfts";
 import { useCallback, useEffect, useState } from "react";
-import { useMoralisQuery } from "react-moralis";
+import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
 import { RootState } from "redux/reducers";
+import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import styled from "styled-components";
-import { roundBalance } from "utils";
+import { formatLongNumber, roundBalance } from "utils";
 
 interface WalletInfoProps {
   address: string;
@@ -19,6 +22,9 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
   const transactionHashToFetch = useSelector(
     (state: RootState) => state.wallet.currentTransaction
   );
+
+  const { fetchBalance } = useFetchBalance();
+  const { fetchNfts } = useFetchNfts();
 
   const balance = useSelector(
     (state: RootState) => state.wallet.wallet.balance
@@ -47,6 +53,11 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
     }
   };
 
+  const fetchBalanceAndNfts = () => {
+    fetchBalance();
+    fetchNfts();
+  };
+
   useEffect(() => {
     if (transactionHashToFetch.length) {
       setStoredHash(transactionHashToFetch);
@@ -71,6 +82,7 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
 
   useEffect(() => {
     if (showSuccess) {
+      fetchBalanceAndNfts();
       setTimeout(() => {
         setShowSuccess(false);
         clearTransaction();
@@ -89,7 +101,7 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
         <Container onClick={onClick}>
           <LeftContainer>
             <Text color={Colors.white.primary}>
-              {balance ? roundBalance(balance, 4) : "0.00"} ETH
+              {balance ? formatLongNumber(parseInt(balance)) : "0.00"} PDN
             </Text>
           </LeftContainer>
           <MiddleContainer address={address}>

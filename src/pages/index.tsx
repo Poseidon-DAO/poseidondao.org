@@ -9,7 +9,7 @@ import { IoRocketOutline } from "react-icons/io5";
 import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
 import { Colors } from "components/UI_KIT/colors";
-import { useIsMobile } from "customHooks";
+import { useIsMobile } from "hooks/useIsMobile";
 
 const skew = 8;
 const IMAGES = [

@@ -4,8 +4,7 @@ import AvatarDisplay from "../UI_KIT/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import { ButtonTypes } from "types";
-import { roundBalance } from "utils";
-import Link from "next/link";
+import { formatLongNumber, roundBalance } from "utils";
 import { useRouter } from "next/router";
 import useCopyAddress from "utils/useCopyAddress";
 import { useCallback } from "react";
@@ -25,6 +24,9 @@ export default function UserModal({
   onLogout,
 }: UserModalProps) {
   const user = useSelector((state: RootState) => state.auth.user);
+  const userBalance = useSelector(
+    (state: RootState) => state.wallet.wallet.balance
+  );
   const copyAddress = useCopyAddress();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -35,12 +37,19 @@ export default function UserModal({
     [dispatch]
   );
 
+  const isInRightChain = process.env.NEXT_PUBLIC_CHAIN_ID === chainID;
+
+  console.log("IsInRightchain", process.env.NEXT_PUBLIC_CHAIN_ID, chainID);
   const wrongChainModal = () => {
-    newToast({
-      type: "warning",
-      text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
-      duration: 5000,
-    });
+    if (!isInRightChain) {
+      newToast({
+        type: "warning",
+        text: "Please switch to " + process.env.NEXT_PUBLIC_CHAIN,
+        duration: 5000,
+      });
+      return;
+    }
+    onClose();
   };
 
   const userBody = (
@@ -52,48 +61,59 @@ export default function UserModal({
         <Pane>
           <Heading>Address:</Heading>
           <Text>{user?.accounts[0]}</Text>
-          {!isProfile && process.env.NEXT_PUBLIC_CHAIN_ID === chainID ? (
-            <Link
-              href="/profile"
-              style={{ color: "white", textDecoration: "none" }}
-            >
-              <Badge
-                color="green"
-                style={{ cursor: "pointer", marginRight: 5 }}
-                onClick={onClose}
-              >
-                Profile
-              </Badge>
-            </Link>
-          ) : (
+          <Pane>
             <Badge
-              color="green"
-              style={{ cursor: "pointer", marginRight: 5 }}
-              onClick={wrongChainModal}
+              color="neutral"
+              style={{ cursor: "pointer" }}
+              onClick={copyAddress}
             >
-              Profile
+              Copy Address
             </Badge>
-          )}
-          <Badge
-            color="neutral"
-            style={{ cursor: "pointer" }}
-            onClick={copyAddress}
-          >
-            Copy Address
-          </Badge>
+          </Pane>
         </Pane>
         <Pane>
           <Heading>Balance:</Heading>
-          <Text>{roundBalance(user?.balance, 6)} ETH</Text>
+          <Text>{formatLongNumber(parseInt(userBalance))} PDN</Text>
         </Pane>
-        <LogoutContainer>
+        <ButtonsContainer>
+          {!isProfile && isInRightChain ? (
+            <CustomButton
+              type={ButtonTypes.success}
+              style={{
+                width: "25%",
+                justifySelf: "flex-end",
+                cursor: "pointer",
+                marginRight: 5,
+              }}
+              text="Your Profile"
+              onClick={() => {
+                router.push("/profile");
+                onClose();
+              }}
+            />
+          ) : (
+            <CustomButton
+              onClick={wrongChainModal}
+              type={ButtonTypes.success}
+              style={{
+                width: "25%",
+                justifySelf: "flex-end",
+                cursor: "pointer",
+                marginRight: 5,
+                border: "none",
+              }}
+              text="Your Profile"
+            />
+          )}
           <CustomButton
             onClick={onLogout}
             type={ButtonTypes.danger}
-            style={{ width: "25%", justifySelf: "flex-end", cursor: "pointer" }}
             text="Disconnect"
+            style={{
+              border: "none",
+            }}
           />
-        </LogoutContainer>
+        </ButtonsContainer>
       </Content>
     </Pane>
   );
@@ -116,7 +136,7 @@ const Content = styled.div`
   justify-content: space-between;
 `;
 
-const LogoutContainer = styled.div`
+const ButtonsContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: flex-end;

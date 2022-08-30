@@ -51,7 +51,6 @@ const AuthReducer = (
       return {
         ...state,
         user: { ...state.user, balance: payload },
-        failure: true,
       };
     default:
       return state;

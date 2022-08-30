@@ -14,6 +14,8 @@ import { NetworkTypes } from "types";
 import { WALLET_ENABLED } from "config";
 import styled from "styled-components";
 import Head from "next/head";
+import useFetchBalance from "hooks/useFetchBalance";
+import useFetchNfts from "hooks/useFetchNfts";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -36,16 +38,14 @@ function App({ Component, pageProps }: AppProps) {
   const [chainId, setChainId] = useState<string>("");
   const { Moralis, isAuthenticated, account, logout } = useMoralis();
   const dispatch = useDispatch();
+  const { fetchBalance } = useFetchBalance();
+  const { fetchNfts } = useFetchNfts();
   const newToast = useCallback(
     (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
     [dispatch]
   );
   const updateChain = useCallback(
     (payload: any) => dispatch(Actions.WalletActions.UpdateChain(payload)),
-    [dispatch]
-  );
-  const updateBalance = useCallback(
-    (payload: string) => dispatch(Actions.AuthActions.Balance(payload)),
     [dispatch]
   );
   const storeLogout = useCallback(
@@ -126,7 +126,7 @@ function App({ Component, pageProps }: AppProps) {
 
   //Update chain of change in wallet
   useEffect(() => {
-    if (chainId.length && userData.balance && account) {
+    if (chainId.length && userData.balance != null && account) {
       //@ts-ignore
       const chainName = NetworkTypes[chainId];
       updateChain({
@@ -154,23 +154,9 @@ function App({ Component, pageProps }: AppProps) {
 
   // Fetch address balance and NFTs on address change
   useEffect(() => {
-    const getBalancesAndNfts = async () => {
-      if (account) {
-        try {
-          const balances = await Moralis.Web3API.account.getNativeBalance({
-            address: account,
-            //@ts-ignore
-            chain: chainId,
-          });
-
-          updateBalance(Moralis.Units.FromWei(balances.balance));
-        } catch (e) {
-          updateBalance("0");
-        }
-      }
-    };
     if (account && chainId.length && isAuthenticated) {
-      getBalancesAndNfts();
+      fetchBalance();
+      fetchNfts();
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, isAuthenticated, chainId]);
 

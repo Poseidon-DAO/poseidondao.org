@@ -3,13 +3,11 @@ import { INft } from "types";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
-import LoadingModal from "components/LoadingModal";
+import { Colors } from "components/UI_KIT/colors";
 
 export default function NFTList({
-  loading,
   handleNFTModal,
 }: {
-  loading: boolean;
   handleNFTModal: (nft: INft) => void;
 }) {
   const list = useSelector((state: RootState) => state.wallet.nfts);
@@ -17,7 +15,11 @@ export default function NFTList({
 
   return (
     <Container>
-      {!loading ? (
+      {list.length === 0 ? (
+        <p style={{ alignSelf: "flex-end", color: Colors.white.primary }}>
+          You have no items.
+        </p>
+      ) : (
         list.map((nft, i) => (
           <div
             key={i}
@@ -29,8 +31,6 @@ export default function NFTList({
             <NFTCard nft={nft} onClick={() => handleNFTModal(nft)} />
           </div>
         ))
-      ) : (
-        <LoadingModal />
       )}
       {[...Array(emptySpaces)].map(() => (
         <div style={{ width: "16rem", height: "24rem" }} />
