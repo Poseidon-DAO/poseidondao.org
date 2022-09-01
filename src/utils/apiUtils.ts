@@ -1,4 +1,5 @@
 export const checkError = async (response: any) => {
+  console.log("Response", response);
   if (!(response.status >= 200 && response.status < 400)) {
     const { message } = await toJson(response);
     const error = new Error(message);

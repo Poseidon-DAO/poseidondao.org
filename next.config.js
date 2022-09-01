@@ -8,6 +8,7 @@ const nextConfig = {
       "expertphotography.b-cdn.net",
       "images.unsplash.com",
       "ipfs.moralis.io",
+      "pinata.cloud",
     ],
   },
 };
