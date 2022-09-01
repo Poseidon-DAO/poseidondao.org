@@ -18,6 +18,9 @@ import { useRouter } from "next/router";
 import { Heading, Text, Badge } from "evergreen-ui";
 import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
+import { AiFillCopy } from "react-icons/ai";
+
+import Image from "next/image";
 
 interface ITab {
   name: string;
@@ -133,16 +136,10 @@ const ProfilePage = () => {
                   {address?.slice(0, 6) + "..." + address?.slice(-6)}
                 </Text>
                 <Badges style={{ marginTop: 5 }}>
-                  <Badge
-                    style={{ cursor: "pointer" }}
-                    onClick={copyAdress}
-                    color="green"
-                  >
-                    Copy
-                  </Badge>
-                  <Badge
-                    color="neutral"
-                    style={{ cursor: "pointer", marginLeft: "1rem" }}
+                  <IconContainer onClick={copyAdress}>
+                    <AiFillCopy size={25} />
+                  </IconContainer>
+                  <IconContainer
                     onClick={() =>
                       window.open(
                         `https://etherscan.io/address/${address}`,
@@ -150,8 +147,13 @@ const ProfilePage = () => {
                       )
                     }
                   >
-                    View on Etherscan
-                  </Badge>
+                    <Image
+                      src="/img/icons/etherscan.png"
+                      height={25}
+                      width={25}
+                      alt="etherscan"
+                    />
+                  </IconContainer>
                 </Badges>
               </AddressInfo>
             )}
@@ -305,5 +307,16 @@ const Modal = styled.div`
     width: 90%;
     height: auto;
   }
+`;
+
+const IconContainer = styled.div`
+  cursor: pointer;
+  margin-left: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export default ProfilePage;
