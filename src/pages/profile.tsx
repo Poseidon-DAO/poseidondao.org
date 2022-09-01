@@ -28,7 +28,7 @@ interface ITab {
 }
 
 const tabs: ITab[] = [
-  { name: "Collectibles", id: 0 },
+  { name: "NFTs", id: 0 },
   { name: "Burn", id: 1 },
   { name: "Transfer Tokens", id: 2 },
 ];
@@ -85,15 +85,10 @@ const ProfilePage = () => {
     }
   }, [account, Moralis]);
 
-  const handleNFTModal = (nft: INft) => {
-    setNftModalOpen(true);
-    setSelectedNft(nft);
-  };
-
   const TabContent = () => {
     switch (selectedTab.id) {
       case 0:
-        return <NFTList handleNFTModal={handleNFTModal} />;
+        return <NFTList />;
       case 1:
         return <Burn ratio={ratioConversion} />;
       case 2:
@@ -176,12 +171,6 @@ const ProfilePage = () => {
           <Content>{TabContent()}</Content>
         </ContentContainer>
       </Container>
-      <CustomModal
-        isOpen={nftModalOpen}
-        onClose={() => setNftModalOpen(false)}
-        header={selectedNft?.name}
-        body={<Modal></Modal>}
-      />
     </FlexView>
   );
 };
