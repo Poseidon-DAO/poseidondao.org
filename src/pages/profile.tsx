@@ -19,8 +19,7 @@ import { Heading, Text, Badge } from "evergreen-ui";
 import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
 import { AiFillCopy } from "react-icons/ai";
-
-import Image from "next/image";
+import { FaShareSquare } from "react-icons/fa";
 
 interface ITab {
   name: string;
@@ -108,7 +107,6 @@ const ProfilePage = () => {
               <Heading
                 size={600}
                 style={{
-                  marginBottom: 1,
                   fontWeight: 700,
                   color: Colors.white.primary,
                 }}
@@ -116,42 +114,47 @@ const ProfilePage = () => {
                 Your Account
               </Heading>
             </div>
-            {address && (
-              <AddressInfo>
-                <Text
-                  style={{
-                    fontSize: "1.2rem",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    maxWidth: "80vw",
-                    color: Colors.white.primary,
-                  }}
-                >
-                  {address?.slice(0, 6) + "..." + address?.slice(-6)}
-                </Text>
-                <Badges style={{ marginTop: 5 }}>
-                  <IconContainer onClick={copyAdress}>
-                    <AiFillCopy size={25} />
-                  </IconContainer>
-                  <IconContainer
-                    onClick={() =>
-                      window.open(
-                        `https://etherscan.io/address/${address}`,
-                        "_blank"
-                      )
-                    }
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "50%",
+                marginTop: "0.8rem",
+              }}
+            >
+              {address && (
+                <AddressInfo>
+                  <Text
+                    style={{
+                      fontSize: "1.2rem",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      maxWidth: "80vw",
+                      color: Colors.white.primary,
+                    }}
                   >
-                    <Image
-                      src="/img/icons/etherscan.png"
-                      height={25}
-                      width={25}
-                      alt="etherscan"
-                    />
-                  </IconContainer>
-                </Badges>
-              </AddressInfo>
-            )}
+                    {address?.slice(0, 6) + "..." + address?.slice(-6)}
+                  </Text>
+                  <Badges>
+                    <IconContainer onClick={copyAdress}>
+                      <AiFillCopy size={18} color="white" />
+                    </IconContainer>
+                    <IconContainer
+                      onClick={() =>
+                        window.open(
+                          `https://etherscan.io/address/${address}`,
+                          "_blank"
+                        )
+                      }
+                    >
+                      <FaShareSquare size={18} color="white" />
+                    </IconContainer>
+                  </Badges>
+                </AddressInfo>
+              )}
+            </div>
           </HeaderData>
         </Header>
         <ContentContainer>
@@ -301,9 +304,6 @@ const Modal = styled.div`
 const IconContainer = styled.div`
   cursor: pointer;
   margin-left: 1rem;
-  background-color: white;
-  border-radius: 0.5rem;
-  padding: 0.1rem;
   display: flex;
   justify-content: center;
   align-items: center;
