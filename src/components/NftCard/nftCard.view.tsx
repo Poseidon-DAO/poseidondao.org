@@ -4,13 +4,7 @@ import { INft } from "types";
 import Tilt from "react-parallax-tilt";
 import { Colors } from "components/UI_KIT/colors";
 
-export default function NFTCard({
-  nft,
-  onClick,
-}: {
-  nft: INft;
-  onClick: (nft: INft) => void;
-}) {
+export default function NFTCard({ nft }: { nft: INft }) {
   const isLoading = nft?.image.content.length;
   return (
     <Tilt
@@ -19,7 +13,7 @@ export default function NFTCard({
       scale={1.01}
       transitionEasing={"cubic-bezier(0.2,.98,.52,.99)"}
     >
-      <Card onClick={() => onClick(nft)}>
+      <Card>
         {isLoading ? (
           <>
             <Image src={nft.image.content} alt={nft.name} />
@@ -46,7 +40,6 @@ const Card = styled.div`
   align-items: center;
   border-radius: 0.2rem;
   margin-bottom: 1rem;
-  cursor: pointer;
   background-position: center center;
   box-shadow: inset 0 0 1rem 0 rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.5s;

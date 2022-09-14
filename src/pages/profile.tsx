@@ -18,6 +18,8 @@ import { useRouter } from "next/router";
 import { Heading, Text, Badge } from "evergreen-ui";
 import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
+import { AiFillCopy } from "react-icons/ai";
+import { FaShareSquare } from "react-icons/fa";
 
 interface ITab {
   name: string;
@@ -25,7 +27,7 @@ interface ITab {
 }
 
 const tabs: ITab[] = [
-  { name: "Collectibles", id: 0 },
+  { name: "NFTs", id: 0 },
   { name: "Burn", id: 1 },
   { name: "Transfer Tokens", id: 2 },
 ];
@@ -82,15 +84,10 @@ const ProfilePage = () => {
     }
   }, [account, Moralis]);
 
-  const handleNFTModal = (nft: INft) => {
-    setNftModalOpen(true);
-    setSelectedNft(nft);
-  };
-
   const TabContent = () => {
     switch (selectedTab.id) {
       case 0:
-        return <NFTList handleNFTModal={handleNFTModal} />;
+        return <NFTList />;
       case 1:
         return <Burn ratio={ratioConversion} />;
       case 2:
@@ -110,7 +107,6 @@ const ProfilePage = () => {
               <Heading
                 size={600}
                 style={{
-                  marginBottom: 1,
                   fontWeight: 700,
                   color: Colors.white.primary,
                 }}
@@ -118,43 +114,47 @@ const ProfilePage = () => {
                 Your Account
               </Heading>
             </div>
-            {address && (
-              <AddressInfo>
-                <Text
-                  style={{
-                    fontSize: "1.2rem",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    maxWidth: "80vw",
-                    color: Colors.white.primary,
-                  }}
-                >
-                  {address?.slice(0, 6) + "..." + address?.slice(-6)}
-                </Text>
-                <Badges style={{ marginTop: 5 }}>
-                  <Badge
-                    style={{ cursor: "pointer" }}
-                    onClick={copyAdress}
-                    color="green"
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "50%",
+                marginTop: "0.8rem",
+              }}
+            >
+              {address && (
+                <AddressInfo>
+                  <Text
+                    style={{
+                      fontSize: "1.2rem",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      maxWidth: "80vw",
+                      color: Colors.white.primary,
+                    }}
                   >
-                    Copy
-                  </Badge>
-                  <Badge
-                    color="neutral"
-                    style={{ cursor: "pointer", marginLeft: "1rem" }}
-                    onClick={() =>
-                      window.open(
-                        `https://etherscan.io/address/${address}`,
-                        "_blank"
-                      )
-                    }
-                  >
-                    View on Etherscan
-                  </Badge>
-                </Badges>
-              </AddressInfo>
-            )}
+                    {address?.slice(0, 6) + "..." + address?.slice(-6)}
+                  </Text>
+                  <Badges>
+                    <IconContainer onClick={copyAdress}>
+                      <AiFillCopy size={18} color="white" />
+                    </IconContainer>
+                    <IconContainer
+                      onClick={() =>
+                        window.open(
+                          `https://etherscan.io/address/${address}`,
+                          "_blank"
+                        )
+                      }
+                    >
+                      <FaShareSquare size={18} color="white" />
+                    </IconContainer>
+                  </Badges>
+                </AddressInfo>
+              )}
+            </div>
           </HeaderData>
         </Header>
         <ContentContainer>
@@ -174,12 +174,6 @@ const ProfilePage = () => {
           <Content>{TabContent()}</Content>
         </ContentContainer>
       </Container>
-      <CustomModal
-        isOpen={nftModalOpen}
-        onClose={() => setNftModalOpen(false)}
-        header={selectedNft?.name}
-        body={<Modal></Modal>}
-      />
     </FlexView>
   );
 };
@@ -305,5 +299,13 @@ const Modal = styled.div`
     width: 90%;
     height: auto;
   }
+`;
+
+const IconContainer = styled.div`
+  cursor: pointer;
+  margin-left: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export default ProfilePage;

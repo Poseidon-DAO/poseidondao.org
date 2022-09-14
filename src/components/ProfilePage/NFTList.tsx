@@ -5,11 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
 import { Colors } from "components/UI_KIT/colors";
 
-export default function NFTList({
-  handleNFTModal,
-}: {
-  handleNFTModal: (nft: INft) => void;
-}) {
+export default function NFTList() {
   const list = useSelector((state: RootState) => state.wallet.nfts);
   const emptySpaces = list.length % 3;
 
@@ -28,7 +24,7 @@ export default function NFTList({
               marginBottom: "1rem",
             }}
           >
-            <NFTCard nft={nft} onClick={() => handleNFTModal(nft)} />
+            <NFTCard nft={nft} />
           </div>
         ))
       )}
