@@ -149,14 +149,13 @@ export default function Burn({ ratio }: BurnProps) {
                       else return false;
                     } else return renderNftButton(i);
                   })}
-
-                  <Heading color="white">
-                    You are going to burn: {selectedAmount * ratio} PDN
-                  </Heading>
-                  <Heading color="white">
-                    Receiving: {selectedAmount} NFTs
-                  </Heading>
                 </div>
+                <Heading color="white">
+                  You are going to burn: {selectedAmount * ratio} PDN
+                </Heading>
+                <Heading color="white">
+                  Receiving: {selectedAmount} NFTs
+                </Heading>
                 <div>
                   {availableToBurn !== 0 ? (
                     <Button

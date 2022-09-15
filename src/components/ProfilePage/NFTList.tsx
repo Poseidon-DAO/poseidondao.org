@@ -1,5 +1,4 @@
 import NFTCard from "components/NftCard/nftCard.view";
-import { INft } from "types";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
@@ -28,8 +27,8 @@ export default function NFTList() {
           </div>
         ))
       )}
-      {[...Array(emptySpaces)].map(() => (
-        <div style={{ width: "16rem", height: "24rem" }} />
+      {[...Array(emptySpaces)].map((i) => (
+        <div key={i} style={{ width: "16rem", height: "24rem" }} />
       ))}
     </Container>
   );
@@ -48,14 +47,5 @@ const Container = styled.div`
   @media (max-width: 768px) {
     gap: 1rem;
     justify-content: center;
-  }
-`;
-const NftContainer = styled.div`
-  display: flex;
-  width: 16rem;
-  height: 24rem;
-  @media (max-width: 768px) {
-    margin-right: 1rem;
-    width: 60%;
   }
 `;

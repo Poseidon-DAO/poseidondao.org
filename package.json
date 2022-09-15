@@ -9,12 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "1.8",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@walletconnect/web3-provider": "^1.7.8",
     "@web3auth/web3auth": "^1.0.0",
     "boring-avatars": "^1.6.3",
     "decimal.js-light": "^2.5.1",
     "evergreen-ui": "^6.9.10",
     "formik": "^2.2.9",
+    "framer-motion": "^6.5.1",
     "lottie-react": "^2.3.1",
     "magic-sdk": "^8.1.1",
     "moralis": "1.11.0",

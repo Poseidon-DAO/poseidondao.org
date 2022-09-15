@@ -16,20 +16,24 @@ import styled from "styled-components";
 import Head from "next/head";
 import useFetchBalance from "hooks/useFetchBalance";
 import useFetchNfts from "hooks/useFetchNfts";
+import { ChakraProvider } from "@chakra-ui/react";
+import { theme } from "styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <MoralisProvider
-        appId={process.env.NEXT_PUBLIC_MORALIS_ID!}
-        serverUrl={process.env.NEXT_PUBLIC_MORALIS_URL!}
-      >
-        <ToastContainer />
-        <IndexNavbar />
-        <App Component={Component} {...pageProps} />
-        <Footer />
-      </MoralisProvider>
-    </Provider>
+    <ChakraProvider theme={theme}>
+      <Provider store={store}>
+        <MoralisProvider
+          appId={process.env.NEXT_PUBLIC_MORALIS_ID!}
+          serverUrl={process.env.NEXT_PUBLIC_MORALIS_URL!}
+        >
+          <ToastContainer />
+          <IndexNavbar />
+          <App Component={Component} {...pageProps} />
+          <Footer />
+        </MoralisProvider>
+      </Provider>
+    </ChakraProvider>
   );
 }
 
