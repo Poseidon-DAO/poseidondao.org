@@ -20,6 +20,20 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "styles/theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  if (typeof window === "undefined") {
+    return <></>;
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <Provider store={store}>
@@ -182,11 +196,7 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Poseidon DAO</title>
-        <meta
-          name="viewport"
-          // content="minimum-scale=1, initial-scale=1, width=device-width"
-          content="viewport-fit=cover"
-        />
+        <meta name="viewport" content="viewport-fit=cover" />
       </Head>
       <Dots>
         <Component {...pageProps} />

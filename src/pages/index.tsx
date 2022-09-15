@@ -79,10 +79,6 @@ const LandingPage = () => {
   return (
     <>
       <FullScreen>
-        <Background>
-          <Shape1 isMobile={isMobile} />
-          <Shape2 isMobile={isMobile} />
-        </Background>
         <Container>
           <ContentWrapper>
             <Heading
@@ -490,40 +486,5 @@ const wobble2 = keyframes`
     border-radius: 76% 24% 33% 67% / 41% 69% 31% 59%;
   }
 }`;
-
-const Background = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  max-width: 100vw;
-`;
-
-const Shape1 = styled.div<{ isMobile: boolean }>`
-  height: ${(props) => (props.isMobile ? "15rem" : "30rem")};
-  width: ${(props) => (props.isMobile ? "60vw" : "40vw")};
-  background-color: grey;
-  opacity: 0.2;
-  border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
-  position: absolute;
-  top: 10%;
-  left: ${(props) => (props.isMobile ? "35%" : "40%")};
-  animation: ${wobble} 5s ease-in-out alternate infinite;
-`;
-const Shape2 = styled.div<{ isMobile: boolean }>`
-  height: ${(props) => (props.isMobile ? "15rem" : "30rem")};
-  width: ${(props) => (props.isMobile ? "50vw" : "40vw")};
-  background-color: grey;
-  opacity: 0.2;
-  border-radius: 14% 86% 48% 52% / 25% 21% 79% 75%;
-  position: absolute;
-  top: 30%;
-  left: ${(props) => (props.isMobile ? "30%" : "50%")};
-  animation: ${wobble2} 7s ease-in-out alternate infinite;
-`;
 
 export default LandingPage;
