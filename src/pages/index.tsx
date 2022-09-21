@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import LoopGallery from "components/LoopGallery/LoopGallery";
 import FullScreen from "components/FullScreen";
-import { Heading, Pane, Paragraph, Text } from "evergreen-ui";
-import styled, { keyframes } from "styled-components";
+import { Pane, Paragraph, Text } from "evergreen-ui";
+import { Box, Heading, Image } from "@chakra-ui/react";
+import styled from "styled-components";
 import SocialMediaIcons from "components/UI_KIT/SocialMediaIcons";
 import { BsTrophy, BsSuitHeart } from "react-icons/bs";
 import { IoRocketOutline } from "react-icons/io5";
@@ -10,6 +11,7 @@ import { FaCoins } from "react-icons/fa";
 import { AiOutlineRight } from "react-icons/ai";
 import { Colors } from "components/UI_KIT/colors";
 import { useIsMobile } from "hooks/useIsMobile";
+import MobilePhoneImage from "../assets/images/phone.png";
 
 const skew = 8;
 const IMAGES = [
@@ -78,31 +80,51 @@ const LandingPage = () => {
 
   return (
     <>
+      <FullScreen showImage>
+        <Container>
+          <ContentWrapper>
+            <Heading size="4xl" fontSize={{ lg: 68, sm: 48 }}>
+              We collect NFTs to pass on a legacy!
+            </Heading>
+            <Image
+              zIndex={100}
+              src={MobilePhoneImage.src}
+              style={{ position: "absolute" }}
+              height="90vh"
+              right={0}
+              marginRight={-350}
+              top="2%"
+            />
+          </ContentWrapper>
+        </Container>
+        <Box
+          backgroundColor="brand.background"
+          width="100vw"
+          height="100vh"
+          position="absolute"
+          top="85vh"
+          transform={`skewY(-${20}deg)`}
+          zIndex={1}
+        />
+      </FullScreen>
       <FullScreen>
         <Container>
           <ContentWrapper>
-            <Heading
-              marginBottom="2rem"
-              color="white"
-              fontSize={40}
-              fontWeight={300}
-              lineHeight="40px"
-              marginTop={isMobile ? "5rem" : "0"}
-            >
-              Artists & Collectors DAO <br />
+            <Heading size="4xl" fontSize={{ lg: 68, sm: 48 }}>
+              DAO Collection
             </Heading>
-            <Paragraph color="white" paddingX={isMobile ? "0.5rem" : 0}>
-              Poseidon DAO brings NFTs to the next step, enabling their
-              evolution. The DAO is built on top of the knowledge of a huge
-              collective of artists and collectors, in order to create a
-              decentralized entity that can lead NFTs and crypto art to another
-              level
-            </Paragraph>
-            <SocialMediaIcons />
+            <Image
+              zIndex={100}
+              src={MobilePhoneImage.src}
+              style={{ position: "absolute" }}
+              height="90vh"
+              right={0}
+              marginRight={-350}
+              top="2%"
+            />
           </ContentWrapper>
         </Container>
       </FullScreen>
-
       <Pane
         width="100vw"
         display="flex"
@@ -381,7 +403,7 @@ const LandingPage = () => {
 const ContentWrapper = styled.div`
   text-align: start;
   display: flex;
-  width: 450px;
+  width: 600px;
   flex-direction: column;
   @media (max-width: 992px) {
     text-align: center;
@@ -392,6 +414,7 @@ const ContentWrapper = styled.div`
 
 const Container = styled.div`
   display: flex;
+  z-index: 2;
   width: 80%;
   justify-content: space-between;
   align-items: center;
@@ -462,29 +485,5 @@ const GenesisSection = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
-const wobble = keyframes`
-  0% {
-    border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
-  }
-  50% {
-    border-radius: 47% 53% 86% 14% / 53% 36% 64% 47%;
-  }
-  100% {
-    border-radius: 56% 44% 71% 29% / 67% 23% 77% 33%;
-  }
-}`;
-
-const wobble2 = keyframes`
-  0% {
-    border-radius: 40% 60% 80% 20% / 58% 28% 72% 42%;
-  }
-  50% {
-    border-radius: 65% 35% 33% 67% / 49% 21% 79% 51%;
-  }
-  100% {
-    border-radius: 76% 24% 33% 67% / 41% 69% 31% 59%;
-  }
-}`;
 
 export default LandingPage;
