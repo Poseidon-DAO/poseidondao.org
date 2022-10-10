@@ -5,8 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { MoralisProvider, useMoralis } from "react-moralis";
 import store from "redux/store";
-import IndexNavbar from "components/Navbars/IndexNavbar";
-import Footer from "components/Footer/Footer";
 import { useCallback, useEffect, useState } from "react";
 import Actions from "redux/actions";
 import { RootState } from "redux/reducers";
@@ -16,8 +14,10 @@ import styled from "styled-components";
 import Head from "next/head";
 import useFetchBalance from "hooks/useFetchBalance";
 import useFetchNfts from "hooks/useFetchNfts";
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { theme } from "styles/theme";
+
+import { Footer, Navbar } from "components";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isMounted, setIsMounted] = useState(false);
@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           serverUrl={process.env.NEXT_PUBLIC_MORALIS_URL!}
         >
           <ToastContainer />
-          <IndexNavbar />
+          <Navbar />
           <App Component={Component} {...pageProps} />
           <Footer />
         </MoralisProvider>
@@ -88,7 +88,7 @@ function App({ Component, pageProps }: AppProps) {
         setChainId(chainID);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -198,17 +198,12 @@ function App({ Component, pageProps }: AppProps) {
         <title>Poseidon DAO</title>
         <meta name="viewport" content="viewport-fit=cover" />
       </Head>
-      <Dots>
+
+      <Box minH="100vh" pt="10vh" bg="brand.background">
         <Component {...pageProps} />
-      </Dots>
+      </Box>
     </>
   );
 }
 
 export default MyApp;
-
-const Dots = styled.div`
-  background-image: url("/img/dots.png");
-  background-repeat: repeat repeat;
-  background-size: contain;
-`;

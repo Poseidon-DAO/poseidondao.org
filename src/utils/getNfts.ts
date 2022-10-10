@@ -37,7 +37,7 @@ export async function getNfts(nftList: INftFetch[]) {
           const nft = await transformImg(response, item);
           if (nft) nftData.push(nft);
         })
-        .catch((e) => console.log(e))
+        .catch((e) => console.error(e))
     )
   );
   store.dispatch(Actions.WalletActions.UpdateNfts.success(nftData));

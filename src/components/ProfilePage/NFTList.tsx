@@ -17,7 +17,7 @@ export default function NFTList() {
       ) : (
         list.map((nft, i) => (
           <div
-            key={i}
+            key={`${i}-${Date.now()}`}
             style={{
               width: "16rem",
               marginBottom: "1rem",

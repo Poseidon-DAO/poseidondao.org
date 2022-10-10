@@ -4,7 +4,10 @@ const colors = {
     purple: "#a291bf",
     red: "#f20a70",
     pink: "#f385cd",
-    background: "purple",
+    background: "#1F2046",
+    text: "#fff",
+    black: "#000",
+    transparent: "transparent",
   },
 };
 
