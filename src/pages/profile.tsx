@@ -307,5 +307,8 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 export default ProfilePage;
