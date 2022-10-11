@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
-Disallow:
+Allow: /
+
+# Host
+Host: poseidondao.org
+
+# Sitemaps
+Sitemap: poseidondao.org/sitemap.xml
