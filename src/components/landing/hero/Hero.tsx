@@ -2,7 +2,6 @@ import { Box, Flex, Heading, Image } from "@chakra-ui/react";
 import { Container } from "components/container";
 
 import background from "assets/images/background-tunnel.png";
-import phone from "assets/images/phone.png";
 
 const Hero = () => {
   return (
@@ -34,15 +33,6 @@ const Hero = () => {
             </Heading>
           </Flex>
         </Container>
-      </Box>
-
-      <Box
-        pos="absolute"
-        right="-300px"
-        top={{ sm: "450px", lg: "50px" }}
-        zIndex={1}
-      >
-        <Image w="800px" src={phone.src} />
       </Box>
     </Box>
   );

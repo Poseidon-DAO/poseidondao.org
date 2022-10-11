@@ -18,6 +18,7 @@ import { Box, ChakraProvider } from "@chakra-ui/react";
 import { theme } from "styles/theme";
 
 import { Footer, Navbar } from "components";
+import ErrorBoundary from "components/error-boundary/ErrorBoundary";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isMounted, setIsMounted] = useState(false);
@@ -41,10 +42,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           appId={process.env.NEXT_PUBLIC_MORALIS_ID!}
           serverUrl={process.env.NEXT_PUBLIC_MORALIS_URL!}
         >
-          <ToastContainer />
-          <Navbar />
-          <App Component={Component} {...pageProps} />
-          <Footer />
+          <ErrorBoundary>
+            <ToastContainer />
+            <Navbar />
+            <App Component={Component} {...pageProps} />
+            <Footer />
+          </ErrorBoundary>
         </MoralisProvider>
       </Provider>
     </ChakraProvider>
