@@ -19,7 +19,7 @@ import { publicProvider } from "wagmi/providers/public";
 
 import store from "redux/store";
 import { Header } from "components/header";
-import { Footer } from "components/footer2";
+import { Footer } from "components/footer";
 
 import useFetchBalance from "hooks/useFetchBalance";
 import useFetchNfts from "hooks/useFetchNfts";
