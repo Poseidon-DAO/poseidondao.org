@@ -28,8 +28,8 @@ export default function NFTList() {
           </div>
         ))
       )}
-      {[...Array(emptySpaces)].map(() => (
-        <div style={{ width: "16rem", height: "24rem" }} />
+      {[...Array(emptySpaces)].map((i) => (
+        <div key={i} style={{ width: "16rem", height: "24rem" }} />
       ))}
     </Container>
   );
