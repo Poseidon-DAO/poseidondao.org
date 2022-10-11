@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
 
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 const defaultHeight = 4;
 const defaultPadding = 3;
 
@@ -80,7 +82,7 @@ export default function IndexNavbar() {
       />
       {WALLET_ENABLED && (
         <Pane flex={1} justifyContent="flex-end" display="flex">
-          <ConnectWallet />
+          <ConnectButton />
         </Pane>
       )}
     </Pane>
