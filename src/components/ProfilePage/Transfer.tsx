@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import styled from "styled-components";
 import { useTransfer } from "hooks/useTransfer";
 import TransactionForm from "components/TransactionForm";
 import { Alert } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import Actions from "redux/actions";
+import { Heading } from "@chakra-ui/react";
+import { Container } from "components/container";
 
 export default function Transfer({
   availableBalance,
@@ -52,15 +53,12 @@ export default function Transfer({
 
   return (
     <Container>
-      <Label>Transfer tokens</Label>
+      <Heading size="lg">Transfer tokens</Heading>
 
       <TransactionForm
-        column
         availableBalance={availableBalance}
-        maxAmountButton
         onSubmit={handleTransfer}
         loading={isFetching || isLoading}
-        buttonProps={{ title: "Transfer", variant: "contained" }}
       />
       {transactionState === "success" && (
         <Alert
@@ -96,16 +94,3 @@ export default function Transfer({
     </Container>
   );
 }
-
-const Container = styled.div`
-  width: 50vw;
-  height: 100%;
-  @media (max-width: 768px) {
-    width: 90vw;
-  }
-`;
-
-const Label = styled.h4`
-  color: #fff;
-  margin-bottom: 0.5rem;
-`;

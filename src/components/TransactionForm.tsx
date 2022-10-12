@@ -1,34 +1,79 @@
-import { TextInputField } from "evergreen-ui";
-import { useIsMobile } from "hooks/useIsMobile";
-import { useState } from "react";
-import { Form, FormGroup, Label } from "reactstrap";
+import {
+  ChangeEvent,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 import web3 from "web3";
-import styled from "styled-components";
-import { Colors } from "components/UI_KIT/colors";
+import {
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Text,
+  Tooltip,
+} from "@chakra-ui/react";
+
+interface ITransactionFormProps {
+  resetOnSubmit?: boolean;
+  onSubmit?: (
+    data: { address: string; amount: string },
+    reset: () => void
+  ) => void;
+  loading?: boolean;
+  availableBalance: string;
+}
 
 TransactionForm.defaultProps = {
   resetOnSubmit: false,
-  column: false,
-  maxAmountButton: false,
+  onSubmit: () => {},
   loading: false,
-  buttonProps: {
-    title: "",
-  },
 };
 
 function TransactionForm({
   onSubmit,
-  buttonProps,
   resetOnSubmit,
   availableBalance,
-}: any) {
-  const isMobile = useIsMobile();
+  loading,
+}: ITransactionFormProps) {
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
   const [errors, setErrors] = useState({
     address: "",
     amount: "",
   });
+
+  console.log(errors);
+
+  const handleInputChange =
+    (setter: Dispatch<SetStateAction<any>>, asNumber = false) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setter(asNumber ? event.target.valueAsNumber : event.target.value);
+      setErrors((errors) => ({
+        ...errors,
+        [event.target.name]: "",
+      }));
+    };
+
+  function renderSubmitButton({
+    element,
+    tooltip,
+  }: {
+    element: ReactNode;
+    tooltip: boolean;
+  }) {
+    if (!tooltip) return element;
+
+    return (
+      <Tooltip label="Insufficient funds">
+        <span>{element}</span>
+      </Tooltip>
+    );
+  }
 
   function validate() {
     if (!amount) {
@@ -80,86 +125,71 @@ function TransactionForm({
     }
   }
 
-  const { title, ...allButtonProps } = buttonProps;
-
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormGroup style={{ margin: "1rem 0rem" }}>
-        <Label style={{ color: "white" }}>Address:</Label>
-        <TextInputField
-          label=""
-          type="text"
-          value={address}
-          onChange={(e: any) => setAddress(e.target.value)}
-          placeholder="0x850EdEfE0A1d573057a695B870Ada74116F8E3d0"
-          style={{ width: !isMobile ? "80%" : "100%" }}
-        />
-      </FormGroup>
-      <FormGroup style={{ margin: "1rem 0rem" }}>
-        <Label style={{ color: "white" }}>Amount:</Label>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            width: !isMobile ? "80%" : "100%",
-          }}
-        >
-          <TextInputField
-            type="number"
-            label=""
-            value={amount}
-            onChange={(e: any) => setAmount(e.target.value)}
-            placeholder="7"
-            style={{ marginRight: "1rem" }}
+    <form onSubmit={handleSubmit}>
+      <Flex direction="column" wrap="nowrap">
+        <Box mb={4}>
+          <FormLabel htmlFor="address">Address</FormLabel>
+          <Input
+            name="address"
+            value={address}
+            disabled={loading}
+            onChange={handleInputChange(setAddress)}
+            placeholder="0x850EdEfE0A1d573057a695B870Ada74116F8E3d0"
+            autoComplete="off"
+            size="lg"
+            isInvalid={!!errors["address"]}
           />
-          <Badge onClick={handleMaxValueSet} style={{ marginBottom: "1rem" }}>
-            MAX
-          </Badge>
-        </div>
-      </FormGroup>
-      <Button
-        disabled={amount.length < 1 || address.length < 1}
-        onClick={handleSubmit}
-      >
-        SEND
-      </Button>
-    </Form>
+          <Text color="brand.red">{errors["address"]}</Text>
+        </Box>
+
+        <Box mb={4}>
+          <FormLabel htmlFor="amount">Amount</FormLabel>
+          <InputGroup>
+            <Input
+              name="amount"
+              value={amount}
+              disabled={loading}
+              onChange={handleInputChange(setAmount, true)}
+              placeholder="7"
+              type="number"
+              autoComplete="off"
+              size="lg"
+              isInvalid={!!errors["amount"]}
+              pr="4.5rem"
+            />
+
+            {!amount && (
+              <InputRightElement w="4.5rem" h="100%">
+                <Tooltip label="Use the max amount of tokens you have">
+                  <Button size="sm" onClick={handleMaxValueSet}>
+                    Max
+                  </Button>
+                </Tooltip>
+              </InputRightElement>
+            )}
+          </InputGroup>
+          <Text color="brand.red">{errors["amount"]}</Text>
+        </Box>
+
+        <Flex justifyContent="flex-end">
+          {renderSubmitButton({
+            element: (
+              <Button
+                size="lg"
+                type="submit"
+                disabled={amount > availableBalance}
+                isLoading={loading}
+              >
+                Transfer
+              </Button>
+            ),
+            tooltip: availableBalance < amount,
+          })}
+        </Flex>
+      </Flex>
+    </form>
   );
 }
-
-const Badge = styled.div`
-  width: fit-content;
-  background: transparent;
-  color: white;
-  font-size: 0.7em;
-  padding: 0.7em 1em;
-  border: 0.1px solid lightgrey;
-  border-radius: 3px;
-  margin-left: 0.5rem;
-  &:hover {
-    background-color: ${Colors.blue.clear};
-    transition: background-color 0.2s;
-    cursor: pointer;
-  }
-`;
-
-const Button = styled.div<{ disabled: boolean }>`
-  width: fit-content;
-  background: ${(props) =>
-    !props.disabled ? "transparent" : Colors.blue.ocean};
-  color: ${(props) => (!props.disabled ? "white" : "grey")};
-  font-size: 1em;
-  margin-top: 1rem;
-  padding: 0.5em 1em;
-  border: ${(props) => (!props.disabled ? "0.1px solid lightgrey" : "none")};
-  border-radius: 3px;
-  &:hover {
-    transform: ${(props) => (!props.disabled ? "scale(0.98)" : "")};
-    background-color: ${(props) => (!props.disabled ? Colors.blue.clear : "")};
-    transition: background-color 0.2s;
-    cursor: ${(props) => (!props.disabled ? "pointer" : "default")};
-  }
-`;
 
 export default TransactionForm;

@@ -1,5 +1,4 @@
 import CustomModal from "../UI_KIT/CustomModal";
-import styled from "styled-components";
 import AvatarDisplay from "../UI_KIT/Avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
@@ -11,6 +10,7 @@ import { useCallback } from "react";
 import Actions from "redux/actions";
 import { Badge, Heading, Pane, Text } from "evergreen-ui";
 import CustomButton from "components/UI_KIT/CustomButton";
+import { Flex } from "@chakra-ui/react";
 
 interface UserModalProps {
   isOpen: boolean;
@@ -56,7 +56,13 @@ export default function UserModal({
       <Pane style={{ height: "5rem", width: "20%" }}>
         <AvatarDisplay size={50} />
       </Pane>
-      <Content>
+      <Flex
+        flex={1}
+        h="10rem"
+        flexDir="column"
+        justifyContent="space-between
+      "
+      >
         <Pane>
           <Heading>Address:</Heading>
           <Text>{user?.accounts[0]}</Text>
@@ -74,7 +80,7 @@ export default function UserModal({
           <Heading>Balance:</Heading>
           <Text>{formatLongNumber(parseInt(userBalance))} PDN</Text>
         </Pane>
-        <ButtonsContainer>
+        <Flex w="100%" justifyContent="flex-end" justifySelf="flex-end">
           {!isProfile && isInRightChain ? (
             <CustomButton
               type={ButtonTypes.success}
@@ -112,8 +118,8 @@ export default function UserModal({
               border: "none",
             }}
           />
-        </ButtonsContainer>
-      </Content>
+        </Flex>
+      </Flex>
     </Pane>
   );
 
@@ -126,18 +132,3 @@ export default function UserModal({
     />
   ) : null;
 }
-
-const Content = styled.div`
-  display: flex;
-  flex: 1;
-  height: 10rem;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  justify-self: flex-end;
-`;

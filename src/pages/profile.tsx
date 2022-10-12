@@ -4,10 +4,8 @@ import { FlexView } from "components/UI_KIT/Display";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/reducers";
-import styled from "styled-components";
 import { INft } from "types";
 import useCopyAddress from "utils/useCopyAddress";
-import CustomModal from "components/UI_KIT/CustomModal";
 import NFTList from "components/ProfilePage/NFTList";
 import Transfer from "components/ProfilePage/Transfer";
 import { useMoralis } from "react-moralis";
@@ -20,6 +18,7 @@ import { Colors } from "components/UI_KIT/colors";
 import { WALLET_ENABLED } from "config";
 import { AiFillCopy } from "react-icons/ai";
 import { FaShareSquare } from "react-icons/fa";
+import { Flex } from "@chakra-ui/react";
 
 interface ITab {
   name: string;
@@ -99,10 +98,10 @@ const ProfilePage = () => {
 
   return (
     <FlexView>
-      <Container>
-        <Header>
+      <Flex flexDir="column" minH="100vh" w="90vw">
+        <Flex alignItems="center">
           <AvatarDisplay size={"6vw"} />
-          <HeaderData>
+          <Flex flexDir="column" ml="1rem">
             <div style={{ height: "50%" }}>
               <Heading
                 size={600}
@@ -124,7 +123,7 @@ const ProfilePage = () => {
               }}
             >
               {address && (
-                <AddressInfo>
+                <Flex alignItems="center" h="20%">
                   <Text
                     style={{
                       fontSize: "1.2rem",
@@ -137,11 +136,25 @@ const ProfilePage = () => {
                   >
                     {address?.slice(0, 6) + "..." + address?.slice(-6)}
                   </Text>
-                  <Badges>
-                    <IconContainer onClick={copyAdress}>
+                  <Flex ml="1rem">
+                    <Flex
+                      justifyContent="center"
+                      alignItems="center"
+                      ml="1rem"
+                      _hover={{
+                        opacity: "0.8",
+                      }}
+                      onClick={copyAdress}
+                    >
                       <AiFillCopy size={18} color="white" />
-                    </IconContainer>
-                    <IconContainer
+                    </Flex>
+                    <Flex
+                      justifyContent="center"
+                      alignItems="center"
+                      ml="1rem"
+                      _hover={{
+                        opacity: "0.8",
+                      }}
                       onClick={() =>
                         window.open(
                           `https://etherscan.io/address/${address}`,
@@ -150,165 +163,65 @@ const ProfilePage = () => {
                       }
                     >
                       <FaShareSquare size={18} color="white" />
-                    </IconContainer>
-                  </Badges>
-                </AddressInfo>
+                    </Flex>
+                  </Flex>
+                </Flex>
               )}
             </div>
-          </HeaderData>
-        </Header>
-        <ContentContainer>
-          <Tabs>
+          </Flex>
+        </Flex>
+        <Flex w="100%" mt="2rem" minH="40vh">
+          <Flex
+            __css={{
+              minHeight: "60vh",
+              width: "20%",
+              borderRight: "solid 0.2px white",
+              paddingRight: "1rem",
+            }}
+          >
             {tabs.map((el) => (
-              <Tab
+              <Flex
                 key={el.id}
-                isSelected={selectedTab.name === el.name}
+                __css={{
+                  height: "3rem",
+                  marginTop: "1rem",
+                  display: "flex",
+                  width: "100%",
+                  padding: "0.5rem",
+                  alignItems: "center",
+                  borderRadius: "1px",
+                }}
+                _hover={{
+                  backgroundColor: "#4824fa",
+                  cursor: "pointer",
+                }}
+                _active={{
+                  backgroundColor: "black",
+                }}
+                bg={selectedTab.name === el.name ? Colors.blue.ocean : ""}
                 onClick={() => setSelectedTab(el)}
               >
                 <h4 style={{ margin: 0, color: Colors.white.primary }}>
                   {el.name}
                 </h4>
-              </Tab>
+              </Flex>
             ))}
-          </Tabs>
-          <Content>{TabContent()}</Content>
-        </ContentContainer>
-      </Container>
+          </Flex>
+
+          <Flex
+            wrap="wrap"
+            justifyContent="space-between"
+            alignItems="center"
+            w="80%"
+            ml="1rem"
+            mt="1rem"
+          >
+            {TabContent()}
+          </Flex>
+        </Flex>
+      </Flex>
     </FlexView>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 90vw;
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const HeaderData = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 1rem;
-`;
-const Badges = styled.div`
-  display: flex;
-  margin-left: 1rem;
-  @media (max-width: 768px) {
-    margin-left: 0;
-  }
-`;
-
-const ContentContainer = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 2rem;
-  min-height: 40vh;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  margin-left: 1rem;
-  margin-top: 1rem;
-  width: 80%;
-  @media (max-width: 768px) {
-    margin-left: 0;
-    margin-top: 1rem;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-const AddressInfo = styled.div`
-  height: 20%;
-  display: flex;
-  align-items: center;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-  }
-`;
-
-const Tab = styled.div<{ isSelected: boolean }>`
-  height: 3rem;
-  margin-top: 1rem;
-  display: flex;
-  width: 100%;
-  padding: 0.5rem;
-  align-items: center;
-  border-radius: 1px;
-  background-color: ${(props) => (props.isSelected ? Colors.blue.ocean : "")};
-  border-bottom: ${(props) =>
-    props.isSelected ? "0.5px solid #4824fa" : "none"};
-  &:hover {
-    background-color: #4824fa;
-    cursor: pointer;
-  }
-  &:active {
-    background-color: black;
-  }
-  @media (max-width: 768px) {
-    width: 25%;
-    height: 3rem;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-
-const Tabs = styled.div`
-  min-height: 60vh;
-  width: 20%;
-  border-right: solid 0.2px white;
-  padding-right: 1rem;
-  @media (max-width: 768px) {
-    display: flex;
-    width: 100%;
-    min-height: 3rem;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    border-right: 0px;
-    border-bottom: solid 0.2px white;
-    padding-right: 0px;
-    padding-bottom: 1rem;
-    margin-top: 0;
-  }
-`;
-
-const Modal = styled.div`
-  width: 40%;
-  height: 40%;
-  background-color: white;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  @media (max-width: 768px) {
-    width: 90%;
-    height: auto;
-  }
-`;
-
-const IconContainer = styled.div`
-  cursor: pointer;
-  margin-left: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
 export default ProfilePage;

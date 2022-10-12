@@ -1,18 +1,14 @@
-import { Spinner } from "evergreen-ui";
-import styled from "styled-components";
+import { Flex, CircularProgress } from "@chakra-ui/react";
 
 export default function LoadingSpinner({ size }: { size?: number }) {
   return (
-    <LoadingContainer>
-      <Spinner size={size ?? 110} />
-    </LoadingContainer>
+    <Flex w="100%" h="100%" justifyContent="center" alignItems="center">
+      <CircularProgress
+        isIndeterminate
+        thickness="5px"
+        color="brand.blue"
+        size={size || 110}
+      />
+    </Flex>
   );
 }
-
-const LoadingContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
