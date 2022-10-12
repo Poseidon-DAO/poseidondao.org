@@ -1,4 +1,3 @@
-import "styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@rainbow-me/rainbowkit/styles.css";
 

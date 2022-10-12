@@ -1,5 +1,5 @@
 import { Paragraph, Spinner } from "evergreen-ui";
-import styled from "styled-components";
+import { Flex } from "@chakra-ui/react";
 
 export default function LoadingModal({
   white,
@@ -9,40 +9,34 @@ export default function LoadingModal({
   text?: string;
 }) {
   return (
-    <Container>
+    <Flex
+      w="100vw"
+      h="100vh"
+      justifyContent="center"
+      alignItems="center"
+      bg="rgba(0,0,0,0.4)"
+      position="fixed"
+      top="50%"
+      left="50%"
+      transform="translate(-50%, -50%)"
+    >
       {white ? (
-        <SpinnerBackground>
+        <Flex
+          flexDir="column"
+          justifyContent="center"
+          alignItems="center"
+          borderRadius="5px"
+          bg="white"
+          maxW="90vw"
+          maxH="90vh"
+          p="5rem"
+        >
           <Paragraph marginBottom={15}>{text}</Paragraph>
           <Spinner size={110} color="white" />
-        </SpinnerBackground>
+        </Flex>
       ) : (
         <Spinner size={110} color="white" />
       )}
-    </Container>
+    </Flex>
   );
 }
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const SpinnerBackground = styled.div`
-  padding: 5rem;
-  max-width: 90vw;
-  max-height: 90vh;
-  background-color: #fff;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
