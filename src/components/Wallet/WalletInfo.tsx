@@ -1,3 +1,4 @@
+import { Flex } from "@chakra-ui/react";
 import LoadingSpinner from "components/LoadingSpinner";
 import SuccessAnimation from "components/SuccessAnimation";
 import { Colors } from "components/UI_KIT/colors";
@@ -9,8 +10,6 @@ import { useMoralis, useMoralisQuery } from "react-moralis";
 import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
 import { RootState } from "redux/reducers";
-import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
-import styled from "styled-components";
 import { formatLongNumber, roundBalance } from "utils";
 
 interface WalletInfoProps {
@@ -98,24 +97,56 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
           alignItems: "center",
         }}
       >
-        <Container onClick={onClick}>
-          <LeftContainer>
+        <Flex
+          onClick={onClick}
+          justifyContent="space-between"
+          alignItems="center"
+          cursor="pointer"
+          height="5vh"
+          mr="1rem"
+          border="0.5px solid #4824fa"
+          borderRadius="0.5rem"
+          bg="#171941"
+        >
+          <Flex
+            __css={{
+              padding: "0 1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "fit-content",
+              borderRight: "0.5px solid #4824fa",
+              height: "100%",
+            }}
+          >
             <Text color={Colors.white.primary}>
               {balance ? formatLongNumber(parseInt(balance)) : "0.00"} PDN
             </Text>
-          </LeftContainer>
-          <MiddleContainer address={address}>
+          </Flex>
+          <Flex
+            p="0 1rem"
+            justifyContent={address ? "center" : "flex-end"}
+            maxH="100%"
+          >
             <Text color={Colors.white.primary}>
               {address?.slice(0, 8) + "..." + address?.slice(-8)}
             </Text>
-          </MiddleContainer>
+          </Flex>
           {(loadingBurn || showSuccess) && (
-            <RightContainer>
+            <Flex
+              p="0 1rem"
+              alignItems="center"
+              justifyContent="center"
+              w="fit-content"
+              minW="1rem"
+              borderLeft="0.5px solid #4824fa"
+              h="100%"
+            >
               {loadingBurn && <LoadingSpinner size={35} />}
               {showSuccess && <SuccessAnimation />}
-            </RightContainer>
+            </Flex>
           )}
-        </Container>
+        </Flex>
       </div>
       {showSuccess && (
         <Alert
@@ -140,43 +171,3 @@ export default function WalletInfo({ address, onClick }: WalletInfoProps) {
     </>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #171941;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  border: 0.5px solid #4824fa;
-  height: 5vh;
-  margin-right: 1rem;
-`;
-
-const LeftContainer = styled.div`
-  padding: 0 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  border-right: 0.5px solid #4824fa;
-  height: 100%;
-`;
-
-const RightContainer = styled.div`
-  padding: 0 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  min-width: 1rem;
-  border-left: 0.5px solid #4824fa;
-  height: 100%;
-`;
-
-const MiddleContainer = styled.div<Pick<WalletInfoProps, "address">>`
-  padding: 0 1rem;
-  display: flex;
-  justify-content: ${(props) => (props.address ? "center" : "flex-end")};
-  max-height: 100%;
-`;

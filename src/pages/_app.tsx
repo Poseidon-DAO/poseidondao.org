@@ -1,4 +1,3 @@
-import "styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -29,7 +28,7 @@ import { useEffect } from "react";
 import { WALLET_ENABLED } from "config";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import { theme } from "chakra/theme";
-import ErrorBoundary from "components/error-boundary/ErrorBoundary";
+import { ErrorBoundary } from "components/error-boundary";
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.goerli],

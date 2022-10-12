@@ -1,5 +1,6 @@
+import { Flex } from "@chakra-ui/react";
 import { submitArtist } from "apis/index";
-import FullScreen from "components/FullScreen";
+import { Container } from "components";
 import LoadingModal from "components/LoadingModal";
 import { Colors } from "components/UI_KIT/colors";
 import CustomButton from "components/UI_KIT/CustomButton";
@@ -9,7 +10,6 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import Actions from "redux/actions";
-import styled from "styled-components";
 import { ButtonTypes, IArtist } from "types";
 import { validators } from "utils/formValidators";
 
@@ -145,7 +145,7 @@ const ArtistForm = () => {
   };
 
   return (
-    <FullScreen>
+    <Container>
       <Pane
         display="flex"
         flexDirection="column"
@@ -163,7 +163,14 @@ const ArtistForm = () => {
         >
           Artist Application
         </h2>
-        <Form>
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          w="100%"
+          maxW="40%"
+          flexDir="column"
+          pb="3rem"
+        >
           <p
             style={{
               alignSelf: "flex-end",
@@ -220,27 +227,11 @@ const ArtistForm = () => {
             appearance="primary"
             backgroundColor={Colors.blue.primary}
           />
-        </Form>
+        </Flex>
         {loading && <LoadingModal />}
       </Pane>
-    </FullScreen>
+    </Container>
   );
 };
-
-const Form = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 40%;
-  flex-direction: column;
-  padding-bottom: 3rem;
-  @media (max-width: 1200px) {
-    max-width: 60%;
-  }
-  @media (max-width: 992px) {
-    max-width: 90%;
-  }
-`;
 
 export default ArtistForm;

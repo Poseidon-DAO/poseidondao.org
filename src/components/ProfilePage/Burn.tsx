@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Form, FormGroup } from "reactstrap";
 import { useCallback, useEffect, useState } from "react";
 import { IMAGE_ARRAY } from "../../../public/img/collection";
@@ -11,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Actions from "redux/actions";
 import { RootState } from "redux/reducers";
 import { formatLongNumber } from "utils";
+import { Box, Button, Text } from "@chakra-ui/react";
 
 const MAX_ELEMENTS_CAP = 10;
 
@@ -49,22 +49,34 @@ export default function Burn({ ratio }: BurnProps) {
 
   const renderNftButton = (i: number) => {
     return (
-      <NftButton
-        isSelected={selectedAmount === i}
+      <Button
         key={i}
         onClick={() => setSelectedAmount(i)}
         onMouseEnter={() => setHoverImage(i)}
         onMouseLeave={() => setHoverImage(-1)}
       >
-        <BackgroundNFT
-          backgroundImage={IMAGE_ARRAY[i].src}
-          isSelected={selectedAmount === i}
-          isHovered={hoverImage === i}
+        <Box
+          __css={{
+            height: "100%",
+            width: "100%",
+            position: "absolute",
+            top: "0",
+            bottom: "0",
+            left: "0",
+            right: "0",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            zIndex: 0,
+            opacity: hoverImage === i ? 1 : 0.2,
+            backgroundImage: `url(${IMAGE_ARRAY[i].src})`,
+            "&:hover": { opacity: 1, cursor: "pointer" },
+          }}
         />
         <Heading zIndex={10} color="white" fontSize={"4rem"} padding={"1rem"}>
           {i}
         </Heading>
-      </NftButton>
+      </Button>
     );
   };
 
@@ -99,12 +111,12 @@ export default function Burn({ ratio }: BurnProps) {
   }, [showPendingToast]);
 
   return (
-    <Container>
+    <Box w={{ base: "90vh", md: "50vw" }} h="100%" color="white">
       <Form>
         <FormGroup>
-          <Label>
+          <Text mt="0.5rem">
             Become part of the Poseidon DAO family by getting voting rights:
-          </Label>
+          </Text>
           <p
             style={{
               alignSelf: "flex-end",
@@ -189,6 +201,7 @@ export default function Burn({ ratio }: BurnProps) {
           </div>
         </FormGroup>
       </Form>
+
       {showPendingToast && (
         <Alert
           style={{
@@ -205,94 +218,6 @@ export default function Burn({ ratio }: BurnProps) {
           marginBottom={32}
         />
       )}
-    </Container>
+    </Box>
   );
 }
-
-const Container = styled.div`
-  width: 50vw;
-  height: 100%;
-  @media (max-width: 768px) {
-    width: 90vw;
-  }
-`;
-
-const SuccessContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const Label = styled.h4`
-  color: #fff;
-  margin-bottom: 0.5rem;
-`;
-
-const NftButton = styled.div<{ isSelected: boolean }>`
-  transform: ${(props) => (props.isSelected ? "scale(1.1)" : "scale(1)")};
-  color: white;
-  font-size: 1em;
-  margin: 1em;
-  margin-left: 0rem;
-  height: 150px;
-  width: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0.1px solid lightgrey;
-  border-radius: 3px;
-  &:hover {
-    transform: scale(1.2);
-    opacity: 1;
-    cursor: pointer;
-  }
-`;
-
-const BackgroundNFT = styled.div<{
-  isSelected: boolean;
-  backgroundImage: string;
-  isHovered: boolean;
-}>`
-  opacity: ${(props) => (props.isHovered || props.isSelected ? 1 : 0.2)};
-  z-index: 0;
-  background-image: ${(props) => `url(${props.backgroundImage})`};
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  &:hover {
-    opacity: 1;
-    cursor: pointer;
-  }
-`;
-
-const Button = styled.div<{ disabled: boolean }>`
-  width: fit-content;
-  background: ${(props) =>
-    props.disabled ? "transparent" : Colors.blue.ocean};
-  color: ${(props) => (props.disabled ? "white" : "grey")};
-  font-size: 1em;
-  margin-top: 1rem;
-  padding: 0.5em 1em;
-  border: ${(props) => (props.disabled ? "0.1px solid lightgrey" : "none")};
-  border-radius: 3px;
-  &:hover {
-    transform: ${(props) => (props.disabled ? "scale(0.98)" : "")};
-    background-color: ${(props) => (props.disabled ? Colors.blue.clear : "")};
-    transition: background-color 0.2s;
-    cursor: ${(props) => (props.disabled ? "pointer" : "default")};
-  }
-`;
