@@ -1,10 +1,12 @@
 import "react-toastify/dist/ReactToastify.css";
 import "@rainbow-me/rainbowkit/styles.css";
 
+import { useEffect } from "react";
+import { type AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 import { MoralisProvider, useMoralis } from "react-moralis";
-
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import {
   chain,
@@ -15,20 +17,18 @@ import {
 } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import TagManager from "react-gtm-module";
 
 import store from "redux/store";
 import { Header } from "components/header";
 import { Footer } from "components/footer";
+import { ErrorBoundary } from "components/error-boundary";
 
 import useFetchBalance from "hooks/useFetchBalance";
 import useFetchNfts from "hooks/useFetchNfts";
 
-import { type AppProps } from "next/app";
-import { useEffect } from "react";
 import { WALLET_ENABLED } from "config";
-import { Box, ChakraProvider } from "@chakra-ui/react";
 import { theme } from "chakra/theme";
-import { ErrorBoundary } from "components/error-boundary";
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.goerli],
@@ -46,7 +46,15 @@ const wagmiClient = createClient({
   provider,
 });
 
+const tagManagerArgs = {
+  gtmId: process.env.NEXT_PUBLIC_GTM_ID!,
+};
+
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    TagManager.initialize(tagManagerArgs);
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
