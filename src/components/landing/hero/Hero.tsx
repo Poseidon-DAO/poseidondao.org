@@ -29,7 +29,7 @@ const Hero = () => {
             alignItems={{ sm: "flex-start", lg: "center" }}
           >
             <Heading size="4xl" mt={{ sm: "350px", lg: "-150px" }}>
-              We collect NFTs <br /> to pass on a legacy!
+              Making Crypto Art <br /> the 21st Century Art
             </Heading>
           </Flex>
         </Container>

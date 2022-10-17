@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import {
-  ArtistsAndCollectors,
+  PoseidonDAO,
   Collections,
   CollectionStats,
   DerivatesCollection,
@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       <Hero />
       <CollectionStats />
       <Collections />
-      <ArtistsAndCollectors />
+      <PoseidonDAO />
       <DerivatesCollection />
       <GenesisCollection />
     </Box>

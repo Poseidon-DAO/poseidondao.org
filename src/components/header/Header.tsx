@@ -5,7 +5,7 @@ import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { WALLET_ENABLED } from "config";
-import { Container } from "components/container";
+import { Container, SocialIcons } from "components";
 import { makeAnimatedElement } from "framer/utils";
 
 import logo from "../../../public/img/logo-transparent.png";
@@ -14,6 +14,7 @@ function Header() {
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
+  const iconsSize = useBreakpointValue({ sm: 80, lg: 50, base: 50 });
 
   const { scrollY } = useScroll();
 
@@ -59,10 +60,16 @@ function Header() {
             alt="logo"
             src={logo.src}
             onClick={handleReload}
-            style={{ width: logoWidth }}
+            style={{ width: logoWidth, padding: "0.5rem" }}
           />
 
-          {WALLET_ENABLED && <ConnectButton />}
+          {WALLET_ENABLED ? (
+            <ConnectButton />
+          ) : (
+            <Box>
+              <SocialIcons size={iconsSize} />
+            </Box>
+          )}
         </Flex>
       </Container>
     </AnimatedBox>
