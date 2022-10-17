@@ -11,10 +11,12 @@ const Collections = () => {
         borderColor="brand.text"
         color="brand.red"
       >
-        <Box w="100%" py={6} pl={8}>
+        <Box w="100%" py={6} textAlign="center" pl={8}>
           <Container>
             <Link href="https://opensea.io/PoseidonNftFund" isExternal>
-              <Text fontSize="xl">OpenSea Collection &gt;</Text>
+              <Text fontWeight="bold" fontSize="xl">
+                OpenSea Collection
+              </Text>
             </Link>
           </Container>
         </Box>
@@ -28,14 +30,19 @@ const Collections = () => {
           boxSizing="border-box"
         >
           <Link href="https://superrare.com/poseidonnftfund" isExternal>
-            <Text fontSize="xl">Superrare Collection &gt;</Text>
+            <Text fontWeight="bold" fontSize="xl">
+              Superrare Collection
+            </Text>
           </Link>
         </Box>
 
-        <Box w="100%" py={6} textAlign="right" pr={8}>
+        <Box w="100%" py={6} textAlign="center" pr={8}>
           <Container>
             <Link href="https://foundation.app/@Poseidonnftfund" isExternal>
-              <Text fontSize="xl"> Foundation Collection &gt;</Text>
+              <Text fontWeight="bold" fontSize="xl">
+                {" "}
+                Foundation Collection
+              </Text>
             </Link>
           </Container>
         </Box>
@@ -51,7 +58,7 @@ const Collections = () => {
         }}
       >
         <Flex wrap="wrap" ml="5%" w="120%" py={20}>
-          {[...IMAGE_ARRAY].reverse().map((imageName) => {
+          {[...IMAGE_ARRAY.slice(0, 13)].map((imageName, i) => {
             return (
               <Box
                 key={imageName.src}

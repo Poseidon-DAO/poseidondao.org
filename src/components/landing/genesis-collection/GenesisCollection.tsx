@@ -14,7 +14,7 @@ const GenesisCollection = () => {
 
       <Box
         w={{ sm: "100%", lg: "50%" }}
-        p={{ sm: 20, lg: 40 }}
+        p={{ sm: 20, lg: 24 }}
         pl="5vw"
         bg="rgba(0,0,0,0.7)"
       >
@@ -40,11 +40,12 @@ const GenesisCollection = () => {
           color="brand.red"
         >
           <Text
+            fontWeight="bold"
             fontSize={{ sm: "4xl", lg: "xl" }}
             textAlign={{ sm: "center", lg: "start" }}
             color="brand.red"
           >
-            On Foundation &gt;
+            On Foundation
           </Text>
         </Link>
       </Box>
