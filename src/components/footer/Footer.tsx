@@ -28,9 +28,10 @@ const Footer = () => {
       <Container>
         <Flex py={8} alignItems="center" justifyContent="space-between">
           <Box color="brand.red">
-            <Link href="mailto:info@poseidonnft.org" isExternal>
+            <Link href="mailto:info@poseidondao.org" isExternal>
               <Text
                 fontSize={{ sm: "4xl", lg: "xl" }}
+                fontWeight="bold"
                 textAlign={{ sm: "center", lg: "start" }}
                 color="brand.red"
               >
@@ -65,6 +66,7 @@ const Footer = () => {
                 alt="logo"
                 src={logo.src}
                 w={{ sm: "220px", lg: "200px" }}
+                pr={{ sm: 0, lg: "2rem" }}
               />
             </Box>
 
@@ -83,15 +85,27 @@ const Footer = () => {
                 textAlign={{ sm: "center", lg: "start" }}
               >
                 {" "}
-                <Link href="https://opensea.io/PoseidonNftFund" isExternal>
+                <Link
+                  href="https://opensea.io/PoseidonNftFund"
+                  fontWeight="bold"
+                  isExternal
+                >
                   OpenSea
                 </Link>{" "}
                 |{" "}
-                <Link href="https://superrare.com/poseidonnftfund" isExternal>
+                <Link
+                  href="https://superrare.com/poseidonnftfund"
+                  fontWeight="bold"
+                  isExternal
+                >
                   SuperRare
                 </Link>{" "}
                 |{" "}
-                <Link href="https://foundation.app/@Poseidonnftfund" isExternal>
+                <Link
+                  href="https://foundation.app/@Poseidonnftfund"
+                  fontWeight="bold"
+                  isExternal
+                >
                   Foundation
                 </Link>
               </Text>
@@ -112,17 +126,22 @@ const Footer = () => {
               >
                 <Link
                   href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
+                  fontWeight="bold"
                   isExternal
                 >
                   Blog
                 </Link>{" "}
                 |{" "}
-                <Link href="https://poseidongroup.ch/" isExternal>
-                  Group
+                <Link
+                  href="https://forum.poseidondao.org/"
+                  fontWeight="bold"
+                  isExternal
+                >
+                  Forum
                 </Link>{" "}
                 |{" "}
                 <NextLink href="/artists" passHref>
-                  <Link>Artists</Link>
+                  <Link fontWeight="bold">Artists</Link>
                 </NextLink>
               </Text>
             </Box>

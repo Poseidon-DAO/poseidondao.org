@@ -15,7 +15,7 @@ const DerivatesCollection = () => {
         borderRight={{ sm: "none", lg: "1px solid" }}
         borderBottom={{ sm: "1px solid", lg: "none" }}
         borderColor="brand.text"
-        p={{ sm: 20, lg: 40 }}
+        p={{ sm: 20, lg: 24 }}
         pl="5vw"
       >
         <Image
@@ -65,11 +65,12 @@ const DerivatesCollection = () => {
             color="brand.red"
           >
             <Text
+              fontWeight="bold"
               fontSize={{ sm: "4xl", lg: "xl" }}
               textAlign={{ sm: "center", lg: "start" }}
               color="brand.red"
             >
-              On Foundation &gt;
+              On Foundation
             </Text>
           </Link>
         </Box>

@@ -13,24 +13,29 @@ const CollectionStats = () => {
           flexDir={{ sm: "column", lg: "row" }}
           alignItems={{ sm: "center", lg: "normal" }}
         >
-          <Box w="100%" py="100px" textAlign={{ sm: "center", lg: "start" }}>
-            <Heading fontSize={{ sm: "6xl", lg: "2xl" }}>
-              DAO Collection
-            </Heading>
+          <Box
+            w="100%"
+            py="100px"
+            pr={{ sm: "0", lg: "2rem" }}
+            textAlign={{ sm: "center", lg: "start" }}
+          >
+            <Heading fontSize={{ sm: "6xl", lg: "2xl" }}>Collection</Heading>
 
             <br />
 
             <Text fontSize={{ sm: "4xl", lg: "xl" }} lineHeight={1.2}>
-              The DAO is built on top of a massive treasury <br />
-              made up of historical NFTs, 1-of-1 and <br />
-              collectibles
+              We invested and supported this space since its infancy, collecting
+              NFTs since 2015 when they were only known by the name
+              collectibles.
             </Text>
 
             <br />
 
             <Text fontSize={{ sm: "4xl", lg: "xl" }} lineHeight={1.2}>
-              Poseidon valued art and artists investing in the <br />
-              long term vision of digital art
+              Poseidon DAO identified NFTs as the blockchain killer app. Indeed,
+              NFTs have proven to be the technology able to unlock blockchain
+              mainstream adoption. Since 2020, Poseidon DAO focused on crypto
+              art, collecting and never selling 1-of-1 NFT artworks.
             </Text>
           </Box>
 
@@ -51,6 +56,9 @@ const CollectionStats = () => {
                 justifyContent="center"
                 pos="relative"
               >
+                {/* 
+                // internal ellipsis overlapping with background 
+                // banner and hiding the tunnerl sight, hidden 
                 <Box
                   pos="absolute"
                   w="50px"
@@ -59,7 +67,7 @@ const CollectionStats = () => {
                   border="1px solid"
                   borderColor="brand.text"
                   borderRadius="calc(90px / 2)"
-                ></Box>
+                ></Box> */}
               </Flex>
             </Box>
           </Box>
@@ -68,7 +76,12 @@ const CollectionStats = () => {
             <GridItem w="100%" h="20" mb={{ sm: 10, lg: "initial" }}>
               <Flex justifyContent={{ sm: "center", lg: "flex-end" }}>
                 <Box mr={6}>
-                  <AiOutlineTrophy size={80} />
+                  <AiOutlineTrophy
+                    size={80}
+                    style={{
+                      fill: "background: linear-gradient(0deg, rgba(73,35,252,1) 0%, rgba(242,10,112,1) 50%, rgba(243,133,205,1) 100%)",
+                    }}
+                  />
                 </Box>
                 <Flex flexDir="column" mt={4} w="160px">
                   <Heading size="2xl">4</Heading>
@@ -99,7 +112,7 @@ const CollectionStats = () => {
                   <AiOutlineHeart size={80} />
                 </Box>
                 <Flex flexDir="column" mt={4} w="160px">
-                  <Heading size="2xl">+50</Heading>
+                  <Heading size="2xl">~300</Heading>
                   <Text fontSize="xl" mt="8px">
                     Artists
                   </Text>
