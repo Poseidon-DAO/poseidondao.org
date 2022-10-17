@@ -66,7 +66,7 @@ const Footer = () => {
                 alt="logo"
                 src={logo.src}
                 w={{ sm: "220px", lg: "200px" }}
-                p={{ sm: 0, lg: "2rem" }}
+                pr={{ sm: 0, lg: "2rem" }}
               />
             </Box>
 
