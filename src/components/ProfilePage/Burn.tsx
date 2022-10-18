@@ -1,15 +1,13 @@
 import { Form, FormGroup } from "reactstrap";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IMAGE_ARRAY } from "../../../public/img/collection";
 import { Colors } from "components/UI_KIT/colors";
 import Decimal from "decimal.js-light";
-import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
-import { useMoralis } from "react-moralis";
+import { ERC20Options, SMART_CONTRACT_FUNCTIONS_NAMES } from "contracts/utils";
 import { Alert, Heading } from "evergreen-ui";
-import { useDispatch, useSelector } from "react-redux";
-import Actions from "redux/actions";
-import { RootState } from "redux/reducers";
 import { formatLongNumber } from "utils";
+import { useAccount } from "wagmi";
+import { usePDNBalance } from "lib/hooks";
 import { Box, Button, Text } from "@chakra-ui/react";
 
 const MAX_ELEMENTS_CAP = 10;
@@ -23,24 +21,25 @@ export default function Burn({ ratio }: BurnProps) {
   const [hoverImage, setHoverImage] = useState(-1);
   const [showPendingToast, setShowPendingToast] = useState(false);
   const [error, setError] = useState(false);
-  const userBalance = useSelector(
-    (state: RootState) => state.wallet.wallet.balance
-  );
+  // const userBalance = useSelector(
+  //   (state: RootState) => state.wallet.wallet.balance
+  // );
 
-  const balance = new Decimal(userBalance ?? "0");
+  // const balance = new Decimal(userBalance ?? "0");
+
+  const { balance } = usePDNBalance();
+
   const availableToBurn =
-    balance != null && ratio != null && ratio != 0
-      ? balance.div(ratio).toNumber()
-      : 0;
+    balance != null && ratio != null && ratio != 0 ? ratio : 0;
 
-  const dispatch = useDispatch();
-  const setSuccessfulTransaction = useCallback(
-    (hash: string) =>
-      dispatch(Actions.WalletActions.setSuccessfulHashTransaction(hash)),
-    [dispatch]
-  );
+  // const dispatch = useDispatch();
+  // const setSuccessfulTransaction = useCallback(
+  //   (hash: string) =>
+  //     dispatch(Actions.WalletActions.setSuccessfulHashTransaction(hash)),
+  //   [dispatch]
+  // );
 
-  const { account, Moralis } = useMoralis();
+  const { address } = useAccount();
 
   const clearAmounts = () => {
     setSelectedAmount(0);
@@ -81,17 +80,21 @@ export default function Burn({ ratio }: BurnProps) {
   };
 
   const burnNFTS = async () => {
-    const options = ERC20Options(account!!, SMART_CONTRACT_FUNCTIONS.BURN, {
-      _amount: new Decimal(selectedAmount).mul(ratio).toNumber(),
-    });
-    const burn = await Moralis.executeFunction(options);
-    if (burn.hash) {
-      setShowPendingToast(true);
-      setSuccessfulTransaction(burn.hash);
-      clearAmounts();
-    } else {
-      setError(true);
-    }
+    const options = ERC20Options(
+      address!!,
+      SMART_CONTRACT_FUNCTIONS_NAMES.BURN,
+      {
+        _amount: new Decimal(selectedAmount).mul(ratio).toNumber(),
+      }
+    );
+    // const burn = await Moralis.executeFunction(options);
+    // if (burn.hash) {
+    //   setShowPendingToast(true);
+    //   // setSuccessfulTransaction(burn.hash);
+    //   clearAmounts();
+    // } else {
+    //   setError(true);
+    // }
   };
 
   useEffect(() => {

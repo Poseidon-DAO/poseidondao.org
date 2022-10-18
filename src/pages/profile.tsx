@@ -1,23 +1,18 @@
 import AvatarDisplay from "components/UI_KIT/Avatar";
 import { FlexView } from "components/UI_KIT/Display";
 
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "redux/reducers";
+import { useState } from "react";
 import { INft } from "types";
-import useCopyAddress from "utils/useCopyAddress";
 import NFTList from "components/ProfilePage/NFTList";
 import Transfer from "components/ProfilePage/Transfer";
-import { useMoralis } from "react-moralis";
-import SMART_CONTRACT_FUNCTIONS, { ERC20Options } from "smartContract";
 import Burn from "components/ProfilePage/Burn";
-import Actions from "redux/actions";
 import { useRouter } from "next/router";
-import { Heading, Text, Badge } from "evergreen-ui";
+import { Heading, Text } from "evergreen-ui";
 import { Colors } from "components/UI_KIT/colors";
-import { WALLET_ENABLED } from "config";
+import { WALLET_ENABLED } from "constants/env";
 import { AiFillCopy } from "react-icons/ai";
 import { FaShareSquare } from "react-icons/fa";
+import { useAccount } from "wagmi";
 import { Flex } from "@chakra-ui/react";
 
 interface ITab {
@@ -32,56 +27,21 @@ const tabs: ITab[] = [
 ];
 
 const ProfilePage = () => {
-  const address = useSelector(
-    (state: RootState) => state.wallet.wallet.address
-  );
-  const copyAdress = useCopyAddress();
-  const dispatch = useDispatch();
   const router = useRouter();
+  const { address } = useAccount();
 
-  const userBalance = useSelector(
-    (state: RootState) => state.wallet.wallet.balance
-  );
+  // TODO getRationHook
+
+  // const copyAdress = useCopyAddress();
 
   const [nftModalOpen, setNftModalOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<ITab>(tabs[0]);
   const [selectedNft, setSelectedNft] = useState<INft>();
   const [ratioConversion, setRatioConversion] = useState(0);
-  const { account, Moralis } = useMoralis();
 
-  const newToast = useCallback(
-    (payload: any) => dispatch(Actions.UtilsActions.AddToast(payload)),
-    [dispatch]
-  );
-
-  // If we don't have the wallet enabled, we have to send them back to the landing
-  useEffect(() => {
-    if (!WALLET_ENABLED) {
-      router.push("/");
-    }
-  }, []);
-
-  // Get the user balance, total tokens, nft list and ratio of nft conversion
-  useEffect(() => {
-    const getRatio = async () => {
-      const options = ERC20Options(account!!, SMART_CONTRACT_FUNCTIONS.RATIO);
-      const ratio = (await Moralis.executeFunction(
-        options
-      )) as unknown as string;
-      setRatioConversion(parseInt(ratio));
-    };
-
-    if (account != null) {
-      try {
-        getRatio();
-      } catch (e) {
-        newToast({
-          text: "Something went wrong...",
-          type: "warning",
-        });
-      }
-    }
-  }, [account, Moralis]);
+  if (!WALLET_ENABLED) {
+    router.push("/");
+  }
 
   const TabContent = () => {
     switch (selectedTab.id) {
@@ -90,12 +50,11 @@ const ProfilePage = () => {
       case 1:
         return <Burn ratio={ratioConversion} />;
       case 2:
-        return <Transfer availableBalance={userBalance} />;
+        return <Transfer />;
       default:
         return null;
     }
   };
-
   return (
     <FlexView>
       <Flex flexDir="column" minH="100vh" w="90vw">
@@ -144,7 +103,6 @@ const ProfilePage = () => {
                       _hover={{
                         opacity: "0.8",
                       }}
-                      onClick={copyAdress}
                     >
                       <AiFillCopy size={18} color="white" />
                     </Flex>

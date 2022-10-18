@@ -6,6 +6,8 @@ import {
   useState,
 } from "react";
 import web3 from "web3";
+import { usePDNBalance, usePDNTransfer } from "lib/hooks";
+import { useDebounce } from "hooks";
 import {
   Box,
   Button,
@@ -19,13 +21,10 @@ import {
 } from "@chakra-ui/react";
 
 interface ITransactionFormProps {
-  resetOnSubmit?: boolean;
-  onSubmit?: (
-    data: { address: string; amount: string },
-    reset: () => void
-  ) => void;
   loading?: boolean;
-  availableBalance: string;
+  onSuccess: () => void;
+  onError: () => void;
+  onSubmit?: (data: { to: string; amount: string }, reset: () => void) => void;
 }
 
 TransactionForm.defaultProps = {
@@ -35,19 +34,28 @@ TransactionForm.defaultProps = {
 };
 
 function TransactionForm({
+  loading = false,
   onSubmit,
-  resetOnSubmit,
-  availableBalance,
-  loading,
+  onSuccess,
+  onError,
 }: ITransactionFormProps) {
-  const [address, setAddress] = useState("");
+  const [to, setTo] = useState("");
   const [amount, setAmount] = useState("");
   const [errors, setErrors] = useState({
-    address: "",
+    to: "",
     amount: "",
   });
 
-  console.log(errors);
+  const debouncedTo = useDebounce(to);
+  const debouncedAmount = useDebounce(amount);
+
+  const { transfer, transferData, isTransfering } = usePDNTransfer({
+    args: { amount: debouncedAmount, to: debouncedTo },
+    onSuccess,
+    onError,
+  });
+
+  const { balance } = usePDNBalance();
 
   const handleInputChange =
     (setter: Dispatch<SetStateAction<any>>, asNumber = false) =>
@@ -81,19 +89,19 @@ function TransactionForm({
         ...errors,
         amount: "Please provide an amount!",
       });
-      if (!address) {
+      if (!to) {
         setErrors({
           ...errors,
-          address: "Please provide an address!",
+          to: "Please provide an address!",
         });
       }
       return false;
     }
 
-    if (!web3.utils.isAddress(address)) {
+    if (!web3.utils.isAddress(to)) {
       setErrors({
         ...errors,
-        address: "Please provide a valid address!",
+        to: "Please provide a valid address!",
       });
 
       return false;
@@ -103,12 +111,12 @@ function TransactionForm({
   }
 
   function reset() {
-    setAddress("");
+    setTo("");
     setAmount("");
   }
 
   function handleMaxValueSet() {
-    setAmount(availableBalance);
+    setAmount(balance!);
   }
 
   function handleSubmit(event: any) {
@@ -118,29 +126,28 @@ function TransactionForm({
 
     if (!isValid) return;
 
-    onSubmit?.({ address, amount }, reset);
+    transfer?.();
+    onSubmit?.({ to, amount }, reset);
 
-    if (resetOnSubmit) {
-      reset();
-    }
+    reset();
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <Flex direction="column" wrap="nowrap">
         <Box mb={4}>
-          <FormLabel htmlFor="address">Address</FormLabel>
+          <FormLabel htmlFor="to">Address</FormLabel>
           <Input
-            name="address"
-            value={address}
+            name="to"
+            value={to}
             disabled={loading}
-            onChange={handleInputChange(setAddress)}
+            onChange={handleInputChange(setTo)}
             placeholder="0x850EdEfE0A1d573057a695B870Ada74116F8E3d0"
             autoComplete="off"
             size="lg"
-            isInvalid={!!errors["address"]}
+            isInvalid={!!errors["to"]}
           />
-          <Text color="brand.red">{errors["address"]}</Text>
+          <Text color="brand.red">{errors["to"]}</Text>
         </Box>
 
         <Box mb={4}>
@@ -178,13 +185,13 @@ function TransactionForm({
               <Button
                 size="lg"
                 type="submit"
-                disabled={amount > availableBalance}
+                disabled={Number(amount) > Number(balance)}
                 isLoading={loading}
               >
                 Transfer
               </Button>
             ),
-            tooltip: availableBalance < amount,
+            tooltip: Number(balance) < Number(amount),
           })}
         </Flex>
       </Flex>

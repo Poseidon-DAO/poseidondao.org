@@ -1,23 +1,38 @@
-import { Container as ChakraContainer } from "@chakra-ui/react";
+import { Container as ChakraContainer, ContainerProps } from "@chakra-ui/react";
 
 import { type FC, type ReactNode } from "react";
 
 interface IPageContainerProps {
   children?: ReactNode;
   fullscreen?: boolean;
+  takeFullHeight?: boolean;
+  maxW?: ContainerProps["maxW"];
 }
 
-const Container: FC<IPageContainerProps> = ({ children, fullscreen }) => {
+const Container: FC<IPageContainerProps> = ({
+  children,
+  fullscreen,
+  takeFullHeight,
+  maxW,
+}) => {
   if (fullscreen) {
     return (
-      <ChakraContainer maxW="100%" p="0">
+      <ChakraContainer
+        maxW={maxW || "100%"}
+        p={0}
+        h={takeFullHeight ? "100%" : "initial"}
+      >
         {children}
       </ChakraContainer>
     );
   }
 
   return (
-    <ChakraContainer maxW={["90%", "container.2lg"]} p={0}>
+    <ChakraContainer
+      maxW={maxW || { sm: "90%", lg: "container.2xl" }}
+      p={0}
+      h={takeFullHeight ? "100%" : "initial"}
+    >
       {children}
     </ChakraContainer>
   );
