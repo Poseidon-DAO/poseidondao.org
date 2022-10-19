@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { submitArtist } from "apis/index";
-import { Container } from "components";
+import { Container, LoadingIndicator } from "components";
 import LoadingModal from "components/LoadingModal";
 import { Colors } from "components/UI_KIT/colors";
 import CustomButton from "components/UI_KIT/CustomButton";
@@ -24,6 +24,12 @@ const ArtistForm = () => {
     return "";
   };
   const router = useRouter();
+
+  if (typeof window !== "undefined") {
+    router.replace("/404");
+  }
+
+  return <LoadingIndicator />;
 
   const [name, setName] = useState(() => getInitialValue("name"));
   const [email, setEmail] = useState(() => getInitialValue("email"));

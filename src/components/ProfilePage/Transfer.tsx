@@ -1,48 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTransfer } from "hooks/useTransfer";
-import TransactionForm from "components/TransactionForm";
+import { useEffect, useState } from "react";
 import { Alert } from "evergreen-ui";
-import { useDispatch } from "react-redux";
-import Actions from "redux/actions";
+import TransactionForm from "components/TransactionForm";
 import { Heading } from "@chakra-ui/react";
 import { Container } from "components/container";
 
-export default function Transfer({
-  availableBalance,
-}: {
-  availableBalance: string;
-}) {
-  const { transfer, isFetching, isLoading } = useTransfer({
-    amount: "0",
-    address: "",
-  });
+export default function Transfer() {
   const [transactionState, setTransactionState] = useState("");
-  const dispatch = useDispatch();
-  const updateBalance = useCallback(
-    (payload: any) => dispatch(Actions.AuthActions.setBalance(payload)),
-    [dispatch]
-  );
 
-  function handleTransactionSuccess(transferData: any, resetForm: () => void) {
+  function handleTransactionSuccess() {
     setTransactionState("success");
-    updateBalance(+availableBalance - transferData.amount);
-    resetForm();
   }
 
-  function handleTransactionFailure() {
+  function handleTransactionError() {
     setTransactionState("error");
-  }
-
-  async function handleTransfer(transferData: any, resetForm: () => void) {
-    try {
-      await transfer({
-        ...transferData,
-        onSuccess: () => handleTransactionSuccess(transferData, resetForm),
-        onError: handleTransactionFailure,
-      });
-    } catch (err) {
-      console.error(err);
-    }
   }
 
   useEffect(() => {
@@ -56,10 +26,10 @@ export default function Transfer({
       <Heading size="lg">Transfer tokens</Heading>
 
       <TransactionForm
-        availableBalance={availableBalance}
-        onSubmit={handleTransfer}
-        loading={isFetching || isLoading}
+        onSuccess={handleTransactionSuccess}
+        onError={handleTransactionError}
       />
+
       {transactionState === "success" && (
         <Alert
           style={{

@@ -13,7 +13,6 @@ import { type NextPage } from "next";
 const Home: NextPage = () => {
   return (
     <Box
-      mt="-10vh"
       css={{
         backgroundImage:
           "linear-gradient(180deg,hsl(238deg 39% 20%) 0%,hsl(239deg 38% 14%) 23%,hsl(288deg 45% 2%) 100%)",

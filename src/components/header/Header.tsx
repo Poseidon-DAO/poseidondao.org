@@ -4,9 +4,9 @@ import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import { WALLET_ENABLED } from "config";
+import { WALLET_ENABLED } from "constants/env";
 import { Container, SocialIcons } from "components";
-import { makeAnimatedElement } from "framer/utils";
+import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
 
