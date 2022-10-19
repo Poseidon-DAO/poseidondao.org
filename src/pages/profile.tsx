@@ -14,6 +14,7 @@ import { AiFillCopy } from "react-icons/ai";
 import { FaShareSquare } from "react-icons/fa";
 import { useAccount } from "wagmi";
 import { Flex } from "@chakra-ui/react";
+import { LoadingIndicator } from "components";
 
 interface ITab {
   name: string;
@@ -42,6 +43,12 @@ const ProfilePage = () => {
   if (!WALLET_ENABLED) {
     router.push("/");
   }
+
+  if (typeof window !== "undefined") {
+    router.replace("/404");
+  }
+
+  return <LoadingIndicator />;
 
   const TabContent = () => {
     switch (selectedTab.id) {

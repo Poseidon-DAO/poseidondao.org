@@ -129,7 +129,7 @@ export default function Burn({ ratio }: BurnProps) {
           >
             Available PDN:{" "}
             <span style={{ fontWeight: 400 }}>
-              {formatLongNumber(balance.toNumber())}
+              {formatLongNumber(Number(balance) || 0)}
             </span>
           </p>
           {Math.floor(availableToBurn) !== 0 && (

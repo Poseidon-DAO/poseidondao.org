@@ -12,7 +12,11 @@ const PageInitalizer: NextPage<IPageInitalizerProps> = ({ children }) => {
   usePDNBalance();
   useNfts();
 
-  return <Box minH="100vh">{children}</Box>;
+  return (
+    <Box minH="100vh" bg="brand.blue">
+      {children}
+    </Box>
+  );
 };
 
 export { PageInitalizer };
