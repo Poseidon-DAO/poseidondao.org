@@ -5,6 +5,7 @@ import {
   CollectionStats,
   DerivatesCollection,
   GenesisCollection,
+  Whitepaper,
   Hero,
 } from "components/landing";
 
@@ -22,6 +23,7 @@ const Home: NextPage = () => {
       <CollectionStats />
       <Collections />
       <PoseidonDAO />
+      <Whitepaper />
       <DerivatesCollection />
       <GenesisCollection />
     </Box>

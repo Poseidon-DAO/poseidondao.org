@@ -4,3 +4,4 @@ export * from "./collections";
 export * from "./derivates-collection";
 export * from "./genesis-collection";
 export * from "./hero";
+export * from "./whitepaper";
