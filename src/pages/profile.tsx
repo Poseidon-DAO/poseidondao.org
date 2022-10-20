@@ -40,7 +40,7 @@ const ProfilePage = () => {
   const [selectedNft, setSelectedNft] = useState<INft>();
   const [ratioConversion, setRatioConversion] = useState(0);
 
-  if (!WALLET_ENABLED) {
+  if (typeof window !== "undefined" && !WALLET_ENABLED) {
     router.push("/");
   }
 
