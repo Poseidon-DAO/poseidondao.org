@@ -4,7 +4,12 @@ import { useEffect } from "react";
 import { type AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  darkTheme,
+  getDefaultWallets,
+  lightTheme,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import TagManager from "react-gtm-module";
@@ -47,7 +52,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains} modalSize="compact">
+        <RainbowKitProvider
+          chains={chains}
+          modalSize="compact"
+          theme={lightTheme({
+            borderRadius: "none",
+            accentColor: theme?.colors?.purple as string,
+          })}
+        >
           <Provider store={store}>
             <ErrorBoundary>
               <Head>

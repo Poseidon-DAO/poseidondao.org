@@ -10,6 +10,7 @@ const colors = {
     transparent: "transparent",
     line: "rgba(255, 255, 255, 0.4)",
   },
+  purple: "#a291bf",
 };
 
 export { colors };
