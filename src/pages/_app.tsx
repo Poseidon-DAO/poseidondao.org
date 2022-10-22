@@ -57,7 +57,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           modalSize="compact"
           theme={lightTheme({
             borderRadius: "none",
-            accentColor: theme?.colors?.purple as string,
+            accentColor: theme?.colors?.red as string,
           })}
         >
           <Provider store={store}>

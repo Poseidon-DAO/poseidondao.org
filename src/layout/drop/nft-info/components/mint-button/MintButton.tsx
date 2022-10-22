@@ -6,7 +6,7 @@ const MintButton = () => {
       w="100%"
       minH={{ sm: "84px", lg: "54px" }}
       borderRadius={0}
-      bg="brand.blue"
+      bg="brand.red"
       fontSize={{ sm: "4xl", lg: "md" }}
     >
       MINT
