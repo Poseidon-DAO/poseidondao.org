@@ -6,6 +6,7 @@ import {
   DerivatesCollection,
   GenesisCollection,
   Whitepaper,
+  Architecture,
   Hero,
 } from "components/landing";
 
@@ -24,6 +25,7 @@ const Home: NextPage = () => {
       <Collections />
       <PoseidonDAO />
       <Whitepaper />
+      <Architecture />
       <DerivatesCollection />
       <GenesisCollection />
     </Box>
