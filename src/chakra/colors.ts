@@ -8,6 +8,7 @@ const colors = {
     text: "#fff",
     black: "#000",
     transparent: "transparent",
+    line: "rgba(255, 255, 255, 0.4)",
   },
 };
 
