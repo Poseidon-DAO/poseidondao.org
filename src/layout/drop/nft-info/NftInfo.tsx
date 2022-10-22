@@ -11,7 +11,7 @@ import {
 
 const NftInfo = () => {
   return (
-    <Box>
+    <Box py={{ sm: 10, lg: 0 }}>
       <Box mb={4}>
         <NftTitle />
       </Box>
@@ -19,17 +19,17 @@ const NftInfo = () => {
       <NftAccountInfo />
 
       <Box my={8}>
-        <Text>oh the agony</Text>
+        <Text fontSize={{ sm: "4xl", lg: "lg" }}>oh the agony</Text>
       </Box>
 
       <Box>
-        <Heading size="md">OPEN EDITION</Heading>
+        <Heading fontSize={{ sm: "4xl", lg: "lg" }}>OPEN EDITION</Heading>
 
         <NftPriceInfo />
 
         <Flex my={4} ml={36} alignItems="center">
           <HiInformationCircle />
-          <Text fontSize="sm" ml={1}>
+          <Text fontSize={{ sm: "4xl", lg: "md" }} ml={1}>
             This claim ended a month ago
           </Text>
         </Flex>

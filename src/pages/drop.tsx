@@ -14,17 +14,24 @@ const Drop = () => {
   return (
     <Box pt="14vh">
       <Container>
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex
+          flexDir={{ sm: "column-reverse", lg: "row" }}
+          justifyContent="space-between"
+          alignItems="center"
+        >
           {!fullScreen && (
-            <Box w="35%">
+            <Box w={{ sm: "100%", lg: "35%" }} mt={{ sm: 12, lg: 0 }}>
               <NftInfo />
             </Box>
           )}
 
           <Box
-            w={fullScreen ? "100%" : "65%"}
+            w={{
+              sm: "100%",
+              lg: fullScreen ? "100%" : "65%",
+            }}
             h={fullScreen ? "80vh" : "initial"}
-            pl={8}
+            pl={{ sm: 0, lg: 8 }}
           >
             <NftView onExpand={handleExpand} expanded={fullScreen} />
           </Box>

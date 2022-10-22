@@ -14,7 +14,7 @@ const NftMintInfo = () => {
       <Grid
         gridTemplateRows="repeat(3, 1fr)"
         gridTemplateColumns="1fr 1fr"
-        gap={2}
+        gap={{ sm: 4, lg: 2 }}
       >
         {nftData.map(({ id, ...itemProps }) => (
           <GridItem>
@@ -24,7 +24,7 @@ const NftMintInfo = () => {
       </Grid>
 
       <Box mb={8}>
-        <Flex mt={2}>
+        <Flex mt={{ sm: 4, lg: 2 }}>
           <Box w="70%">
             <NftInput text="VIEW ON PLATFORMS" />
           </Box>
@@ -57,7 +57,7 @@ const NftMintInfo = () => {
           </Flex>
         </Flex>
 
-        <Box mt={2}>
+        <Box mt={{ sm: 4, lg: 2 }}>
           <NftInput
             text={
               <Flex alignItems="center">

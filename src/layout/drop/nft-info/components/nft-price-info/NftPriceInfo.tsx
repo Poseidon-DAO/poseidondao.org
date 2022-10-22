@@ -7,16 +7,16 @@ const NftPriceInfo = () => {
 
       <Flex>
         <Box mr={12}>
-          <Text fontSize="xs" color="brand.line">
+          <Text fontSize={{ sm: "3xl", lg: "xs" }} color="brand.line">
             PRICE
           </Text>
-          <Heading size="md">0.001 ETH</Heading>
+          <Heading fontSize={{ sm: "4xl", lg: "lg" }}>0.001 ETH</Heading>
         </Box>
         <Box>
-          <Text fontSize="xs" color="brand.line">
+          <Text fontSize={{ sm: "3xl", lg: "xs" }} color="brand.line">
             TOTAL MINTED
           </Text>
-          <Heading size="md">3403</Heading>
+          <Heading fontSize={{ sm: "4xl", lg: "lg" }}>3403</Heading>
         </Box>
       </Flex>
 

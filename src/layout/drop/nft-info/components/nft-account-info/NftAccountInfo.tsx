@@ -28,11 +28,20 @@ const NftAccountInfo = () => {
       </Box>
 
       <Box ml={2}>
-        <Text fontSize="lg">alphacentaurikid.eth</Text>
+        <Text fontSize={{ sm: "4xl", lg: "lg" }}>alphacentaurikid.eth</Text>
 
         <Flex alignItems="center" mt={1} mb={2}>
-          <Image src={FoundationIconBW.src} h={3.5} objectFit="fill" />
-          <Image src={OpenSeaIconBW.src} w={3.5} h={3.5} ml={2} />
+          <Image
+            src={FoundationIconBW.src}
+            h={{ sm: 6, lg: 3.5 }}
+            objectFit="fill"
+          />
+          <Image
+            src={OpenSeaIconBW.src}
+            w={{ sm: 6, lg: 3.5 }}
+            h={{ sm: 6, lg: 3.5 }}
+            ml={2}
+          />
         </Flex>
       </Box>
     </Flex>

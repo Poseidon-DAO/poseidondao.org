@@ -28,7 +28,7 @@ const NftInput: FC<INftInfoInputProps> = ({
       variant="unstyled"
       w="100%"
       h="auto"
-      minH="54px"
+      minH={{ sm: "84px", lg: "54px" }}
       borderRadius={0}
       border="0.5px solid"
       borderColor="brand.line"
@@ -43,7 +43,11 @@ const NftInput: FC<INftInfoInputProps> = ({
     >
       <Flex justifyContent="space-between" alignItems="center">
         {label && (
-          <Text fontSize="xs" fontWeight="normal" color="brand.line">
+          <Text
+            fontSize={{ sm: "3xl", lg: "xs" }}
+            fontWeight="normal"
+            color="brand.line"
+          >
             {label}
           </Text>
         )}
@@ -55,7 +59,11 @@ const NftInput: FC<INftInfoInputProps> = ({
       </Flex>
 
       {typeof text === "string" ? (
-        <Text fontSize="sm" textAlign="left" color="brand.text">
+        <Text
+          fontSize={{ sm: "4xl", lg: "lg" }}
+          textAlign="left"
+          color="brand.text"
+        >
           {truncate ? truncateAddress(text as string) : text}
         </Text>
       ) : (
