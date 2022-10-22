@@ -67,7 +67,12 @@ const Collections = () => {
                 m="2px"
                 objectFit="cover"
               >
-                <Image src={imageName.src} />
+                <Image
+                  src={imageName.src}
+                  height="100%"
+                  width="100%"
+                  objectFit="cover"
+                />
               </Box>
             );
           })}
