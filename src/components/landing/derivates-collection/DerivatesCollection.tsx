@@ -31,48 +31,17 @@ const DerivatesCollection = () => {
 
         <Box position="relative" zIndex={5}>
           <Heading fontSize={{ sm: "6xl", lg: "2xl" }}>
-            Derivatives Collection
+            Open Editions & Derivatives
           </Heading>
           <br />
           <Text fontSize={{ sm: "4xl", lg: "xl" }} lineHeight={1.2}>
-            The purpose of the derivatives collection is to combine different
-            atristic styles with unique pieces of high commercial value but like
-            artistic content, valuing both the starting work thanks to the
-            collaboration of excellent artists as well as the DAO itself and
-            future token holders. Niro Perrone, Gio' Roman and Bert One are just
-            some of the artists the DAO partnered with for the derrivatives
-            project
+            Monthly drops with a limited supply and a limited amount of time, in
+            collaboration with valuable artists. The artists will have their
+            floor price guaranteed and additionally 10% of the Open Edition
+            sale. The participants are incentivized to buy during the open
+            edition because they will automatically receive a certain amount of
+            PDN tokens back in airdrop.
           </Text>
-
-          <br />
-
-          <Text
-            fontSize={{ sm: "4xl", lg: "xl" }}
-            lineHeight={1.2}
-            textAlign={{ sm: "center", lg: "start" }}
-          >
-            To make collection and art lovers of all budgets participate as much
-            as possible in the project, to all those who make bids during the
-            auction, for each bid, they will be given in airdrop the governance
-            tokens od the DAO
-          </Text>
-
-          <br />
-
-          <Link
-            href="https://foundation.app/@Poseidonnftfund"
-            isExternal
-            color="brand.red"
-          >
-            <Text
-              fontWeight="bold"
-              fontSize={{ sm: "4xl", lg: "xl" }}
-              textAlign={{ sm: "center", lg: "start" }}
-              color="brand.red"
-            >
-              On Foundation
-            </Text>
-          </Link>
         </Box>
       </Box>
 
