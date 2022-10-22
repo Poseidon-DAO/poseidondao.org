@@ -1,9 +1,6 @@
-import { Box, Flex, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
-import { AiOutlineHeart, AiOutlineTrophy } from "react-icons/ai";
-import { BiRocket } from "react-icons/bi";
-import { BsCoin } from "react-icons/bs";
-
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { Container } from "components/container";
+import { GiAbstract024, GiGlassHeart } from "react-icons/gi";
 
 const CollectionStats = () => {
   return (
@@ -72,68 +69,38 @@ const CollectionStats = () => {
             </Box>
           </Box>
 
-          <Grid templateColumns="repeat(2, 1fr)" gap={4} w="100%" py="100px">
-            <GridItem w="100%" h="20" mb={{ sm: 10, lg: "initial" }}>
-              <Flex justifyContent={{ sm: "center", lg: "flex-end" }}>
-                <Box mr={6}>
-                  <AiOutlineTrophy
-                    size={80}
-                    style={{
-                      fill: "background: linear-gradient(0deg, rgba(73,35,252,1) 0%, rgba(242,10,112,1) 50%, rgba(243,133,205,1) 100%)",
-                    }}
-                  />
-                </Box>
-                <Flex flexDir="column" mt={4} w="160px">
-                  <Heading size="2xl">4</Heading>
-                  <Text fontSize="xl" mt="8px">
-                    Collections
-                  </Text>
-                </Flex>
+          <Flex
+            flexDir={{ sm: "row", lg: "column" }}
+            justify="space-evenly"
+            align="center"
+            w="100%"
+            pt={{ sm: "0px", l: "100px" }}
+            pb="100px"
+          >
+            <Flex justifyContent="center">
+              <Box mr={6}>
+                <GiAbstract024 size={80} />
+              </Box>
+              <Flex flexDir="column" mt={4}>
+                <Heading size="3xl">+3000</Heading>
+                <Text fontSize="2xl" fontWeight="bold" mt="8px">
+                  NFTs collected
+                </Text>
               </Flex>
-            </GridItem>
+            </Flex>
 
-            <GridItem w="100%" h="20" mb={{ sm: 10, lg: "initial" }}>
-              <Flex justifyContent={{ sm: "center", lg: "flex-end" }}>
-                <Box mr={6}>
-                  <BiRocket size={80} />
-                </Box>
-                <Flex flexDir="column" mt={4} w="160px">
-                  <Heading size="2xl">+3000</Heading>
-                  <Text fontSize="xl" mt="8px">
-                    NFTs
-                  </Text>
-                </Flex>
+            <Flex justifyContent="center">
+              <Box mr={6}>
+                <GiGlassHeart size={80} />
+              </Box>
+              <Flex flexDir="column" mt={4}>
+                <Heading size="3xl">~300</Heading>
+                <Text fontSize="2xl" fontWeight="bold" mt="8px">
+                  Artists collected
+                </Text>
               </Flex>
-            </GridItem>
-
-            <GridItem w="100%" h="20" mb={{ sm: 10, lg: "initial" }}>
-              <Flex justifyContent={{ sm: "center", lg: "flex-end" }}>
-                <Box mr={6}>
-                  <AiOutlineHeart size={80} />
-                </Box>
-                <Flex flexDir="column" mt={4} w="160px">
-                  <Heading size="2xl">~300</Heading>
-                  <Text fontSize="xl" mt="8px">
-                    Artists
-                  </Text>
-                </Flex>
-              </Flex>
-            </GridItem>
-
-            <GridItem w="100%" h="20" mb={{ sm: 10, lg: "initial" }}>
-              <Flex justifyContent={{ sm: "center", lg: "flex-end" }}>
-                <Box mr={6}>
-                  <BsCoin size={80} />
-                </Box>
-                <Flex flexDir="column" mt={4} w="160px">
-                  <Heading size="2xl">+$10M</Heading>
-                  <Text fontSize="xl" mt="8px">
-                    Value
-                  </Text>
-                </Flex>
-              </Flex>
-            </GridItem>
-          </Grid>
+            </Flex>
+          </Flex>
         </Flex>
       </Container>
     </Box>

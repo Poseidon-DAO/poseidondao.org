@@ -50,7 +50,7 @@ const Collections = () => {
 
       <Box
         maxW="100vw"
-        overflowX="auto"
+        overflowX={{ sm: "auto", lg: "hidden" }}
         sx={{
           "::-webkit-scrollbar": {
             display: "none",
@@ -58,7 +58,7 @@ const Collections = () => {
         }}
       >
         <Flex wrap="wrap" ml="5%" w="120%" py={20}>
-          {[...IMAGE_ARRAY.slice(0, 13)].map((imageName, i) => {
+          {[...IMAGE_ARRAY.slice(0, 14)].map((imageName, i) => {
             return (
               <Box
                 key={imageName.src}
@@ -67,7 +67,12 @@ const Collections = () => {
                 m="2px"
                 objectFit="cover"
               >
-                <Image src={imageName.src} />
+                <Image
+                  src={imageName.src}
+                  height="100%"
+                  width="100%"
+                  objectFit="cover"
+                />
               </Box>
             );
           })}
