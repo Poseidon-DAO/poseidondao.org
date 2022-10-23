@@ -1,4 +1,6 @@
 import { Box } from "@chakra-ui/react";
+import { type NextPage } from "next";
+
 import {
   PoseidonDAO,
   Collections,
@@ -7,8 +9,6 @@ import {
   GenesisCollection,
   Hero,
 } from "components/landing";
-
-import { type NextPage } from "next";
 
 const Home: NextPage = () => {
   return (

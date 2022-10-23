@@ -1,3 +1,4 @@
+import { type FC } from "react";
 import { Box, Flex, Grid, GridItem, Image, Text } from "@chakra-ui/react";
 
 import OpenSeaIconBW from "assets/images/opensea-bw.png";
@@ -6,8 +7,16 @@ import FoundationIconBW from "assets/images/foundation-bw.webp";
 import { makeNftData } from "../../data";
 import { NftInput } from "../nft-input";
 
-const NftMintInfo = () => {
-  const nftData = makeNftData();
+interface INftMintInfo {
+  contractAddress: string;
+  contractEtherscanLink: string;
+  tokenType: "ERC721" | "ERC1155";
+  startDate: string;
+  endDate: string;
+}
+
+const NftMintInfo: FC<INftMintInfo> = (props) => {
+  const nftData = makeNftData(props);
 
   return (
     <Box>
@@ -17,8 +26,8 @@ const NftMintInfo = () => {
         gap={{ sm: 4, lg: 2 }}
       >
         {nftData.map(({ id, ...itemProps }) => (
-          <GridItem>
-            <NftInput key={id} {...itemProps} />
+          <GridItem key={id}>
+            <NftInput {...itemProps} />
           </GridItem>
         ))}
       </Grid>

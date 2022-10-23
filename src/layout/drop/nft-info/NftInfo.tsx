@@ -1,5 +1,8 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { type FC } from "react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { HiInformationCircle } from "react-icons/hi";
+
+import { type NftMetadata } from "lib/types/NftMetadata";
 
 import {
   MintButton,
@@ -9,17 +12,23 @@ import {
   NftMintInfo,
 } from "./components";
 
-const NftInfo = () => {
+interface INftInfoProps extends NftMetadata {}
+
+const NftInfo: FC<INftInfoProps> = ({
+  metadata,
+  contract,
+  contractMetadata,
+}) => {
   return (
     <Box py={{ sm: 10, lg: 0 }}>
       <Box mb={4}>
-        <NftTitle />
+        <NftTitle title={metadata.name} />
       </Box>
 
       <NftAccountInfo />
 
       <Box my={8}>
-        <Text fontSize={{ sm: "4xl", lg: "lg" }}>oh the agony</Text>
+        <Text fontSize={{ sm: "4xl", lg: "lg" }}>{metadata.description}</Text>
       </Box>
 
       <Box>
@@ -34,7 +43,13 @@ const NftInfo = () => {
           </Text>
         </Flex>
 
-        <NftMintInfo />
+        <NftMintInfo
+          contractAddress={contract.address}
+          contractEtherscanLink=""
+          tokenType={contractMetadata.tokenType}
+          startDate="22.05.2023"
+          endDate="22.05.2023"
+        />
 
         <Box>
           <MintButton />

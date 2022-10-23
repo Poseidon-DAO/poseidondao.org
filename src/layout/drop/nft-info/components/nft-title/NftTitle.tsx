@@ -1,9 +1,7 @@
 import { Heading } from "@chakra-ui/react";
 
-const NftTitle = () => {
-  return (
-    <Heading fontSize={{ sm: "6xl", lg: "4xl" }}>ACK OPEN EDITION</Heading>
-  );
+const NftTitle = ({ title }: { title: string }) => {
+  return <Heading fontSize={{ sm: "6xl", lg: "4xl" }}>{title}</Heading>;
 };
 
 export { NftTitle };

@@ -4,12 +4,19 @@ interface IGetNftsArgs {
   owner: string;
 }
 
-async function getNfts({ owner }: IGetNftsArgs) {
-  const repsonse = await fetch(
+async function getNfts(
+  { owner }: IGetNftsArgs,
+  { json }: { json?: boolean } = { json: true }
+) {
+  const response = await fetch(
     `${ENDPOINTS.nfts}?` + new URLSearchParams({ owner })
   );
 
-  return repsonse.json();
+  if (json) {
+    return response.json();
+  }
+
+  return response;
 }
 
 export { getNfts };

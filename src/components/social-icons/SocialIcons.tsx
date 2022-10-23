@@ -1,6 +1,5 @@
 import NextLink from "next/link";
 import { Flex, Link } from "@chakra-ui/react";
-
 import { SocialIcon } from "react-social-icons";
 import { FaDiscord } from "react-icons/fa";
 

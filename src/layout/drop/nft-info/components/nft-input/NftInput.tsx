@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { FiExternalLink } from "react-icons/fi";
 

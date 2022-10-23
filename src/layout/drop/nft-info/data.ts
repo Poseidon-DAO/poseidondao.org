@@ -1,4 +1,12 @@
-type MakeNFTDataFn = () => {
+type ArgsType = {
+  contractAddress: string;
+  contractEtherscanLink: string;
+  tokenType: "ERC721" | "ERC1155";
+  startDate: string;
+  endDate: string;
+};
+
+type MakeNFTDataFn = (args: ArgsType) => {
   id: string;
   label: string;
   text: string;
@@ -6,19 +14,25 @@ type MakeNFTDataFn = () => {
   truncate: boolean;
 }[];
 
-const makeNftData: MakeNFTDataFn = () => [
+const makeNftData: MakeNFTDataFn = ({
+  contractAddress,
+  contractEtherscanLink,
+  tokenType,
+  startDate,
+  endDate,
+}) => [
   {
     id: "1",
     label: "CONTRACT ADDRESS",
-    text: "0x232A68a51D6e07357ae025D2a459c16077327102",
-    link: "https://etherscan.io/address/0x232a68a51d6e07357ae025d2a459c16077327102",
+    text: contractAddress,
+    link: contractEtherscanLink,
     truncate: true,
     showLinkIcon: true,
   },
   {
     id: "2",
     label: "TOKEN STANDARD",
-    text: "ERC1155",
+    text: tokenType,
     link: "",
     truncate: false,
     showLinkIcon: false,
@@ -34,7 +48,7 @@ const makeNftData: MakeNFTDataFn = () => [
   {
     id: "4",
     label: "START DATE",
-    text: "2022-09-07",
+    text: startDate,
     link: "",
     truncate: false,
     showLinkIcon: false,
@@ -42,7 +56,7 @@ const makeNftData: MakeNFTDataFn = () => [
   {
     id: "5",
     label: "END DATE",
-    text: "2022-09-17",
+    text: endDate,
     link: "",
     truncate: false,
     showLinkIcon: false,

@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Tooltip } from "@chakra-ui/react";
-import { FC, MouseEventHandler, useState } from "react";
+import { type FC, MouseEventHandler } from "react";
 import { IoIosArrowUp, IoIosArrowDown, IoMdClose } from "react-icons/io";
 
 interface INftViewProps {

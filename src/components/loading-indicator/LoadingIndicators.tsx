@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { type FC } from "react";
 import { Flex, CircularProgress } from "@chakra-ui/react";
 
 interface ILoadingIndicatorProps {

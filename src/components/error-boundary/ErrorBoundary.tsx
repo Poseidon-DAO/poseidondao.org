@@ -1,30 +1,29 @@
 import { Component, ReactNode } from "react";
 
-type IState = {
+interface IErrorBoundaryState {
   hasError: boolean;
-};
+}
 
-type IProps = {
+interface IErrorBoundaryProps {
   children: ReactNode;
-};
+}
 
-class ErrorBoundary extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class ErrorBoundary extends Component<
+  IErrorBoundaryProps,
+  IErrorBoundaryState
+> {
+  constructor(props: IErrorBoundaryProps) {
     super(props);
 
     this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error: Error) {
-    // Update state so the next render will show the fallback UI
-
     return { hasError: true };
   }
 
   render() {
-    // Check if the error is thrown
     if (this.state.hasError) {
-      // You can render any custom fallback UI
       return (
         <div>
           <h2>Oops, there is an error!</h2>

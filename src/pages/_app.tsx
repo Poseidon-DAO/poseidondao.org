@@ -1,11 +1,12 @@
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
 import { type AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
-  darkTheme,
   getDefaultWallets,
   lightTheme,
   RainbowKitProvider,
@@ -15,12 +16,9 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import TagManager from "react-gtm-module";
 
 import { PageInitalizer } from "PageInitalizer";
-import { ErrorBoundary } from "components/error-boundary";
+import { Footer, Header, ErrorBoundary } from "components";
 import store from "redux/store";
 import { theme } from "chakra/theme";
-import Head from "next/head";
-import { Footer, Header } from "components";
-import { useRouter } from "next/router";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
