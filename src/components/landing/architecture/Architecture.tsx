@@ -5,6 +5,8 @@ import image from "../../../../public/img/wp/architecture.png";
 const Architecture = () => {
   return (
     <Flex
+      as="section"
+      id="architecture"
       borderWidth="1px 0 0 0"
       borderColor="brand.text"
       flexDir={{ sm: "column", lg: "row" }}

@@ -15,6 +15,8 @@ import image from "../../../../public/img/wp/wp-cover-draft.jpg";
 const Whitepaper = () => {
   return (
     <Flex
+      as="section"
+      id="whitepaper"
       backgroundImage={background.src}
       backgroundSize="cover"
       borderWidth="1px 0 0 0"
@@ -59,7 +61,7 @@ const Whitepaper = () => {
             textAlign={{ sm: "center", lg: "center" }}
             m={{ sm: 10 }}
           >
-            Download the whitepaper latest version to learn more
+            Download the latest whitepaper version to learn more
           </Text>
           <Link
             href={"/Whitepaper_Poseidon_DAO.pdf"}
