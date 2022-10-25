@@ -2,10 +2,11 @@ import { type FC, useState } from "react";
 import { type GetServerSideProps } from "next";
 import { Box, Flex } from "@chakra-ui/react";
 
-import { Container } from "components";
+import { Container, LoadingIndicator } from "components";
 import { NftInfo, NftView } from "layout/drop";
 import { getNftMetadata } from "lib/api/queryFunctions";
 import { type NftMetadata } from "lib/types/NftMetadata";
+import { useRouter } from "next/router";
 
 // const ManifoldAddress = process.env.NEXT_PUBLIC_MANIFOLD_ADDRESS;
 
@@ -14,9 +15,17 @@ interface IOpenEditionProps extends NftMetadata {}
 const OpenEdition: FC<IOpenEditionProps> = (props) => {
   const [fullScreen, setFullScreen] = useState(false);
 
+  const router = useRouter();
+
   function handleExpand() {
     setFullScreen((prevState) => !prevState);
   }
+
+  if (typeof window !== "undefined") {
+    router.replace("/404");
+  }
+
+  return <LoadingIndicator />;
 
   return (
     <Box pt="14vh">
