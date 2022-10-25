@@ -16,6 +16,7 @@ import { theme } from "chakra/theme";
 import Head from "next/head";
 import { Footer, Header } from "components";
 import { useRouter } from "next/router";
+import { DefaultSeo } from "next-seo";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
@@ -57,6 +58,30 @@ function MyApp({ Component, pageProps }: AppProps) {
 
               <Header />
               <PageInitalizer>
+                <DefaultSeo
+                  title="Poseidon DAO"
+                  description="Making Crypto Art the 21th Century Art"
+                  openGraph={{
+                    type: "website",
+                    locale: "en_IE",
+                    url: "https://poseidondao.org",
+                    siteName: "Poseidon DAO",
+                    images: [
+                      {
+                        url: "https://poseidondao.org/img/hero/background-tunnel.png",
+                        width: 800,
+                        height: 600,
+                        alt: "Hero Image Alt",
+                        type: "image/png",
+                      },
+                    ],
+                  }}
+                  twitter={{
+                    handle: "@Poseidon_SF",
+                    site: "@Poseidon_SF",
+                    cardType: "summary_large_image",
+                  }}
+                />
                 <Component {...pageProps} />
               </PageInitalizer>
               {pathname === "/" && <Footer />}
