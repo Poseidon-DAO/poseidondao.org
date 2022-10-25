@@ -60,7 +60,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <PageInitalizer>
                 <DefaultSeo
                   title="Poseidon DAO"
-                  description="Making Crypt Art the 21th Century Art"
+                  description="Making Crypto Art the 21th Century Art"
                   openGraph={{
                     type: "website",
                     locale: "en_IE",
