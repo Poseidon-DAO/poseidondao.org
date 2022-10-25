@@ -77,8 +77,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                     ],
                   }}
                   twitter={{
-                    handle: "@handle",
-                    site: "@site",
+                    handle: "@Poseidon_SF",
+                    site: "@Poseidon_SF",
                     cardType: "summary_large_image",
                   }}
                 />
