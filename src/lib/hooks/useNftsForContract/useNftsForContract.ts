@@ -19,7 +19,7 @@ const useNftsForContract = (props: IUseNftsForContract = {}) => {
 
   return {
     ...query,
-    contractNfts: query.data,
+    contractNfts: query.data ? query.data.nfts : query.data,
     areContractNftsLoading: query.isLoading,
     areContractNftsFetching: query.isFetching,
   };

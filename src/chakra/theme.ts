@@ -5,9 +5,11 @@ import { config } from "chakra/config";
 import { colors } from "chakra/colors";
 import { Button } from "./components";
 
+import * as components from "chakra/components";
+
 export const theme: ThemeOverride = extendTheme({
   colors,
   fonts,
   config,
-  components: { Button },
+  components: { ...components },
 });

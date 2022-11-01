@@ -10,15 +10,28 @@ import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
 
+const headerColorForRoute: Record<string, string> = {
+  "/": "transparent",
+  "/drop": "blue",
+};
+
 function Header() {
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
   const iconsSize = useBreakpointValue({ sm: 80, lg: 50, base: 50 });
 
+  const headerColor = headerColorForRoute[router.pathname as string];
+  const headerThemeColor = theme.colors.brand[headerColor];
+
   const { scrollY } = useScroll();
 
-  const headerBackgroundColor = useMotionValue(theme.colors.transparent);
+  const headerBackgroundColor = useMotionValue(headerThemeColor);
+
+  useEffect(() => {
+    headerBackgroundColor.set(headerThemeColor);
+  }, [router.pathname]);
+
   const logoWidth = useTransform(
     scrollY,
     [0, 20],
@@ -27,6 +40,8 @@ function Header() {
 
   useEffect(() => {
     return scrollY.onChange((y) => {
+      if (router.pathname !== "/") return;
+
       if (y > 20) {
         headerBackgroundColor.set(theme.colors.brand.blue);
       } else {
@@ -36,7 +51,7 @@ function Header() {
   }, []);
 
   function handleReload() {
-    router.replace("/");
+    router.push("/");
   }
 
   const AnimatedBox = makeAnimatedElement(motion.div);
