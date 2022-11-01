@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 
-import { SectionInfo } from "../section-info";
+import { SectionInfo } from "../../multi-step-form/components/section-info";
 
 interface IIntroProps {
   onSubmit: () => void;

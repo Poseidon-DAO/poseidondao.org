@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Box } from "@chakra-ui/react";
-
 import { useScroll, useSpring } from "framer-motion";
 
-import { ProgressBar, SectionList, Controls } from "./components";
-import { BurnSelect } from "./components/section-list/BurnSelect";
-import { Verification } from "./components/section-list/Verification";
+import { Intro, BurnSelect, Verification } from "components/burn";
 
-const SPRING_CONFIG = { stiffness: 100, damping: 30, restDelta: 0.001 };
+import { ProgressBar, SectionList, Controls } from "./components";
+
+const SPRING_CONFIG = {
+  stiffness: 100,
+  damping: 30,
+  restDelta: 0.001,
+};
 
 const Form = () => {
   const [formStep, setFormStep] = useState(1);
@@ -65,4 +68,20 @@ const Form = () => {
   );
 };
 
-export { Form };
+const MultiStepForm = () => {
+  const [hasSurveryStarted, setSurveryStarted] = useState(false);
+
+  return (
+    <Box minH="90vh">
+      {!hasSurveryStarted ? (
+        <Box px="15vw">
+          <Intro onSubmit={() => setSurveryStarted(true)} />
+        </Box>
+      ) : (
+        <Form />
+      )}
+    </Box>
+  );
+};
+
+export { MultiStepForm };
