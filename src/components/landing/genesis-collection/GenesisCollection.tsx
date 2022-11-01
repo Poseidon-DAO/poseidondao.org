@@ -19,35 +19,18 @@ const GenesisCollection = () => {
         bg="rgba(0,0,0,0.7)"
       >
         <Heading fontSize={{ sm: "6xl", lg: "2xl" }}>
-          Genesis Collection
+          SuperRare Space & Genesis
         </Heading>
         <br />
         <Text fontSize={{ sm: "4xl", lg: "xl" }} lineHeight={1.2}>
-          The purpose of the derivatives collection is to combine different
-          atristic styles with unique pieces of high commercial value but like
-          artistic content, valuing both the starting work thanks to the
-          collaboration of excellent artists as well as the DAO itself and
-          future token holders. Niro Perrone, Gio' Roman and Bert One are just
-          some of the artists the DAO partnered with for the derrivatives
-          project
+          Poseidon DAO Space gallery will primarily aim to bring known and
+          established artists from the traditional art sector to the NFT market.
+          From our point of view, it is important to create synergies and
+          connect the two sides of art that we see advancing in parallel today,
+          with few intersections. By helping already established artists adopt
+          NFTs, we are convinced to bring benefits to the entire ecosystem,
+          allowing them, to work after work, to gain greater visibility.
         </Text>
-
-        <br />
-
-        <Link
-          href="https://foundation.app/@Poseidonnftfund"
-          isExternal
-          color="brand.red"
-        >
-          <Text
-            fontWeight="bold"
-            fontSize={{ sm: "4xl", lg: "xl" }}
-            textAlign={{ sm: "center", lg: "start" }}
-            color="brand.red"
-          >
-            On Foundation
-          </Text>
-        </Link>
       </Box>
     </Flex>
   );

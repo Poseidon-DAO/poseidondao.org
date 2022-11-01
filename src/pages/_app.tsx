@@ -13,6 +13,7 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { DefaultSeo } from "next-seo";
 import TagManager from "react-gtm-module";
 
 import { PageInitalizer } from "PageInitalizer";
@@ -67,6 +68,30 @@ function MyApp({ Component, pageProps }: AppProps) {
 
               <Header />
               <PageInitalizer>
+                <DefaultSeo
+                  title="Poseidon DAO"
+                  description="Making Crypto Art the 21th Century Art"
+                  openGraph={{
+                    type: "website",
+                    locale: "en_IE",
+                    url: "https://poseidondao.org",
+                    siteName: "Poseidon DAO",
+                    images: [
+                      {
+                        url: "https://poseidondao.org/img/hero/background-tunnel.png",
+                        width: 800,
+                        height: 600,
+                        alt: "Hero Image Alt",
+                        type: "image/png",
+                      },
+                    ],
+                  }}
+                  twitter={{
+                    handle: "@Poseidon_SF",
+                    site: "@Poseidon_SF",
+                    cardType: "summary_large_image",
+                  }}
+                />
                 <Component {...pageProps} />
               </PageInitalizer>
               {pathname === "/" && <Footer />}
