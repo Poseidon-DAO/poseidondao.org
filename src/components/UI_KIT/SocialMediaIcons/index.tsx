@@ -22,7 +22,7 @@ export default function SocialMediaIcons() {
         style={style}
       />
       <SocialIcon
-        url="https://discord.gg/gUsX8MpTqk"
+        url="https://discord.gg/H9jrvSwuRV"
         target="_blank"
         bgColor={Colors.blue.clear}
         fgColor="#FFF"
