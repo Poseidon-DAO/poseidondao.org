@@ -1,5 +1,4 @@
 import { Container as ChakraContainer, ContainerProps } from "@chakra-ui/react";
-
 import { type FC, type ReactNode } from "react";
 
 interface IPageContainerProps {

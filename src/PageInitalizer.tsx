@@ -13,7 +13,7 @@ const PageInitalizer: NextPage<IPageInitalizerProps> = ({ children }) => {
   useNfts();
 
   return (
-    <Box minH="100vh" bg="brand.blue">
+    <Box minH="100vh" bg="brand.background">
       {children}
     </Box>
   );

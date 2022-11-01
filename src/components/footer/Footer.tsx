@@ -1,3 +1,4 @@
+import NextLink from "next/link";
 import {
   Box,
   Flex,
@@ -6,10 +7,8 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
 
 import { Container, SocialIcons } from "components";
-
 import footer from "assets/images/footer.png";
 
 import logo from "../../../public/img/logo-transparent.png";
