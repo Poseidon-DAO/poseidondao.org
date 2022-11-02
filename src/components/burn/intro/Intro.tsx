@@ -1,15 +1,14 @@
-import { FC, FormEvent, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 
-import { SectionInfo } from "../../multi-step-form/components/section-info";
+import { SectionInfo } from "components/multi-step-form/components";
 
 interface IIntroProps {
   onSubmit: () => void;
 }
 
 const Intro: FC<IIntroProps> = ({ onSubmit }) => {
-  function handleSubmit(event?: FormEvent<HTMLFormElement>) {
-    event?.preventDefault();
+  function handleSubmit() {
     onSubmit();
   }
 
@@ -29,22 +28,29 @@ const Intro: FC<IIntroProps> = ({ onSubmit }) => {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} method="POST">
-      <Flex w="100%" h="90vh" alignItems="center" justifyContent="center">
-        <Box>
-          <SectionInfo
-            title="Become a Guardian - PDN Burn flow"
-            question="The Guardians are the keepers of DAO collection. Their goal is growing
+    <Flex
+      w="100%"
+      h="90vh"
+      px="15vw"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Box>
+        <SectionInfo
+          title="Become a Guardian - PDN Burn flow"
+          question="The Guardians are the keepers of DAO collection. Their goal is growing
           and improving the collection in the most healthy and representative
           way. Guardians are identified as owners of the Guardian NFT. The
           Guardian NFTs are cumulative and can be obtained burning 200.000 PDN
           tokens."
-            continueButton="Start"
-            continueButtonSize="xl"
-          />
-        </Box>
-      </Flex>
-    </form>
+          continueButton="Start"
+          continueButtonSize="xl"
+          buttonType="submit"
+          buttonIcon={null}
+          onClick={handleSubmit}
+        />
+      </Box>
+    </Flex>
   );
 };
 

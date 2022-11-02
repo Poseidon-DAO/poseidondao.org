@@ -1,5 +1,12 @@
-import { Box, Flex, FormControl, Heading, Text } from "@chakra-ui/react";
-import { FC, ReactNode } from "react";
+import {
+  Box,
+  ButtonProps,
+  Flex,
+  FormControl,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
+import { FC, MouseEventHandler, ReactElement, ReactNode } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 
 import { OkButton } from "../ok-button";
@@ -22,6 +29,11 @@ interface ISectionInfoProps
   continueButton?: string | ReactNode;
   continueButtonPosition?: "left" | "center" | "right";
   continueButtonSize?: "md" | "xl";
+  buttonType?: ButtonProps["type"];
+  buttonIcon?: ReactElement | null;
+  showEnterText?: boolean;
+  error?: string | ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 const SectionInfo: FC<ISectionInfoProps> = ({
@@ -33,6 +45,11 @@ const SectionInfo: FC<ISectionInfoProps> = ({
   continueButton,
   continueButtonPosition,
   continueButtonSize,
+  buttonType,
+  buttonIcon,
+  showEnterText,
+  error,
+  onClick,
 }) => {
   return (
     <FormControl isInvalid={false} my={12}>
@@ -50,20 +67,33 @@ const SectionInfo: FC<ISectionInfoProps> = ({
         </Text>
       </Box>
 
+      {error && (
+        <Box mt={4}>
+          <Text fontSize="lg" lineHeight={1} color="brand.red">
+            {error}
+          </Text>
+        </Box>
+      )}
+
       <Box minH="20px" my={8}>
         {children}
       </Box>
 
-      {continueButton &&
-        (typeof continueButton === "string" ? (
+      <Box minH="80px">
+        {typeof continueButton === "string" ? (
           <OkButton
             title={continueButton}
             align={continueButtonPosition}
             buttonSize={continueButtonSize}
+            type={buttonType}
+            icon={buttonIcon}
+            showEnterText={showEnterText}
+            onClick={onClick}
           />
         ) : (
           continueButton
-        ))}
+        )}
+      </Box>
     </FormControl>
   );
 };

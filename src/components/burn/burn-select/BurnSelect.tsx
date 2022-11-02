@@ -1,10 +1,21 @@
-import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
-
+import { FC } from "react";
+import { useFormContext } from "react-hook-form";
+import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import { MdOutlineDone } from "react-icons/md";
 
-const FIELD_NAME = "nftAmount";
+interface IBurnSelectProps {
+  fieldName: string;
+}
 
-const BurnSelect = () => {
+const BurnSelect: FC<IBurnSelectProps> = ({ fieldName }) => {
+  const { watch, setValue } = useFormContext();
+
+  const currentValue = watch(fieldName);
+
+  function handleOptionChange(newValue: number) {
+    setValue(fieldName, newValue);
+  }
+
   return (
     <Box>
       <Stack display="inline-flex">
@@ -23,7 +34,7 @@ const BurnSelect = () => {
           },
         ].map((option) => {
           const key = Object.keys(option)[0];
-          const isSelected = true; // currentValue === option.value;
+          const isSelected = currentValue === option.value;
 
           return (
             <Button
@@ -34,7 +45,7 @@ const BurnSelect = () => {
               variant="unstyled"
               p={2}
               textAlign="left"
-              // onClick={() => onChange(option.value)}
+              onClick={() => handleOptionChange(option.value)}
               display="inline-flex"
               justifyContent="space-between"
               flexDir="row"
