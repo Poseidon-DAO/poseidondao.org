@@ -10,6 +10,7 @@ import {
   type ISectionProps,
 } from "./components";
 import { Form } from "./Form";
+import { AnimatePresence, motion } from "framer-motion";
 
 const FORM_STATES = {
   NOT_STARTED: "not-started",
@@ -29,9 +30,19 @@ interface IMultiStepFormProps {
   formConfig: IFormConfig;
 }
 
+const divAnimationConfig = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
 const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
   const { intro, outro } = formConfig;
 
+  const [renderStatus, setRenderStatus] = useState({
+    showIntro: true,
+    showForm: false,
+    showOutro: false,
+  });
   const router = useRouter();
 
   const [surveryStatus, setSurveyStatus] = useState<FormStatus>(
@@ -39,6 +50,7 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
   );
 
   const hasNotStarted = surveryStatus === FORM_STATES.NOT_STARTED;
+  const hasStarted = surveryStatus === FORM_STATES.STARTED;
   const hasSubmited = surveryStatus === FORM_STATES.SUBMITED;
 
   function handleFormStatusChange(newStatus: FormStatus) {
@@ -58,18 +70,42 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
     handleFormStatusChange(FORM_STATES.SUBMITED);
   }
 
-  if (hasNotStarted && intro) {
-    return <Intro config={intro} onSubmit={handleIntroSubmit} />;
-  }
-
-  if (hasSubmited && outro) {
-    return <Outro config={outro} onSubmit={handleOutroSubmit} />;
-  }
-
   return (
-    <Box minH="90vh">
-      <Form formConfig={formConfig} onSubmit={handleFormSubmit} />
-    </Box>
+    <>
+      <AnimatePresence
+        onExitComplete={() =>
+          setRenderStatus({ ...renderStatus, showForm: true })
+        }
+      >
+        {hasNotStarted && intro && (
+          <motion.div key="intro" {...divAnimationConfig}>
+            <Intro config={intro} onSubmit={handleIntroSubmit} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence
+        onExitComplete={() =>
+          setRenderStatus({ ...renderStatus, showOutro: true })
+        }
+      >
+        {hasStarted && renderStatus.showForm && (
+          <motion.div key="form" {...divAnimationConfig}>
+            <Box minH="90vh">
+              <Form formConfig={formConfig} onSubmit={handleFormSubmit} />
+            </Box>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {hasSubmited && outro && (
+          <motion.div key="outro" {...divAnimationConfig}>
+            <Outro config={outro} onSubmit={handleOutroSubmit} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
