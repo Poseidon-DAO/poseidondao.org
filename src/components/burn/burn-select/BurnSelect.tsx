@@ -4,16 +4,16 @@ import { Box, Button, Stack, Text } from "@chakra-ui/react";
 import { MdOutlineDone } from "react-icons/md";
 
 interface IBurnSelectProps {
-  fieldName: string;
+  fieldName?: string;
 }
 
 const BurnSelect: FC<IBurnSelectProps> = ({ fieldName }) => {
   const { watch, setValue } = useFormContext();
 
-  const currentValue = watch(fieldName);
+  const currentValue = watch(fieldName || "");
 
   function handleOptionChange(newValue: number) {
-    setValue(fieldName, newValue);
+    setValue(fieldName!, newValue);
   }
 
   return (

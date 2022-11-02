@@ -8,9 +8,10 @@ import {
 } from "@chakra-ui/react";
 import { FC, MouseEventHandler, ReactElement, ReactNode } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
+import { IoIosWarning } from "react-icons/io";
 
 import { OkButton } from "../ok-button";
-import { type ISectionProps } from "../section-list";
+import { ISectionProps } from "../section/Section";
 
 interface ISectionInfoProps
   extends Omit<
@@ -25,7 +26,7 @@ interface ISectionInfoProps
   > {
   questionNo?: number;
   required?: boolean;
-  children?: ReactNode;
+  children?: JSX.Element;
   continueButton?: string | ReactNode;
   continueButtonPosition?: "left" | "center" | "right";
   continueButtonSize?: "md" | "xl";
@@ -67,12 +68,25 @@ const SectionInfo: FC<ISectionInfoProps> = ({
         </Text>
       </Box>
 
-      {error && (
-        <Box mt={4}>
-          <Text fontSize="lg" lineHeight={1} color="brand.red">
+      {error && typeof error === "string" ? (
+        <Flex
+          display="inline-flex"
+          mt={4}
+          bg="white"
+          p={2}
+          fontWeight="light"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box color="brand.red" mr={2}>
+            <IoIosWarning />
+          </Box>
+          <Text fontSize="sm" lineHeight={1} color="brand.red">
             {error}
           </Text>
-        </Box>
+        </Flex>
+      ) : (
+        error
       )}
 
       <Box minH="20px" my={8}>

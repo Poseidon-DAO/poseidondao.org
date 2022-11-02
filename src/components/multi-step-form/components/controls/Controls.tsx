@@ -1,6 +1,5 @@
 import { Box, ButtonGroup, IconButton } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
-import { Controller, useFormContext } from "react-hook-form";
 import { FiChevronUp, FiChevronDown } from "react-icons/fi";
 
 interface IControlsProps {

@@ -4,10 +4,12 @@ import { useScroll, useSpring } from "framer-motion";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { ProgressBar, SectionList, Controls } from "./components";
-import { BurnSelect } from "components/burn";
+
+import { type IFormConfig } from "./MultiStepForm";
 
 interface IFormProps {
   onSubmit?: (data: any) => void;
+  formConfig: IFormConfig;
 }
 
 const SPRING_CONFIG = {
@@ -16,40 +18,9 @@ const SPRING_CONFIG = {
   restDelta: 0.001,
 };
 
-const sections = [
-  {
-    id: "1",
-    name: "nftsAmount",
-    defaultValue: 0,
-    error: "Please select one of the options!",
-    title: "How many NFTs you want to mint?",
-    question:
-      "The burn ratio is 200.000 PDN. You own X PDN, that means you can mint up to Y NFTs. Select the number of NFTs you want to mint. This will be executed in a single transaction that will be executed in the next step.",
-    questionNo: 1,
-    required: true,
-    children: (fieldName: string) => <BurnSelect fieldName={fieldName} />,
-    continueButton: "OK",
-    continueButtonPosition: "left" as "left",
-    continueButtonSize: "md" as "md",
-  },
-  {
-    id: "2",
-    name: undefined,
-    defaultValue: "",
-    error: undefined,
-    title: "Burn your PDN and become a Guardian",
-    question:
-      "This is the last step in the process where you confirm you want to become a Guardian burning your tokens.Click on the BURN button to run the burn transaction you will confirm using your wallet, for instance Metamask.",
-    questionNo: 2,
-    required: false,
-    children: null,
-    continueButton: "OK",
-    continueButtonPosition: "left" as "left",
-    continueButtonSize: "md" as "md",
-  },
-];
+const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
+  const { sections } = formConfig;
 
-const Form: FC<IFormProps> = ({ onSubmit }) => {
   const [formStep, setFormStep] = useState(1);
   const prevFormStep = usePrevious(formStep);
 
@@ -57,25 +28,11 @@ const Form: FC<IFormProps> = ({ onSubmit }) => {
   const { scrollYProgress } = useScroll({ container: scrollContainerRef });
   const progressBarWidth = useSpring(scrollYProgress, SPRING_CONFIG);
 
-  const fields = sections.map((section) => ({
-    name: section?.name,
-    value: section?.defaultValue || "",
-  }));
-
-  const formFields = fields.reduce((acc, v) => {
-    if (!v.name) return acc;
-
-    return { ...acc, [v.name as string]: v.value };
-  }, {});
-
-  const formMethods = useForm({
-    defaultValues: formFields,
-  });
+  const formMethods = useForm();
 
   const {
     formState: { errors },
     handleSubmit: onFormSubmit,
-    getValues,
     watch,
   } = formMethods;
 

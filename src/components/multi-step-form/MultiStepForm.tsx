@@ -1,8 +1,14 @@
 import { FC, useState } from "react";
 import { Box } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-import { Intro, Outro } from "components/burn";
-
+import {
+  Intro,
+  Outro,
+  type IIntroConfigProps,
+  type IOutroConfigProps,
+  type ISectionProps,
+} from "./components";
 import { Form } from "./Form";
 
 const FORM_STATES = {
@@ -13,11 +19,21 @@ const FORM_STATES = {
 
 type FormStatus = typeof FORM_STATES[keyof typeof FORM_STATES];
 
+export interface IFormConfig {
+  intro: IIntroConfigProps | null;
+  outro: IOutroConfigProps | null;
+  sections: ISectionProps[];
+}
 interface IMultiStepFormProps {
   onSubmit?: (data: any) => void;
+  formConfig: IFormConfig;
 }
 
-const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit }) => {
+const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
+  const { intro, outro } = formConfig;
+
+  const router = useRouter();
+
   const [surveryStatus, setSurveyStatus] = useState<FormStatus>(
     FORM_STATES.NOT_STARTED
   );
@@ -33,22 +49,26 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit }) => {
     handleFormStatusChange(FORM_STATES.STARTED);
   }
 
+  function handleOutroSubmit() {
+    router.push(outro?.redirectUrl || "/");
+  }
+
   function handleFormSubmit(data: any) {
     onSubmit?.(data);
     handleFormStatusChange(FORM_STATES.SUBMITED);
   }
 
-  if (hasNotStarted) {
-    return <Intro onSubmit={handleIntroSubmit} />;
+  if (hasNotStarted && intro) {
+    return <Intro config={intro} onSubmit={handleIntroSubmit} />;
   }
 
-  if (hasSubmited) {
-    return <Outro />;
+  if (hasSubmited && outro) {
+    return <Outro config={outro} onSubmit={handleOutroSubmit} />;
   }
 
   return (
     <Box minH="90vh">
-      <Form onSubmit={handleFormSubmit} />
+      <Form formConfig={formConfig} onSubmit={handleFormSubmit} />
     </Box>
   );
 };
