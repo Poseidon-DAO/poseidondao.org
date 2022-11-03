@@ -14,7 +14,7 @@ interface IUsePDNTransfer extends ICustomHookBaseProps {
     to: string;
     amount: string;
   };
-  onSuccess: ((data: any) => void) | undefined;
+  onSuccess?: (data: any) => void;
 }
 
 const usePDNTransfer = ({ args, onSuccess, onError }: IUsePDNTransfer) => {
