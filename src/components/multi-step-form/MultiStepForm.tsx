@@ -26,7 +26,7 @@ export interface IFormConfig {
   sections: ISectionProps[];
 }
 interface IMultiStepFormProps {
-  onSubmit?: (data: any) => void;
+  onSubmit?: (data: any, statusSetter: () => void) => void;
   formConfig: IFormConfig;
 }
 
@@ -66,8 +66,9 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
   }
 
   function handleFormSubmit(data: any) {
-    onSubmit?.(data);
-    handleFormStatusChange(FORM_STATES.SUBMITED);
+    onSubmit?.(data, () => {
+      handleFormStatusChange(FORM_STATES.SUBMITED);
+    });
   }
 
   return (

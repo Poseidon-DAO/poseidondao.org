@@ -31,7 +31,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const formMethods = useForm();
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit: onFormSubmit,
     watch,
   } = formMethods;
@@ -39,7 +39,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const currentSectionName = sections.find(
     (s) => Number(s.id) === formStep
   )?.name;
-
+  const errorKeys = Object.keys(errors);
   const currentSectionValue = watch((currentSectionName || "") as any);
 
   useEffect(() => {
@@ -65,7 +65,6 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   }, [currentSectionValue, formStep, prevFormStep]);
 
   useEffect(() => {
-    const errorKeys = Object.keys(errors);
     const sectionIdToScrollTo = sections.find(
       (s) => s.name === errorKeys[0]
     )?.id;
@@ -73,7 +72,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
     if (sectionIdToScrollTo && errorKeys.length) {
       setFormStep(Number(sectionIdToScrollTo));
     }
-  }, [errors]);
+  }, [isSubmitting]);
 
   function getActiveStepAndScroll(nextStep: number = 1) {
     const nextSection = document.getElementById(`section-${nextStep}`);

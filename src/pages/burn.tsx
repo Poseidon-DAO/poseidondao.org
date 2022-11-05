@@ -5,6 +5,11 @@ import { BurnSelect, ConnectWallet } from "components/burn";
 import { IFormConfig, MultiStepForm } from "components/multi-step-form";
 
 import { type NextPage } from "next";
+import { usePDNBalance, usePDNBurn, usePDNTransfer } from "lib/hooks";
+import { type FormRegisteredFieldData } from "components/multi-step-form/components";
+import { overrideFormConfigSection } from "components/multi-step-form/utils";
+import { useDebounce } from "hooks";
+import { useBurnStore } from "@zustand/burn";
 
 const formConfig: IFormConfig = {
   intro: {
@@ -31,8 +36,8 @@ const formConfig: IFormConfig = {
     {
       id: "1",
       name: "nftsAmount",
-      defaultValue: "",
-      error: "Please select one of the options!",
+      defaultValue: undefined,
+      error: "Please choose a valid value to mint!",
       title: "How many NFTs you want to mint?",
       question:
         "The burn ratio is 200.000 PDN. You own X PDN, that means you can mint up to Y NFTs. Select the number of NFTs you want to mint. This will be executed in a single transaction that will be executed in the next step.",
@@ -41,8 +46,10 @@ const formConfig: IFormConfig = {
       continueButton: "OK",
       continueButtonPosition: "left",
       continueButtonSize: "md",
-      validate: (v: any) => v > 0 && v < 4,
-      children: (fieldName: string) => <BurnSelect fieldName={fieldName} />,
+      validate: undefined,
+      children: (props: FormRegisteredFieldData | undefined) => (
+        <BurnSelect {...props} />
+      ),
     },
     {
       id: "2",
@@ -62,18 +69,49 @@ const formConfig: IFormConfig = {
   ],
 };
 
+let RATIO = 200_000;
+
 const Burn: NextPage = () => {
   const { isConnected } = useAccount();
+  const { balance } = usePDNBalance();
 
-  function handleSubmit(data: any) {
-    console.log({ data });
-    console.log("submit");
+  const burnAmount = useBurnStore((state) => state.burnAmount);
+  const debouncedAmount = useDebounce(burnAmount);
+
+  const { burn, burnData } = usePDNBurn({
+    args: { amount: `${debouncedAmount}` },
+  });
+
+  // useEffect(() => {
+  //   if (debouncedAmount) {
+  //     // console.log("runing");
+  //     // burn?.();
+  //     // transfer?.();
+  //   }
+  // }, [debouncedAmount]);
+
+  const maxAmountToBuy = Math.floor(Number(balance) / RATIO);
+
+  function handleSubmit(data: any, showOutro: () => void) {
+    const nftsToMint = data.nftsAmount;
+    console.log("submited");
+    // setAmount("1");
+    // transfer?.();
+    burn?.();
   }
 
   return (
     <Box pt="10vh" bg="brand.background">
       {isConnected ? (
-        <MultiStepForm formConfig={formConfig} onSubmit={handleSubmit} />
+        <MultiStepForm
+          formConfig={overrideFormConfigSection({
+            config: formConfig,
+            sectionId: "1",
+            // @ts-ignore
+            newValue: { validate: (v: any) => v <= maxAmountToBuy && v > 0 },
+          })}
+          onSubmit={handleSubmit}
+        />
       ) : (
         <ConnectWallet />
       )}

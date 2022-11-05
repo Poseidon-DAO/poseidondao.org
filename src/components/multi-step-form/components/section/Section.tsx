@@ -22,14 +22,14 @@ import { SectionInfo } from "../section-info";
 export interface ISectionProps {
   id: string;
   name?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   error?: string | ReactNode;
   title: string;
   question: string;
   questionNo?: number;
   required?: boolean;
   validate?: (v: any) => boolean;
-  children?: (fieldName: string) => JSX.Element;
+  children?: (data: FormRegisteredFieldData) => ReactElement;
   continueButton: string | ReactNode;
   continueButtonPosition: "left" | "center" | "right";
   continueButtonSize: "md" | "xl";
@@ -40,6 +40,64 @@ type ISectionExtendedProps = ISectionProps & {
   sectionsNumber: number;
   submitForm?: () => void;
   changeStep?: Dispatch<SetStateAction<number>>;
+};
+
+export interface FormRegisteredFieldData {
+  field?: ControllerRenderProps<FieldValues, string>;
+  fieldState?: ControllerFieldState;
+  formState?: UseFormStateReturn<FieldValues>;
+}
+
+const SectionContainer = ({
+  index,
+  id,
+  sectionsNumber,
+  name,
+  continueButton,
+  error,
+  showButton,
+  children,
+  changeStep,
+  field,
+  fieldState,
+  formState,
+  ...sectionData
+}: FormRegisteredFieldData &
+  ISectionExtendedProps & { showButton: boolean | null }) => {
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  return (
+    <Flex
+      h="90vh"
+      alignItems="center"
+      justifyContent="center"
+      id={`section-${index + 1}`}
+      key={id}
+    >
+      <SectionInfo
+        {...{
+          ...sectionData,
+          continueButton: !!showButton ? continueButton : null,
+          buttonType: Number(id) === sectionsNumber ? "submit" : "button",
+          onClick: !!name
+            ? () => changeStep?.((prevStep: number) => prevStep + 1)
+            : undefined,
+          error: Object.keys(errors).find((e) => e === name)
+            ? error
+            : undefined,
+        }}
+      >
+        {children &&
+          children({
+            field,
+            fieldState,
+            formState,
+          })}
+      </SectionInfo>
+    </Flex>
+  );
 };
 
 const Section: FC<ISectionExtendedProps> = (props) => {
@@ -54,12 +112,7 @@ const Section: FC<ISectionExtendedProps> = (props) => {
   } = props;
   const [showButton, setShowButton] = useState(name ? null : true);
 
-  const {
-    control,
-    watch,
-    formState: { errors },
-    trigger,
-  } = useFormContext();
+  const { control, watch, trigger } = useFormContext();
 
   const answer = watch(name || "");
 
@@ -101,11 +154,7 @@ const Section: FC<ISectionExtendedProps> = (props) => {
 
   function renderWithController(
     name: string,
-    children: (data: {
-      field: ControllerRenderProps<FieldValues, string>;
-      fieldState: ControllerFieldState;
-      formState: UseFormStateReturn<FieldValues>;
-    }) => ReactElement
+    children: (data: FormRegisteredFieldData) => ReactElement
   ) {
     return (
       <Controller
@@ -121,44 +170,12 @@ const Section: FC<ISectionExtendedProps> = (props) => {
     );
   }
 
-  const SectionContainer = (props: {
-    formState?: UseFormStateReturn<FieldValues>;
-    fieldState?: ControllerFieldState;
-    field?: ControllerRenderProps<FieldValues, string>;
-  }) => {
-    return (
-      <Flex
-        h="90vh"
-        alignItems="center"
-        justifyContent="center"
-        id={`section-${sectionData.index + 1}`}
-        key={id}
-      >
-        <SectionInfo
-          {...{
-            ...sectionData,
-            continueButton: !!showButton ? sectionData.continueButton : null,
-            onClick: !!name
-              ? () => changeStep?.((prevStep: number) => prevStep + 1)
-              : undefined,
-            buttonType: Number(id) === sectionsNumber ? "submit" : "button",
-            error: Object.keys(errors).find((e) => e === name)
-              ? sectionData.error
-              : undefined,
-          }}
-        >
-          {children && children(name || "")}
-        </SectionInfo>
-      </Flex>
-    );
-  };
-
   if (!name) {
-    return <SectionContainer />;
+    return <SectionContainer {...props} showButton={showButton} />;
   }
 
-  return renderWithController(name, ({ formState, fieldState }) => (
-    <SectionContainer formState={formState} fieldState={fieldState} />
+  return renderWithController(name, (formProps) => (
+    <SectionContainer {...props} showButton={showButton} {...formProps} />
   ));
 };
 

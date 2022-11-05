@@ -1,38 +1,59 @@
 import { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import { Box, Button, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Stack, Text } from "@chakra-ui/react";
 import { MdOutlineDone } from "react-icons/md";
+import { usePDNBalance } from "lib/hooks";
 
-interface IBurnSelectProps {
-  fieldName?: string;
-}
+import { type FormRegisteredFieldData } from "components/multi-step-form/components";
+import { useBurnStore } from "@zustand/burn";
 
-const BurnSelect: FC<IBurnSelectProps> = ({ fieldName }) => {
+interface IBurnSelectProps extends FormRegisteredFieldData {}
+
+let RATIO = 200_000;
+
+const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
   const { watch, setValue } = useFormContext();
+  const { balance } = usePDNBalance();
 
+  const setBurnAmount = useBurnStore((state) => state.setBurnAmount);
+
+  const maxAmountToBuy = Math.floor(Number(balance) / RATIO);
+
+  const fieldName = field?.name;
   const currentValue = watch(fieldName || "");
 
   function handleOptionChange(newValue: number) {
     setValue(fieldName!, newValue);
   }
 
+  function handleInputChange(value: number) {
+    setValue(fieldName!, value);
+    setBurnAmount(value);
+  }
+
+  if (maxAmountToBuy > 5) {
+    return (
+      <Flex display="inline-flex">
+        <Input
+          autoFocus
+          value={field?.value}
+          onChange={(e) => handleInputChange(e.target.valueAsNumber)}
+          placeholder="E.g. 7"
+          type="number"
+        />
+      </Flex>
+    );
+  }
+
+  const options = Array.from({ length: maxAmountToBuy }, (_, index) => ({
+    [String.fromCharCode(index + 65)]: `${index + 1} Guardian NFT`,
+    value: index + 1,
+  }));
+
   return (
     <Box>
       <Stack display="inline-flex">
-        {[
-          {
-            A: "1 Guardian NFT",
-            value: 1,
-          },
-          {
-            B: "2 Guardian NFT",
-            value: 2,
-          },
-          {
-            C: "3 Guardian NFT",
-            value: 3,
-          },
-        ].map((option) => {
+        {options.map((option) => {
           const key = Object.keys(option)[0];
           const isSelected = currentValue === option.value;
 
