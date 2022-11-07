@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { useFormContext } from "react-hook-form";
-import { Box, Flex, Input } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 import { usePDNBalance } from "lib/hooks";
 import { useBurnStore } from "@zustand/burn";
 
 import {
   Select,
+  Input,
   type FormRegisteredFieldData,
 } from "components/multi-step-form/components";
 
@@ -36,15 +37,11 @@ const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
 
   if (maxAmountToBuy > 5) {
     return (
-      <Flex display="inline-flex">
-        <Input
-          autoFocus
-          value={field?.value}
-          onChange={(e) => handleInputChange(e.target.valueAsNumber)}
-          placeholder="E.g. 7"
-          type="number"
-        />
-      </Flex>
+      <Input
+        value={field?.value}
+        onChange={(e) => handleInputChange(e.target.valueAsNumber)}
+        type="number"
+      />
     );
   }
 
