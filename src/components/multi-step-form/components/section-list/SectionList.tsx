@@ -18,6 +18,7 @@ const SectionList: FC<
         return (
           <Section
             {...section}
+            key={section.id}
             index={index}
             sectionsNumber={sections.length}
             changeStep={changeStep}

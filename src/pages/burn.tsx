@@ -36,7 +36,7 @@ const formConfig: IFormConfig = {
     {
       id: "1",
       name: "nftsAmount",
-      defaultValue: undefined,
+      defaultValue: "",
       error: "Please choose a valid value to mint!",
       title: "How many NFTs you want to mint?",
       question:
@@ -77,6 +77,7 @@ const Burn: NextPage = () => {
 
   const burnAmount = useBurnStore((state) => state.burnAmount);
   const debouncedAmount = useDebounce(burnAmount);
+  console.log({ debouncedAmount });
 
   const { burn, burnData } = usePDNBurn({
     args: { amount: `${debouncedAmount}` },
@@ -95,8 +96,7 @@ const Burn: NextPage = () => {
   function handleSubmit(data: any, showOutro: () => void) {
     const nftsToMint = data.nftsAmount;
     console.log("submited");
-    // setAmount("1");
-    // transfer?.();
+
     burn?.();
   }
 
