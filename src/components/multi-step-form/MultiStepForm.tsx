@@ -39,14 +39,14 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
   const { intro, outro } = formConfig;
 
   const [renderStatus, setRenderStatus] = useState({
-    showIntro: true,
-    showForm: false,
+    showIntro: !!intro ? true : false,
+    showForm: !intro ? true : false,
     showOutro: false,
   });
   const router = useRouter();
 
   const [surveryStatus, setSurveyStatus] = useState<FormStatus>(
-    FORM_STATES.NOT_STARTED
+    intro ? FORM_STATES.NOT_STARTED : FORM_STATES.STARTED
   );
 
   const hasNotStarted = surveryStatus === FORM_STATES.NOT_STARTED;

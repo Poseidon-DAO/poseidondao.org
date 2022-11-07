@@ -35,6 +35,7 @@ const Select: FC<IBurnSelectProps> = ({ options, value, onChange }) => {
             display="inline-flex"
             justifyContent="space-between"
             flexDir="row"
+            borderRadius="none"
           >
             <Box
               px="6px"

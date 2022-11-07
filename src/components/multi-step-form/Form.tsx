@@ -50,11 +50,6 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
     const keyDownHandler = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
         event.preventDefault();
-
-        if (formStep === steps) {
-          return forceSubmit();
-        }
-
         handleNext();
       }
     };
@@ -62,7 +57,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
     document.addEventListener("keydown", keyDownHandler);
 
     return () => document.removeEventListener("keydown", keyDownHandler);
-  }, [formStep, steps]);
+  }, []);
 
   useEffect(() => {
     let timerId: ReturnType<typeof setTimeout>;
@@ -86,8 +81,9 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   }, [currentSectionValue, formStep, prevFormStep]);
 
   useEffect(() => {
-    if (isSubmitting) {
-      const errorKeys = Object.keys(errors);
+    const errorKeys = Object.keys(errors);
+
+    if (isSubmitting && errorKeys.length) {
       const errorSectionId = sections.find((s) => s.name === errorKeys[0])?.id;
 
       if (!!errorSectionId) {
@@ -95,6 +91,20 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
       }
     }
   }, [isSubmitting, errors]);
+
+  useEffect(() => {
+    let timerId: ReturnType<typeof setTimeout>;
+    const nextSection = document.getElementById(`section-${formStep}`);
+    const input = nextSection?.querySelectorAll("input, textarea")[0];
+
+    if (input instanceof HTMLElement) {
+      timerId = setTimeout(() => {
+        input.focus();
+      }, 1000);
+    }
+
+    return () => clearTimeout(timerId);
+  }, [formStep]);
 
   function handlePrev() {
     setFormStep((step) => {

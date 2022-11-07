@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 
 import { submitArtist } from "apis/index";
 import { IFormConfig, MultiStepForm } from "components/multi-step-form";
@@ -7,17 +7,11 @@ import { Select, Input, TextArea } from "components/multi-step-form/components";
 import { validators } from "utils/formValidators";
 
 const ArtistForm = () => {
+  const toast = useToast();
+
   const formConfig = useMemo<IFormConfig>(
     () => ({
-      intro: {
-        title: "Become a Guardian - PDN Burn flow",
-        question:
-          "The Guardians are the keepers of DAO collection. Their goal is growing and improving the collection in the most healthy and representative way. Guardians are identified as owners of the Guardian NFT. The Guardian NFTs are cumulative and can be obtained burning 200.000 PDN tokens.",
-        continueButton: "Start",
-        continueButtonSize: "xl",
-        buttonType: "submit",
-        buttonIcon: null,
-      },
+      intro: null,
       outro: {
         title: "Congratulations!",
         question:
@@ -55,8 +49,12 @@ const ArtistForm = () => {
           questionNo: 2,
           name: "email",
           required: true,
-          children: ({ field }) => (
-            <Input value={field?.value} onChange={field?.onChange} />
+          children: ({ field, fieldState }) => (
+            <Input
+              value={field?.value}
+              onChange={field?.onChange}
+              isInvalid={!!fieldState?.error}
+            />
           ),
           validate: (v) => validators.emailValidator(v),
           error: "Email is invalid",
@@ -68,8 +66,12 @@ const ArtistForm = () => {
           questionNo: 3,
           name: "twitter",
           required: true,
-          children: ({ field }) => (
-            <Input value={field?.value} onChange={field?.onChange} />
+          children: ({ field, fieldState }) => (
+            <Input
+              value={field?.value}
+              onChange={field?.onChange}
+              isInvalid={!!fieldState?.error}
+            />
           ),
           validate: (v) => validators.urlValidator(v, "twitter"),
           error: "Twitter is invalid",
@@ -81,8 +83,12 @@ const ArtistForm = () => {
           questionNo: 4,
           name: "instagram",
           required: false,
-          children: ({ field }) => (
-            <Input value={field?.value} onChange={field?.onChange} />
+          children: ({ field, fieldState }) => (
+            <Input
+              value={field?.value}
+              onChange={field?.onChange}
+              isInvalid={!!fieldState?.error}
+            />
           ),
           validate: (v) => validators.urlValidator(v, "instagram"),
           error: "Instagram is invalid",
@@ -94,8 +100,12 @@ const ArtistForm = () => {
           questionNo: 5,
           name: "website",
           required: true,
-          children: ({ field }) => (
-            <Input value={field?.value} onChange={field?.onChange} />
+          children: ({ field, fieldState }) => (
+            <Input
+              value={field?.value}
+              onChange={field?.onChange}
+              isInvalid={!!fieldState?.error}
+            />
           ),
           validate: (v) => validators.urlValidator(v),
           error: "Website is invalid, please include http://",
@@ -127,11 +137,12 @@ const ArtistForm = () => {
           questionNo: 7,
           name: "bio",
           required: true,
-          children: ({ field }) => (
+          children: ({ field, fieldState }) => (
             <TextArea
               value={field?.value}
               onChange={field?.onChange}
               maxChars={2000}
+              isInvalid={!!fieldState?.error}
             />
           ),
           validate: (v) => validators.lengthValidator(v, 2, 2000),
@@ -144,11 +155,12 @@ const ArtistForm = () => {
           questionNo: 8,
           name: "exhibitions",
           required: false,
-          children: ({ field }) => (
+          children: ({ field, fieldState }) => (
             <TextArea
               value={field?.value}
               onChange={field?.onChange}
               maxChars={2000}
+              isInvalid={!!fieldState?.error}
             />
           ),
           validate: (v) => validators.lengthValidator(v, 2, 2000),
@@ -162,19 +174,27 @@ const ArtistForm = () => {
           questionNo: 9,
           name: "samples",
           required: false,
-          children: ({ field }) => (
+          children: ({ field, fieldState }) => (
             <Input
-              minW="300px"
               value={field?.value}
               onChange={field?.onChange}
-              placeholder="Type your answer here..."
-              variant="flushed"
-              size="lg"
+              isInvalid={!!fieldState?.error}
             />
           ),
           validate: (v) => validators.urlValidator(v),
           error: "Samples is invalid",
           continueButton: "Submit",
+        },
+        {
+          id: "10",
+          title: "Submit your application?",
+          question:
+            "If you want to change your inputs use the controls to see previous sections!",
+          continueButton: (
+            <Button size="xl" type="submit">
+              Submit
+            </Button>
+          ),
         },
       ],
     }),
@@ -182,18 +202,38 @@ const ArtistForm = () => {
   );
 
   async function handleSubmit(data: any, showOutro: () => void) {
-    // await submitArtist({
-    //   name: data.name,
-    //   email: data.email,
-    //   twitter_url: data.twitter,
-    //   instagram_url: data.instagram,
-    //   website: data.website,
-    //   project: data.project,
-    //   bio: data.bio,
-    //   exhibitions: data.exhibitions,
-    //   samples: data.samples,
-    // });
-    console.log(data);
+    try {
+      await submitArtist({
+        name: data.name,
+        email: data.email,
+        twitter_url: data.twitter,
+        instagram_url: data.instagram,
+        website: data.website,
+        project: data.project,
+        bio: data.bio,
+        exhibitions: data.exhibitions,
+        samples: data.samples,
+      });
+
+      showOutro();
+
+      toast({
+        title: "Aplication was successful.",
+        description:
+          "Thank you for your application. Our team will review your profile and will reach out if it meets our requirements.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (err) {
+      toast({
+        title: "Aplication was not successful.",
+        description: (err as Error)?.message,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   }
 
   return (

@@ -11,7 +11,7 @@ interface ITextAreaProps extends TextareaProps {
   maxChars?: number;
 }
 
-const TextArea: FC<ITextAreaProps> = (props) => {
+const TextArea: FC<ITextAreaProps> = ({ maxChars, ...props }) => {
   return (
     <Box>
       <ChakraTextarea
@@ -26,7 +26,7 @@ const TextArea: FC<ITextAreaProps> = (props) => {
 
       <Flex justifyContent="flex-end" mt={2} opacity="0.7">
         <Text fontSize="sm">
-          {(props?.value as string).length || 0} / {props.maxChars}
+          {(props?.value as string).length || 0} / {maxChars}
         </Text>
       </Flex>
     </Box>
