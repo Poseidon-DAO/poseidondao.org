@@ -90,7 +90,8 @@ const ArtistForm = () => {
               isInvalid={!!fieldState?.error}
             />
           ),
-          validate: (v) => validators.urlValidator(v, "instagram"),
+          validate: (v) =>
+            !!v ? validators.urlValidator(v, "instagram") : true,
           error: "Instagram is invalid",
         },
         {
@@ -99,6 +100,7 @@ const ArtistForm = () => {
           question: "",
           questionNo: 5,
           name: "website",
+          defaultValue: "",
           required: true,
           children: ({ field, fieldState }) => (
             <Input
@@ -163,7 +165,8 @@ const ArtistForm = () => {
               isInvalid={!!fieldState?.error}
             />
           ),
-          validate: (v) => validators.lengthValidator(v, 2, 2000),
+          validate: (v) =>
+            !!v ? validators.lengthValidator(v, 2, 2000) : true,
           error: "Exhibitions is invalid",
         },
         {
@@ -181,7 +184,7 @@ const ArtistForm = () => {
               isInvalid={!!fieldState?.error}
             />
           ),
-          validate: (v) => validators.urlValidator(v),
+          validate: (v) => (!!v ? validators.urlValidator(v) : true),
           error: "Samples is invalid",
           continueButton: "Submit",
         },

@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Box, usePrevious } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useScroll, useSpring } from "framer-motion";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -23,7 +23,6 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const steps = sections.length;
 
   const [formStep, setFormStep] = useState(1);
-  const prevFormStep = usePrevious(formStep);
 
   const scrollContainerRef = useRef(null);
   const { scrollYProgress } = useScroll({ container: scrollContainerRef });
@@ -34,13 +33,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const {
     formState: { errors, isSubmitting },
     handleSubmit: onFormSubmit,
-    watch,
   } = formMethods;
-
-  const currentSectionName = sections.find(
-    (s) => Number(s.id) === formStep
-  )?.name;
-  const currentSectionValue = watch(currentSectionName || "");
 
   useEffect(() => {
     getActiveStepAndScroll(formStep);
@@ -58,27 +51,6 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
 
     return () => document.removeEventListener("keydown", keyDownHandler);
   }, []);
-
-  useEffect(() => {
-    let timerId: ReturnType<typeof setTimeout>;
-
-    let focusedElement = document.activeElement;
-
-    if (currentSectionValue && !(formStep < prevFormStep)) {
-      timerId = setTimeout(() => {
-        if (
-          focusedElement != document.body &&
-          focusedElement instanceof HTMLElement
-        ) {
-          focusedElement?.blur();
-        }
-
-        handleNext();
-      }, 2000);
-    }
-
-    return () => clearTimeout(timerId);
-  }, [currentSectionValue, formStep, prevFormStep]);
 
   useEffect(() => {
     const errorKeys = Object.keys(errors);

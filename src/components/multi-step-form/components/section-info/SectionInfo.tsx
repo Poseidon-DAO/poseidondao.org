@@ -73,7 +73,7 @@ const SectionInfo: FC<ISectionInfoProps> = ({
           {children}
         </Box>
 
-        <Box my={4}>
+        <Box my={6}>
           {error && typeof error === "string" ? (
             <Flex
               display="inline-flex"

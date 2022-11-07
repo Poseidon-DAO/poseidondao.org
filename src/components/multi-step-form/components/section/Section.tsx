@@ -1,13 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import {
-  Dispatch,
-  FC,
-  ReactElement,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, FC, ReactElement, ReactNode, SetStateAction } from "react";
 import {
   useFormContext,
   Controller,
@@ -54,17 +46,13 @@ const SectionContainer = ({
   name,
   continueButton,
   error,
-  showButton,
   children,
   changeStep,
   field,
   fieldState,
   formState,
   ...sectionData
-}: FormRegisteredFieldData &
-  ISectionExtendedProps & {
-    showButton: boolean | null;
-  }) => {
+}: FormRegisteredFieldData & ISectionExtendedProps) => {
   const {
     formState: { errors },
   } = useFormContext();
@@ -80,7 +68,7 @@ const SectionContainer = ({
       <SectionInfo
         {...{
           ...sectionData,
-          continueButton: !!showButton ? continueButton : null,
+          continueButton,
           buttonType: Number(id) === sectionsNumber ? "submit" : "button",
           onClick: !!name
             ? () => changeStep?.((prevStep: number) => prevStep + 1)
@@ -104,21 +92,8 @@ const SectionContainer = ({
 const Section: FC<ISectionExtendedProps> = (props) => {
   const { id, name, children, changeStep, sectionsNumber, ...sectionData } =
     props;
-  const [showButton, setShowButton] = useState(name ? null : true);
 
-  const { control, watch } = useFormContext();
-
-  const answer = watch(name || "");
-
-  useEffect(() => {
-    let timerId: ReturnType<typeof setTimeout>;
-    if (!!name && !!answer) {
-      timerId = setTimeout(() => {
-        setShowButton(true);
-      }, 1500);
-    }
-    return () => clearTimeout(timerId);
-  }, [name, answer]);
+  const { control } = useFormContext();
 
   function renderWithController(
     name: string,
@@ -139,11 +114,11 @@ const Section: FC<ISectionExtendedProps> = (props) => {
   }
 
   if (!name) {
-    return <SectionContainer {...props} showButton={showButton} />;
+    return <SectionContainer {...props} />;
   }
 
   return renderWithController(name, (formProps) => (
-    <SectionContainer {...props} showButton={showButton} {...formProps} />
+    <SectionContainer {...props} {...formProps} />
   ));
 };
 
