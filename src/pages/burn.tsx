@@ -35,21 +35,18 @@ const formConfig: IFormConfig = {
   sections: [
     {
       id: "1",
-      name: "nftsAmount",
-      defaultValue: undefined,
-      error: "Please choose a valid value to mint!",
       title: "How many NFTs you want to mint?",
       question:
         "The burn ratio is 200.000 PDN. You own X PDN, that means you can mint up to Y NFTs. Select the number of NFTs you want to mint. This will be executed in a single transaction that will be executed in the next step.",
       questionNo: 1,
+      name: "nftsAmount",
+      defaultValue: "",
       required: true,
-      continueButton: "OK",
-      continueButtonPosition: "left",
-      continueButtonSize: "md",
-      validate: undefined,
       children: (props: FormRegisteredFieldData | undefined) => (
         <BurnSelect {...props} />
       ),
+      validate: undefined,
+      error: "Please choose a valid value to mint!",
     },
     {
       id: "2",
@@ -62,9 +59,6 @@ const formConfig: IFormConfig = {
       questionNo: 2,
       required: false,
       validate: undefined,
-      continueButton: "OK",
-      continueButtonPosition: "left",
-      continueButtonSize: "md",
     },
   ],
 };
@@ -94,7 +88,7 @@ const Burn: NextPage = () => {
 
   function handleSubmit(data: any, showOutro: () => void) {
     const nftsToMint = data.nftsAmount;
-    console.log("submited");
+    // console.log("submited");
     // setAmount("1");
     // transfer?.();
     burn?.();

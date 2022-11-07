@@ -6,22 +6,21 @@ import { ISectionProps, Section } from "../section/Section";
 interface ISectionListProps {
   sections: ISectionProps[];
   changeStep?: Dispatch<SetStateAction<number>>;
-  submitForm?: () => void;
 }
 
 const SectionList: FC<
   ISectionListProps & { changeStep?: Dispatch<SetStateAction<number>> }
-> = ({ sections, changeStep, submitForm }) => {
+> = ({ sections, changeStep }) => {
   return (
     <Box px="15vw">
       {sections.map((section, index) => {
         return (
           <Section
+            key={section.id}
             {...section}
             index={index}
             sectionsNumber={sections.length}
             changeStep={changeStep}
-            submitForm={submitForm}
           />
         );
       })}

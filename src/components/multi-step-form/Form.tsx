@@ -20,6 +20,7 @@ const SPRING_CONFIG = {
 
 const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const { sections } = formConfig;
+  const steps = sections.length;
 
   const [formStep, setFormStep] = useState(1);
   const prevFormStep = usePrevious(formStep);
@@ -39,40 +40,75 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const currentSectionName = sections.find(
     (s) => Number(s.id) === formStep
   )?.name;
-  const errorKeys = Object.keys(errors);
-  const currentSectionValue = watch((currentSectionName || "") as any);
+  const currentSectionValue = watch(currentSectionName || "");
 
   useEffect(() => {
     getActiveStepAndScroll(formStep);
   }, [formStep]);
 
   useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        if (formStep === steps) {
+          return forceSubmit();
+        }
+
+        handleNext();
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => document.removeEventListener("keydown", keyDownHandler);
+  }, [formStep, steps]);
+
+  useEffect(() => {
     let timerId: ReturnType<typeof setTimeout>;
+
+    let focusedElement = document.activeElement;
 
     if (currentSectionValue && !(formStep < prevFormStep)) {
       timerId = setTimeout(() => {
-        setFormStep((formStep) => {
-          if (formStep === sections.length) {
-            return formStep;
-          }
+        if (
+          focusedElement != document.body &&
+          focusedElement instanceof HTMLElement
+        ) {
+          focusedElement?.blur();
+        }
 
-          return formStep + 1;
-        });
-      }, 1500);
+        handleNext();
+      }, 2000);
     }
 
     return () => clearTimeout(timerId);
   }, [currentSectionValue, formStep, prevFormStep]);
 
   useEffect(() => {
-    const sectionIdToScrollTo = sections.find(
-      (s) => s.name === errorKeys[0]
-    )?.id;
+    if (isSubmitting) {
+      const errorKeys = Object.keys(errors);
+      const errorSectionId = sections.find((s) => s.name === errorKeys[0])?.id;
 
-    if (sectionIdToScrollTo && errorKeys.length) {
-      setFormStep(Number(sectionIdToScrollTo));
+      if (!!errorSectionId) {
+        return setFormStep(Number(errorSectionId));
+      }
     }
-  }, [isSubmitting]);
+  }, [isSubmitting, errors]);
+
+  function handlePrev() {
+    setFormStep((step) => {
+      if (step === 1) return step;
+      return step - 1;
+    });
+  }
+
+  function handleNext() {
+    setFormStep((step) => {
+      if (step === steps) return step;
+      return step + 1;
+    });
+  }
 
   function getActiveStepAndScroll(nextStep: number = 1) {
     const nextSection = document.getElementById(`section-${nextStep}`);
@@ -92,16 +128,12 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
       <form onSubmit={onFormSubmit(handleSubmit)}>
         <Box ref={scrollContainerRef} h="90vh" overflowY="hidden">
           <ProgressBar percentage={progressBarWidth} />
-          <SectionList
-            sections={sections}
-            changeStep={setFormStep}
-            submitForm={forceSubmit}
-          />
+          <SectionList sections={sections} changeStep={setFormStep} />
           <Controls
             steps={sections.length}
             currentStep={formStep}
-            onNext={setFormStep}
-            onPrev={setFormStep}
+            onPrev={handlePrev}
+            onNext={handleNext}
           />
         </Box>
       </form>

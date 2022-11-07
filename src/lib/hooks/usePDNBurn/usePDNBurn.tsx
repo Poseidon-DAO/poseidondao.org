@@ -22,7 +22,7 @@ const usePDNBurn = ({ args, onSuccess, onError }: IUsePDNBurn) => {
     enabled: !!args.amount,
   });
 
-  console.log("prepare err", prpErr, args.amount, !!args.amount);
+  // console.log("prepare err", prpErr, args.amount, !!args.amount);
 
   const { data, write } = useContractWrite(config);
 

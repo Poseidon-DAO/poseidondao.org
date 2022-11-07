@@ -43,7 +43,7 @@ const SectionInfo: FC<ISectionInfoProps> = ({
   questionNo,
   required,
   children,
-  continueButton,
+  continueButton = "OK",
   continueButtonPosition,
   continueButtonSize,
   buttonType,
@@ -53,60 +53,64 @@ const SectionInfo: FC<ISectionInfoProps> = ({
   onClick,
 }) => {
   return (
-    <FormControl isInvalid={false} my={12}>
-      <Flex alignItems="center" my={4} mb={6}>
-        {questionNo && <Text fontSize="3xl">{questionNo}</Text>}
+    <FormControl isInvalid={false} my={12} px="5vw">
+      <Flex alignItems="center" mb={2}>
+        {questionNo && <Text fontSize="2xl">{questionNo}</Text>}
         {questionNo && <BsArrowRightShort size={30} />}
-        <Heading pl={questionNo ? "7px" : "initial"} size="2xl">
+        <Heading pl={questionNo ? "7px" : "initial"} size="lg">
           {title} {required ? "*" : ""}
         </Heading>
       </Flex>
 
-      <Box>
-        <Text fontSize="3xl" lineHeight={1}>
-          {question}
-        </Text>
-      </Box>
-
-      {error && typeof error === "string" ? (
-        <Flex
-          display="inline-flex"
-          mt={4}
-          bg="white"
-          p={2}
-          fontWeight="light"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Box color="brand.red" mr={2}>
-            <IoIosWarning />
-          </Box>
-          <Text fontSize="sm" lineHeight={1} color="brand.red">
-            {error}
+      <Box ml={questionNo ? "49px" : 0}>
+        <Box>
+          <Text fontSize="lg" lineHeight={1.2} opacity={0.7}>
+            {question}
           </Text>
-        </Flex>
-      ) : (
-        error
-      )}
+        </Box>
 
-      <Box minH="20px" my={8}>
-        {children}
-      </Box>
+        <Box minH="20px" my={8}>
+          {children}
+        </Box>
 
-      <Box minH="80px">
-        {typeof continueButton === "string" ? (
-          <OkButton
-            title={continueButton}
-            align={continueButtonPosition}
-            buttonSize={continueButtonSize}
-            type={buttonType}
-            icon={buttonIcon}
-            showEnterText={showEnterText}
-            onClick={onClick}
-          />
-        ) : (
-          continueButton
-        )}
+        <Box>
+          {error && typeof error === "string" ? (
+            <Flex
+              display="inline-flex"
+              mt={4}
+              bg="white"
+              p={2}
+              fontWeight="light"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Box color="brand.red" mr={2}>
+                <IoIosWarning />
+              </Box>
+              <Text fontSize="sm" lineHeight={1} color="brand.red">
+                {error}
+              </Text>
+            </Flex>
+          ) : (
+            error
+          )}
+        </Box>
+
+        <Box minH="80px">
+          {typeof continueButton === "string" ? (
+            <OkButton
+              title={continueButton}
+              align={continueButtonPosition}
+              buttonSize={continueButtonSize}
+              type={buttonType}
+              icon={buttonIcon}
+              showEnterText={showEnterText}
+              onClick={onClick}
+            />
+          ) : (
+            continueButton
+          )}
+        </Box>
       </Box>
     </FormControl>
   );

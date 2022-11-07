@@ -30,15 +30,14 @@ export interface ISectionProps {
   required?: boolean;
   validate?: (v: any) => boolean;
   children?: (data: FormRegisteredFieldData) => ReactElement;
-  continueButton: string | ReactNode;
-  continueButtonPosition: "left" | "center" | "right";
-  continueButtonSize: "md" | "xl";
+  continueButton?: string | ReactNode;
+  continueButtonPosition?: "left" | "center" | "right";
+  continueButtonSize?: "md" | "xl";
 }
 
 type ISectionExtendedProps = ISectionProps & {
   index: number;
   sectionsNumber: number;
-  submitForm?: () => void;
   changeStep?: Dispatch<SetStateAction<number>>;
 };
 
@@ -63,7 +62,9 @@ const SectionContainer = ({
   formState,
   ...sectionData
 }: FormRegisteredFieldData &
-  ISectionExtendedProps & { showButton: boolean | null }) => {
+  ISectionExtendedProps & {
+    showButton: boolean | null;
+  }) => {
   const {
     formState: { errors },
   } = useFormContext();
@@ -101,56 +102,23 @@ const SectionContainer = ({
 };
 
 const Section: FC<ISectionExtendedProps> = (props) => {
-  const {
-    id,
-    name,
-    children,
-    changeStep,
-    sectionsNumber,
-    submitForm,
-    ...sectionData
-  } = props;
+  const { id, name, children, changeStep, sectionsNumber, ...sectionData } =
+    props;
   const [showButton, setShowButton] = useState(name ? null : true);
 
-  const { control, watch, trigger } = useFormContext();
+  const { control, watch } = useFormContext();
 
   const answer = watch(name || "");
-
-  useEffect(() => {
-    if (name && answer) {
-      const revalidate = async () => {
-        await trigger(name);
-      };
-
-      revalidate();
-    }
-  }, [name, answer]);
 
   useEffect(() => {
     let timerId: ReturnType<typeof setTimeout>;
     if (!!name && !!answer) {
       timerId = setTimeout(() => {
         setShowButton(true);
-      }, 1000);
+      }, 1500);
     }
     return () => clearTimeout(timerId);
   }, [name, answer]);
-
-  useEffect(() => {
-    const keyDownHandler = (event: KeyboardEvent) => {
-      if (Number(id) !== sectionsNumber) return;
-      if (event.key === "Enter") {
-        event.preventDefault();
-        submitForm?.();
-      }
-    };
-
-    document.addEventListener("keydown", keyDownHandler);
-
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
 
   function renderWithController(
     name: string,
@@ -159,7 +127,7 @@ const Section: FC<ISectionExtendedProps> = (props) => {
     return (
       <Controller
         control={control}
-        defaultValue={sectionData.defaultValue}
+        defaultValue={sectionData.defaultValue || ""}
         name={name}
         rules={{
           required: sectionData.required,
