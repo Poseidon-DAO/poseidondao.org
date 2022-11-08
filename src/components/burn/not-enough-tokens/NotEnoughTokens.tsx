@@ -1,7 +1,12 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-const ConnectWallet = () => {
+const NotEnoughTokens = () => {
+  const router = useRouter();
+
+  function handleButtonClick() {
+    router.push("/");
+  }
   return (
     <Flex
       w="100%"
@@ -12,7 +17,7 @@ const ConnectWallet = () => {
     >
       <Box>
         <Flex alignItems="center" my={4} mb={6}>
-          <Heading size="lg">Connect your wallet</Heading>
+          <Heading size="lg">You don't have enough tokens</Heading>
         </Flex>
 
         <Box>
@@ -24,11 +29,13 @@ const ConnectWallet = () => {
         </Box>
 
         <Box minH="80px" my={8}>
-          <ConnectButton />
+          <Button size="xl" onClick={handleButtonClick}>
+            Go Home
+          </Button>
         </Box>
       </Box>
     </Flex>
   );
 };
 
-export { ConnectWallet };
+export { NotEnoughTokens };
