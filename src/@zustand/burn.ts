@@ -6,7 +6,7 @@ interface BurnState {
 }
 
 const useBurnStore = create<BurnState>()((set) => ({
-  burnAmount: "",
+  burnAmount: "1",
   setBurnAmount: (value) => set(() => ({ burnAmount: value })),
 }));
 

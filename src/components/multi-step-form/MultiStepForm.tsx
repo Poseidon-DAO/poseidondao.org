@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -12,14 +12,6 @@ import {
 import { Form } from "./Form";
 import { AnimatePresence, motion } from "framer-motion";
 
-const FORM_STATES = {
-  NOT_STARTED: "not-started",
-  STARTED: "started",
-  SUBMITED: "submited",
-} as const;
-
-type FormStatus = typeof FORM_STATES[keyof typeof FORM_STATES];
-
 export interface IFormConfig {
   intro: IIntroConfigProps | null;
   outro: IOutroConfigProps | null;
@@ -28,26 +20,48 @@ export interface IFormConfig {
 interface IMultiStepFormProps {
   onSubmit?: (data: any, statusSetter: () => void) => void;
   formConfig: IFormConfig;
+  activeState?: FormStatus;
+  isLoading?: boolean;
 }
+
+const FORM_STATES = {
+  NOT_STARTED: "not-started",
+  STARTED: "started",
+  SUBMITED: "submited",
+} as const;
+
+type FormStatus = typeof FORM_STATES[keyof typeof FORM_STATES];
 
 const divAnimationConfig = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
 };
-const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
+
+const MultiStepForm: FC<IMultiStepFormProps> = ({
+  onSubmit,
+  formConfig,
+  activeState,
+  isLoading,
+}) => {
   const { intro, outro } = formConfig;
 
   const [renderStatus, setRenderStatus] = useState({
-    showIntro: true,
-    showForm: false,
-    showOutro: false,
+    intro: true,
+    form: false,
+    outro: false,
   });
   const router = useRouter();
 
   const [surveryStatus, setSurveyStatus] = useState<FormStatus>(
-    FORM_STATES.NOT_STARTED
+    activeState || FORM_STATES.NOT_STARTED
   );
+
+  useEffect(() => {
+    if (activeState) {
+      setSurveyStatus(activeState);
+    }
+  }, [activeState]);
 
   const hasNotStarted = surveryStatus === FORM_STATES.NOT_STARTED;
   const hasStarted = surveryStatus === FORM_STATES.STARTED;
@@ -66,17 +80,13 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
   }
 
   function handleFormSubmit(data: any) {
-    onSubmit?.(data, () => {
-      handleFormStatusChange(FORM_STATES.SUBMITED);
-    });
+    onSubmit?.(data, () => handleFormStatusChange(FORM_STATES.SUBMITED));
   }
 
   return (
     <>
       <AnimatePresence
-        onExitComplete={() =>
-          setRenderStatus({ ...renderStatus, showForm: true })
-        }
+        onExitComplete={() => setRenderStatus({ ...renderStatus, form: true })}
       >
         {hasNotStarted && intro && (
           <motion.div key="intro" {...divAnimationConfig}>
@@ -86,14 +96,16 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({ onSubmit, formConfig }) => {
       </AnimatePresence>
 
       <AnimatePresence
-        onExitComplete={() =>
-          setRenderStatus({ ...renderStatus, showOutro: true })
-        }
+        onExitComplete={() => setRenderStatus({ ...renderStatus, outro: true })}
       >
-        {hasStarted && renderStatus.showForm && (
+        {hasStarted && renderStatus.form && (
           <motion.div key="form" {...divAnimationConfig}>
             <Box minH="90vh">
-              <Form formConfig={formConfig} onSubmit={handleFormSubmit} />
+              <Form
+                formConfig={formConfig}
+                onSubmit={handleFormSubmit}
+                isLoading={isLoading}
+              />
             </Box>
           </motion.div>
         )}

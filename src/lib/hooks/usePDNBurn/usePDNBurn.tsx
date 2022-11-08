@@ -13,18 +13,18 @@ interface IUsePDNBurn extends ICustomHookBaseProps {
   onSuccess?: (data: any) => void;
 }
 
-const usePDNBurn = ({ args, onSuccess, onError }: IUsePDNBurn) => {
+const usePDNBurn = ({ args, onSuccess, onError, enabled }: IUsePDNBurn) => {
   const configForWritePrepare = getBasicContractConfig("burnAndReceiveNFT");
 
-  const { config, error: prpErr } = usePrepareContractWrite({
+  const { config } = usePrepareContractWrite({
     ...configForWritePrepare,
     args: [args.amount],
-    enabled: !!args.amount,
+    enabled: enabled && !!args.amount,
   });
 
   const { data, write } = useContractWrite(config);
 
-  const { isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading, isSuccess, isFetching } = useWaitForTransaction({
     hash: data?.hash,
     onSuccess,
     onError,
@@ -34,6 +34,7 @@ const usePDNBurn = ({ args, onSuccess, onError }: IUsePDNBurn) => {
     burn: write,
     burnData: data,
     isBurning: isLoading,
+    isBurnFetching: isFetching,
     isBurnSuccess: isSuccess,
   };
 };

@@ -10,6 +10,7 @@ import { type IFormConfig } from "./MultiStepForm";
 interface IFormProps {
   onSubmit?: (data: any) => void;
   formConfig: IFormConfig;
+  isLoading?: boolean;
 }
 
 const SPRING_CONFIG = {
@@ -18,7 +19,7 @@ const SPRING_CONFIG = {
   restDelta: 0.001,
 };
 
-const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
+const Form: FC<IFormProps> = ({ onSubmit, formConfig, isLoading }) => {
   const { sections } = formConfig;
 
   const [formStep, setFormStep] = useState(1);
@@ -97,12 +98,14 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
             changeStep={setFormStep}
             submitForm={forceSubmit}
           />
-          <Controls
-            steps={sections.length}
-            currentStep={formStep}
-            onNext={setFormStep}
-            onPrev={setFormStep}
-          />
+          {!isLoading && !isSubmitting && (
+            <Controls
+              steps={sections.length}
+              currentStep={formStep}
+              onNext={setFormStep}
+              onPrev={setFormStep}
+            />
+          )}
         </Box>
       </form>
     </FormProvider>

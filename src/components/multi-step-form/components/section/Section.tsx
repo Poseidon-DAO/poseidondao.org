@@ -30,9 +30,9 @@ export interface ISectionProps {
   required?: boolean;
   validate?: (v: any) => boolean;
   children?: (data: FormRegisteredFieldData) => ReactElement;
-  continueButton: string | ReactNode;
-  continueButtonPosition: "left" | "center" | "right";
-  continueButtonSize: "md" | "xl";
+  continueButton?: string | ReactNode;
+  continueButtonPosition?: "left" | "center" | "right";
+  continueButtonSize?: "md" | "xl";
 }
 
 type ISectionExtendedProps = ISectionProps & {
