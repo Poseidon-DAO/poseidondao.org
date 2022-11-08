@@ -108,14 +108,13 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig, isLoading }) => {
         <Box ref={scrollContainerRef} h="90vh" overflowY="hidden">
           <ProgressBar percentage={progressBarWidth} />
           <SectionList sections={sections} changeStep={setFormStep} />
-          {!isLoading && !isSubmitting && (
-            <Controls
-              steps={sections.length}
-              currentStep={formStep}
-              onNext={handleNext}
-              onPrev={handlePrev}
-            />
-          )}
+          <Controls
+            steps={sections.length}
+            currentStep={formStep}
+            onNext={handleNext}
+            onPrev={handlePrev}
+            disabled={isLoading || isSubmitting}
+          />
         </Box>
       </form>
     </FormProvider>

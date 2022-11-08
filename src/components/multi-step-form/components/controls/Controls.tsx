@@ -5,6 +5,7 @@ import { FiChevronUp, FiChevronDown } from "react-icons/fi";
 interface IControlsProps {
   steps: number;
   currentStep: number;
+  disabled?: boolean;
   onPrev: () => void;
   onNext?: () => void;
 }
@@ -12,6 +13,7 @@ interface IControlsProps {
 const Controls: FC<IControlsProps> = ({
   steps,
   currentStep,
+  disabled = false,
   onPrev,
   onNext,
 }) => {
@@ -23,14 +25,14 @@ const Controls: FC<IControlsProps> = ({
           aria-label="Previous"
           onClick={onPrev}
           icon={<FiChevronUp size={24} />}
-          disabled={currentStep === 1}
+          disabled={currentStep === 1 || disabled}
         />
         <IconButton
           bg="brand.red"
           aria-label="Next"
           onClick={onNext}
           icon={<FiChevronDown size={24} />}
-          disabled={currentStep === steps}
+          disabled={currentStep === steps || disabled}
         />
       </ButtonGroup>
     </Box>

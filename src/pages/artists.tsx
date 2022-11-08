@@ -186,7 +186,6 @@ const ArtistForm = () => {
           ),
           validate: (v) => (!!v ? validators.urlValidator(v) : true),
           error: "Samples is invalid",
-          continueButton: "Submit",
         },
         {
           id: "10",
@@ -225,23 +224,29 @@ const ArtistForm = () => {
         description:
           "Thank you for your application. Our team will review your profile and will reach out if it meets our requirements.",
         status: "success",
+        variant: "solid",
+        position: "bottom-left",
         duration: 2000,
-        isClosable: true,
       });
     } catch (err) {
       toast({
         title: "Aplication was not successful.",
         description: (err as Error)?.message,
-        status: "success",
+        status: "error",
+        variant: "solid",
+        position: "bottom-left",
         duration: 2000,
-        isClosable: true,
       });
     }
   }
 
   return (
     <Box pt="10vh">
-      <MultiStepForm formConfig={formConfig} onSubmit={handleSubmit} />
+      <MultiStepForm
+        activeState="started"
+        formConfig={formConfig}
+        onSubmit={handleSubmit}
+      />
     </Box>
   );
 };
