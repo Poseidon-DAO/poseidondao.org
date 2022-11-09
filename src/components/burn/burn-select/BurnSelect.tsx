@@ -1,76 +1,98 @@
 import { FC } from "react";
-import { useFormContext } from "react-hook-form";
-import { Box, Button, Stack, Text } from "@chakra-ui/react";
-import { MdOutlineDone } from "react-icons/md";
+import {
+  Box,
+  Flex,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
+} from "@chakra-ui/react";
 
-interface IBurnSelectProps {
-  fieldName?: string;
-}
+import { usePDNBalance, usePDNRatio } from "lib/hooks";
+import { useBurnStore } from "@zustand/burn";
+import { type FormRegisteredFieldData } from "components/multi-step-form/components";
 
-const BurnSelect: FC<IBurnSelectProps> = ({ fieldName }) => {
-  const { watch, setValue } = useFormContext();
+interface IBurnSelectProps extends FormRegisteredFieldData {}
 
-  const currentValue = watch(fieldName || "");
+const labelStyles = {
+  mt: "5",
+  ml: "-0.5",
+  fontSize: "sm",
+};
 
-  function handleOptionChange(newValue: number) {
-    setValue(fieldName!, newValue);
+const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
+  const setBurnAmount = useBurnStore((state) => state.setBurnAmount);
+
+  const { balance } = usePDNBalance();
+  const { ratio } = usePDNRatio();
+
+  const maxAmountToBuy = Math.floor(Number(balance) / ratio!);
+
+  function handleChange(value: number) {
+    field?.onChange(value);
+    setBurnAmount(value);
   }
 
+  const valueLength = !!field?.value ? `${field.value}`.split("").length : 0;
+
+  const fieldValue = field?.value || 1;
+
   return (
-    <Box>
-      <Stack display="inline-flex">
-        {[
-          {
-            A: "1 Guardian NFT",
-            value: 1,
-          },
-          {
-            B: "2 Guardian NFT",
-            value: 2,
-          },
-          {
-            C: "3 Guardian NFT",
-            value: 3,
-          },
-        ].map((option) => {
-          const key = Object.keys(option)[0];
-          const isSelected = currentValue === option.value;
+    <Flex mt={12}>
+      <NumberInput
+        maxW="140px"
+        mr="2rem"
+        value={fieldValue}
+        onChange={(value) => handleChange(Number(value))}
+      >
+        <NumberInputField />
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      </NumberInput>
 
-          return (
-            <Button
-              key={key}
-              border="1px solid"
-              borderColor={isSelected ? "brand.text" : "whiteAlpha.300"}
-              _focus={{ outline: "none" }}
-              variant="unstyled"
-              p={2}
-              textAlign="left"
-              onClick={() => handleOptionChange(option.value)}
-              display="inline-flex"
-              justifyContent="space-between"
-              flexDir="row"
-            >
-              <Box
-                px="6px"
-                bg={isSelected ? "brand.text" : "transparent"}
-                color={isSelected ? "brand.background" : "inherit"}
-                border="1px solid"
-                borderColor="brand.text"
-              >
-                {key}
-              </Box>
-              <Box ml={2} mr={6} w="100%">
-                <Text>{Object.values(option)[0] as string}</Text>
-              </Box>
+      <Slider
+        flex="1"
+        focusThumbOnChange={false}
+        value={fieldValue}
+        onChange={handleChange}
+        min={1}
+        max={maxAmountToBuy}
+        step={1}
+      >
+        <SliderMark value={1} {...labelStyles}>
+          1
+        </SliderMark>
 
-              <Box visibility={isSelected ? "visible" : "hidden"}>
-                <MdOutlineDone />
-              </Box>
-            </Button>
-          );
-        })}
-      </Stack>
-    </Box>
+        <SliderMark value={maxAmountToBuy} {...{ ...labelStyles, ml: -7 }}>
+          {maxAmountToBuy}
+        </SliderMark>
+
+        <SliderMark
+          value={fieldValue}
+          textAlign="center"
+          fontWeight="extrabold"
+          bg="brand.red"
+          color="white"
+          mt="-8"
+          ml={valueLength > 3 ? "-8" : "-4"}
+          w={valueLength > 3 ? "16" : "8"}
+        >
+          {fieldValue}
+        </SliderMark>
+        <SliderTrack>
+          <SliderFilledTrack bg="brand.red" />
+        </SliderTrack>
+        <SliderThumb />
+      </Slider>
+    </Flex>
   );
 };
 

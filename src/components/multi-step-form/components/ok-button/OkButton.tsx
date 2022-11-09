@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, ReactElement, ReactNode } from "react";
+import { FC, MouseEventHandler, ReactElement } from "react";
 import { Box, Button, ButtonProps, Flex } from "@chakra-ui/react";
 import { MdOutlineDone } from "react-icons/md";
 
@@ -40,7 +40,7 @@ const OkButton: FC<IOkButtonProps> = ({
       >
         {title}
       </Button>
-      <Box ml={4}>{showEnterText && <PressEnterNotice />}</Box>
+      <Box ml={4}>{showEnterText && <PressEnterNotice withOr />}</Box>
     </Flex>
   );
 };

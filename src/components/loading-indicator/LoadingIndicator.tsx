@@ -8,7 +8,12 @@ interface ILoadingIndicatorProps {
 const LoadingIndicator: FC<ILoadingIndicatorProps> = ({ size = "60px" }) => {
   return (
     <Flex h="100vh" justifyContent="center" alignItems="center">
-      <CircularProgress thickness="5px" size={size} isIndeterminate />
+      <CircularProgress
+        thickness="5px"
+        color="brand.red"
+        size={size}
+        isIndeterminate
+      />
     </Flex>
   );
 };

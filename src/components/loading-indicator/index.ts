@@ -1,1 +1,1 @@
-export * from "./LoadingIndicators";
+export * from "./LoadingIndicator";

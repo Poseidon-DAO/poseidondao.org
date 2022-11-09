@@ -10,6 +10,7 @@ import { type IFormConfig } from "./MultiStepForm";
 interface IFormProps {
   onSubmit?: (data: any) => void;
   formConfig: IFormConfig;
+  isLoading?: boolean;
 }
 
 const SPRING_CONFIG = {
@@ -18,7 +19,7 @@ const SPRING_CONFIG = {
   restDelta: 0.001,
 };
 
-const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
+const Form: FC<IFormProps> = ({ onSubmit, formConfig, isLoading }) => {
   const { sections } = formConfig;
 
   const [formStep, setFormStep] = useState(1);
@@ -31,7 +32,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const formMethods = useForm();
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit: onFormSubmit,
     watch,
   } = formMethods;
@@ -39,7 +40,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   const currentSectionName = sections.find(
     (s) => Number(s.id) === formStep
   )?.name;
-
+  const errorKeys = Object.keys(errors);
   const currentSectionValue = watch((currentSectionName || "") as any);
 
   useEffect(() => {
@@ -65,7 +66,6 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
   }, [currentSectionValue, formStep, prevFormStep]);
 
   useEffect(() => {
-    const errorKeys = Object.keys(errors);
     const sectionIdToScrollTo = sections.find(
       (s) => s.name === errorKeys[0]
     )?.id;
@@ -73,7 +73,7 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
     if (sectionIdToScrollTo && errorKeys.length) {
       setFormStep(Number(sectionIdToScrollTo));
     }
-  }, [errors]);
+  }, [isSubmitting]);
 
   function getActiveStepAndScroll(nextStep: number = 1) {
     const nextSection = document.getElementById(`section-${nextStep}`);
@@ -98,12 +98,14 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig }) => {
             changeStep={setFormStep}
             submitForm={forceSubmit}
           />
-          <Controls
-            steps={sections.length}
-            currentStep={formStep}
-            onNext={setFormStep}
-            onPrev={setFormStep}
-          />
+          {!isLoading && !isSubmitting && (
+            <Controls
+              steps={sections.length}
+              currentStep={formStep}
+              onNext={setFormStep}
+              onPrev={setFormStep}
+            />
+          )}
         </Box>
       </form>
     </FormProvider>

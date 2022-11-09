@@ -53,7 +53,7 @@ const SectionInfo: FC<ISectionInfoProps> = ({
   onClick,
 }) => {
   return (
-    <FormControl isInvalid={false} my={12}>
+    <FormControl my={12}>
       <Flex alignItems="center" my={4} mb={6}>
         {questionNo && <Text fontSize="3xl">{questionNo}</Text>}
         {questionNo && <BsArrowRightShort size={30} />}
