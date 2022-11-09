@@ -1,13 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import {
-  Dispatch,
-  FC,
-  ReactElement,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, FC, ReactElement, ReactNode, SetStateAction } from "react";
 import {
   useFormContext,
   Controller,
@@ -38,7 +30,6 @@ export interface ISectionProps {
 type ISectionExtendedProps = ISectionProps & {
   index: number;
   sectionsNumber: number;
-  submitForm?: () => void;
   changeStep?: Dispatch<SetStateAction<number>>;
 };
 
@@ -55,15 +46,13 @@ const SectionContainer = ({
   name,
   continueButton,
   error,
-  showButton,
   children,
   changeStep,
   field,
   fieldState,
   formState,
   ...sectionData
-}: FormRegisteredFieldData &
-  ISectionExtendedProps & { showButton: boolean | null }) => {
+}: FormRegisteredFieldData & ISectionExtendedProps) => {
   const {
     formState: { errors },
   } = useFormContext();
@@ -79,7 +68,7 @@ const SectionContainer = ({
       <SectionInfo
         {...{
           ...sectionData,
-          continueButton: !!showButton ? continueButton : null,
+          continueButton,
           buttonType: Number(id) === sectionsNumber ? "submit" : "button",
           onClick: !!name
             ? () => changeStep?.((prevStep: number) => prevStep + 1)
@@ -101,56 +90,10 @@ const SectionContainer = ({
 };
 
 const Section: FC<ISectionExtendedProps> = (props) => {
-  const {
-    id,
-    name,
-    children,
-    changeStep,
-    sectionsNumber,
-    submitForm,
-    ...sectionData
-  } = props;
-  const [showButton, setShowButton] = useState(name ? null : true);
+  const { id, name, children, changeStep, sectionsNumber, ...sectionData } =
+    props;
 
-  const { control, watch, trigger } = useFormContext();
-
-  const answer = watch(name || "");
-
-  useEffect(() => {
-    if (name && answer) {
-      const revalidate = async () => {
-        await trigger(name);
-      };
-
-      revalidate();
-    }
-  }, [name, answer]);
-
-  useEffect(() => {
-    let timerId: ReturnType<typeof setTimeout>;
-    if (!!name && !!answer) {
-      timerId = setTimeout(() => {
-        setShowButton(true);
-      }, 1000);
-    }
-    return () => clearTimeout(timerId);
-  }, [name, answer]);
-
-  useEffect(() => {
-    const keyDownHandler = (event: KeyboardEvent) => {
-      if (Number(id) !== sectionsNumber) return;
-      if (event.key === "Enter") {
-        event.preventDefault();
-        submitForm?.();
-      }
-    };
-
-    document.addEventListener("keydown", keyDownHandler);
-
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
+  const { control } = useFormContext();
 
   function renderWithController(
     name: string,
@@ -159,7 +102,7 @@ const Section: FC<ISectionExtendedProps> = (props) => {
     return (
       <Controller
         control={control}
-        defaultValue={sectionData.defaultValue}
+        defaultValue={sectionData.defaultValue || ""}
         name={name}
         rules={{
           required: sectionData.required,
@@ -171,11 +114,11 @@ const Section: FC<ISectionExtendedProps> = (props) => {
   }
 
   if (!name) {
-    return <SectionContainer {...props} showButton={showButton} />;
+    return <SectionContainer {...props} />;
   }
 
   return renderWithController(name, (formProps) => (
-    <SectionContainer {...props} showButton={showButton} {...formProps} />
+    <SectionContainer {...props} {...formProps} />
   ));
 };
 

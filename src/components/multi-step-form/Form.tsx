@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Box, usePrevious } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useScroll, useSpring } from "framer-motion";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -21,9 +21,9 @@ const SPRING_CONFIG = {
 
 const Form: FC<IFormProps> = ({ onSubmit, formConfig, isLoading }) => {
   const { sections } = formConfig;
+  const steps = sections.length;
 
   const [formStep, setFormStep] = useState(1);
-  const prevFormStep = usePrevious(formStep);
 
   const scrollContainerRef = useRef(null);
   const { scrollYProgress } = useScroll({ container: scrollContainerRef });
@@ -34,46 +34,64 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig, isLoading }) => {
   const {
     formState: { errors, isSubmitting },
     handleSubmit: onFormSubmit,
-    watch,
   } = formMethods;
-
-  const currentSectionName = sections.find(
-    (s) => Number(s.id) === formStep
-  )?.name;
-  const errorKeys = Object.keys(errors);
-  const currentSectionValue = watch((currentSectionName || "") as any);
 
   useEffect(() => {
     getActiveStepAndScroll(formStep);
   }, [formStep]);
 
   useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        handleNext();
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => document.removeEventListener("keydown", keyDownHandler);
+  }, []);
+
+  useEffect(() => {
+    const errorKeys = Object.keys(errors);
+
+    if (isSubmitting && errorKeys.length) {
+      const errorSectionId = sections.find((s) => s.name === errorKeys[0])?.id;
+
+      if (!!errorSectionId) {
+        return setFormStep(Number(errorSectionId));
+      }
+    }
+  }, [isSubmitting, errors]);
+
+  useEffect(() => {
     let timerId: ReturnType<typeof setTimeout>;
+    const nextSection = document.getElementById(`section-${formStep}`);
+    const input = nextSection?.querySelectorAll("input, textarea")[0];
 
-    if (currentSectionValue && !(formStep < prevFormStep)) {
+    if (input instanceof HTMLElement) {
       timerId = setTimeout(() => {
-        setFormStep((formStep) => {
-          if (formStep === sections.length) {
-            return formStep;
-          }
-
-          return formStep + 1;
-        });
-      }, 1500);
+        input.focus();
+      }, 1000);
     }
 
     return () => clearTimeout(timerId);
-  }, [currentSectionValue, formStep, prevFormStep]);
+  }, [formStep]);
 
-  useEffect(() => {
-    const sectionIdToScrollTo = sections.find(
-      (s) => s.name === errorKeys[0]
-    )?.id;
+  function handlePrev() {
+    setFormStep((step) => {
+      if (step === 1) return step;
+      return step - 1;
+    });
+  }
 
-    if (sectionIdToScrollTo && errorKeys.length) {
-      setFormStep(Number(sectionIdToScrollTo));
-    }
-  }, [isSubmitting]);
+  function handleNext() {
+    setFormStep((step) => {
+      if (step === steps) return step;
+      return step + 1;
+    });
+  }
 
   function getActiveStepAndScroll(nextStep: number = 1) {
     const nextSection = document.getElementById(`section-${nextStep}`);
@@ -84,28 +102,19 @@ const Form: FC<IFormProps> = ({ onSubmit, formConfig, isLoading }) => {
     onSubmit?.(data);
   }
 
-  function forceSubmit() {
-    onFormSubmit(handleSubmit)();
-  }
-
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={onFormSubmit(handleSubmit)}>
         <Box ref={scrollContainerRef} h="90vh" overflowY="hidden">
           <ProgressBar percentage={progressBarWidth} />
-          <SectionList
-            sections={sections}
-            changeStep={setFormStep}
-            submitForm={forceSubmit}
+          <SectionList sections={sections} changeStep={setFormStep} />
+          <Controls
+            steps={sections.length}
+            currentStep={formStep}
+            onNext={handleNext}
+            onPrev={handlePrev}
+            disabled={isLoading || isSubmitting}
           />
-          {!isLoading && !isSubmitting && (
-            <Controls
-              steps={sections.length}
-              currentStep={formStep}
-              onNext={setFormStep}
-              onPrev={setFormStep}
-            />
-          )}
         </Box>
       </form>
     </FormProvider>

@@ -47,9 +47,9 @@ const MultiStepForm: FC<IMultiStepFormProps> = ({
   const { intro, outro } = formConfig;
 
   const [renderStatus, setRenderStatus] = useState({
-    intro: true,
-    form: false,
-    outro: false,
+    intro: !!intro,
+    form: !!!intro,
+    outro: !!outro,
   });
   const router = useRouter();
 

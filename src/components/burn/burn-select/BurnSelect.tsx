@@ -1,6 +1,5 @@
 import { FC } from "react";
 import {
-  Box,
   Flex,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -16,6 +15,7 @@ import {
 
 import { usePDNBalance, usePDNRatio } from "lib/hooks";
 import { useBurnStore } from "@zustand/burn";
+
 import { type FormRegisteredFieldData } from "components/multi-step-form/components";
 
 interface IBurnSelectProps extends FormRegisteredFieldData {}
