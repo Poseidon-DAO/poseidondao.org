@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { type AppProps } from "next/app";
-import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   getDefaultWallets,
@@ -18,7 +17,6 @@ import TagManager from "react-gtm-module";
 
 import { PageInitalizer } from "PageInitalizer";
 import { Footer, Header, ErrorBoundary } from "components";
-import store from "redux/store";
 import { theme } from "chakra/theme";
 
 const { chains, provider } = configureChains(
@@ -59,44 +57,42 @@ function MyApp({ Component, pageProps }: AppProps) {
             accentColor: theme?.colors?.red as string,
           })}
         >
-          <Provider store={store}>
-            <ErrorBoundary>
-              <Head>
-                <title>Poseidon DAO</title>
-                <meta name="viewport" content="viewport-fit=cover" />
-              </Head>
+          <ErrorBoundary>
+            <Head>
+              <title>Poseidon DAO</title>
+              <meta name="viewport" content="viewport-fit=cover" />
+            </Head>
 
-              <Header />
-              <PageInitalizer>
-                <DefaultSeo
-                  title="Poseidon DAO"
-                  description="Making Crypto Art the 21th Century Art"
-                  openGraph={{
-                    type: "website",
-                    locale: "en_IE",
-                    url: "https://poseidondao.org",
-                    siteName: "Poseidon DAO",
-                    images: [
-                      {
-                        url: "https://poseidondao.org/img/hero/background-tunnel.png",
-                        width: 800,
-                        height: 600,
-                        alt: "Hero Image Alt",
-                        type: "image/png",
-                      },
-                    ],
-                  }}
-                  twitter={{
-                    handle: "@Poseidon_SF",
-                    site: "@Poseidon_SF",
-                    cardType: "summary_large_image",
-                  }}
-                />
-                <Component {...pageProps} />
-              </PageInitalizer>
-              {pathname === "/" && <Footer />}
-            </ErrorBoundary>
-          </Provider>
+            <Header />
+            <PageInitalizer>
+              <DefaultSeo
+                title="Poseidon DAO"
+                description="Making Crypto Art the 21th Century Art"
+                openGraph={{
+                  type: "website",
+                  locale: "en_IE",
+                  url: "https://poseidondao.org",
+                  siteName: "Poseidon DAO",
+                  images: [
+                    {
+                      url: "https://poseidondao.org/img/hero/background-tunnel.png",
+                      width: 800,
+                      height: 600,
+                      alt: "Hero Image Alt",
+                      type: "image/png",
+                    },
+                  ],
+                }}
+                twitter={{
+                  handle: "@Poseidon_SF",
+                  site: "@Poseidon_SF",
+                  cardType: "summary_large_image",
+                }}
+              />
+              <Component {...pageProps} />
+            </PageInitalizer>
+            {pathname === "/" && <Footer />}
+          </ErrorBoundary>
         </RainbowKitProvider>
       </WagmiConfig>
     </ChakraProvider>
