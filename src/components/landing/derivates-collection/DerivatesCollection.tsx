@@ -1,4 +1,5 @@
-import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
 const DerivatesCollection = () => {
   return (
@@ -18,16 +19,18 @@ const DerivatesCollection = () => {
         p={{ sm: 20, lg: 24 }}
         pl="5vw"
       >
-        <Image
-          src="/img/derivatives/twitter-teaser.png"
+        <Box
           w="100%"
+          h="50vh"
           transform="scaleX(-1)"
           opacity={0.3}
           zIndex={1}
           pos="absolute"
           top={0}
           left={0}
-        />
+        >
+          <Image src="/img/derivatives/twitter-teaser.png" layout="fill" />
+        </Box>
 
         <Box position="relative" zIndex={5}>
           <Heading fontSize={{ sm: "6xl", lg: "2xl" }}>
@@ -45,8 +48,8 @@ const DerivatesCollection = () => {
         </Box>
       </Box>
 
-      <Box w={{ sm: "100%", lg: "50%" }}>
-        <Image src="/img/derivatives/twitter-teaser.png" w="100%" />
+      <Box w={{ sm: "100%", lg: "50%" }} h="50vh" pos="relative">
+        <Image src="/img/derivatives/twitter-teaser.png" layout="fill" />
       </Box>
     </Flex>
   );

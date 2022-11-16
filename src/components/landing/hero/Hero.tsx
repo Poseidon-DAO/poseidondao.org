@@ -1,4 +1,5 @@
-import { Box, Flex, Heading, Image } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { Container } from "components/container";
 
 import background from "assets/images/background-tunnel.png";
@@ -8,21 +9,20 @@ const Hero = () => {
     <Box pos="relative" minH={{ sm: "60vh", lg: "100vh" }} overflowX="hidden">
       <Box
         pos="absolute"
-        top={0}
-        left={0}
         zIndex={1}
         w="100vw"
         h={{ sm: "60vh", lg: "100vh" }}
-        bgImage={background.src}
-        backgroundPosition="center"
-        backgroundSize="cover"
-        clipPath="polygon(
-          0 0,
-          100% 0,
-          100% 55%,
-          0 100%
-        )"
+        clipPath="polygon(0 0, 100% 0, 100% 55%, 0 100%)"
       >
+        <Image
+          src={background.src}
+          layout="fill"
+          objectFit="cover"
+          alt="hero"
+        />
+      </Box>
+
+      <Box pos="absolute" zIndex={1} w="100vw" h={{ sm: "60vh", lg: "100vh" }}>
         <Container>
           <Flex
             h={{ sm: "60vh", lg: "100vh" }}

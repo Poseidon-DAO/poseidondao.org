@@ -52,30 +52,16 @@ const CollectionStats = () => {
                 alignItems="center"
                 justifyContent="center"
                 pos="relative"
-              >
-                {/* 
-                // internal ellipsis overlapping with background 
-                // banner and hiding the tunnerl sight, hidden 
-                <Box
-                  pos="absolute"
-                  w="50px"
-                  h="90px"
-                  zIndex={10}
-                  border="1px solid"
-                  borderColor="brand.text"
-                  borderRadius="calc(90px / 2)"
-                ></Box> */}
-              </Flex>
+              />
             </Box>
           </Box>
 
           <Flex
             flexDir={{ sm: "row", lg: "column" }}
-            justify="space-evenly"
-            align="center"
+            alignItems="center"
+            justifyContent="center"
             w="100%"
             pt={{ sm: "0px", l: "100px" }}
-            pb="100px"
           >
             <Flex justifyContent="center">
               <Box mr={6}>

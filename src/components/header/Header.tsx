@@ -9,6 +9,7 @@ import { Container, SocialIcons } from "components";
 import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
+import Image from "next/image";
 
 const headerColorForRoute: Record<string, string> = {
   "/": "transparent",
@@ -38,6 +39,8 @@ function Header() {
     [buttonSize, (buttonSize as number) - 30]
   );
 
+  const logoHeight = useTransform(scrollY, [0, 20], ["60%", "45%"]);
+
   useEffect(() => {
     return scrollY.onChange((y) => {
       if (router.pathname !== "/") return;
@@ -55,7 +58,7 @@ function Header() {
   }
 
   const AnimatedBox = makeAnimatedElement(motion.div);
-  const AnimatedImage = makeAnimatedElement(motion.img);
+  const AnimatedImageWrapper = makeAnimatedElement(motion.div);
 
   return (
     <AnimatedBox
@@ -70,13 +73,14 @@ function Header() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <AnimatedImage
+          <AnimatedImageWrapper
             cursor="pointer"
-            alt="logo"
-            src={logo.src}
             onClick={handleReload}
-            style={{ width: logoWidth, padding: "0.5rem" }}
-          />
+            pos="relative"
+            style={{ width: logoWidth, height: logoHeight, padding: "0.5rem" }}
+          >
+            <Image src={logo.src} layout="fill" alt="logo" />
+          </AnimatedImageWrapper>
 
           {WALLET_ENABLED ? (
             <ConnectButton />

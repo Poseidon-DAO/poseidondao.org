@@ -1,4 +1,5 @@
-import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import { Container } from "components/container";
 
 import { IMAGE_ARRAY } from "../../../../public/img/collection";
@@ -66,13 +67,9 @@ const Collections = () => {
                 h={{ sm: 120, lg: 200 }}
                 m="2px"
                 objectFit="cover"
+                pos="relative"
               >
-                <Image
-                  src={imageName.src}
-                  height="100%"
-                  width="100%"
-                  objectFit="cover"
-                />
+                <Image src={imageName.src} layout="fill" objectFit="cover" />
               </Box>
             );
           })}

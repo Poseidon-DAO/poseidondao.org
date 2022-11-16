@@ -1,4 +1,5 @@
-import { Box, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { Container } from "components/container";
 
 import image from "../../../../public/img/derivatives/foundation.jpeg";
@@ -27,13 +28,13 @@ const PoseidonDAO = () => {
             </Text>
           </Flex>
 
-          <Box w={{ sm: "100%", lg: "60%" }} pl={{ sm: 0, lg: 16 }}>
-            <Image
-              w="100%"
-              src={image.src}
-              objectFit="cover"
-              objectPosition="center"
-            />
+          <Box
+            w={{ sm: "100%", lg: "60%" }}
+            h="320px"
+            ml={{ sm: 0, lg: 16 }}
+            pos="relative"
+          >
+            <Image layout="fill" src={image.src} />
           </Box>
         </Flex>
       </Container>
