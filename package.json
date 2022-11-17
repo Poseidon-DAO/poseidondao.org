@@ -16,6 +16,7 @@
     "@fontsource/merriweather": "^4.5.14",
     "@rainbow-me/rainbowkit": "^0.7.1",
     "boring-avatars": "^1.6.3",
+    "country-flag-icons": "^1.5.5",
     "ethers": "^5.7.1",
     "framer-motion": "^6.5.1",
     "next": "12.1.6",

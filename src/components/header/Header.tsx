@@ -5,7 +5,7 @@ import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { WALLET_ENABLED } from "constants/env";
-import { Container, SocialIcons } from "components";
+import { Container, SocialIcons, LanguagePicker } from "components";
 import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
@@ -78,13 +78,19 @@ function Header() {
             style={{ width: logoWidth, padding: "0.5rem" }}
           />
 
-          {WALLET_ENABLED ? (
-            <ConnectButton />
-          ) : (
-            <Box>
-              <SocialIcons size={iconsSize} />
+          <Flex alignItems="center">
+            <Box mr={4}>
+              <LanguagePicker />
             </Box>
-          )}
+
+            {WALLET_ENABLED ? (
+              <ConnectButton />
+            ) : (
+              <Box>
+                <SocialIcons size={iconsSize} />
+              </Box>
+            )}
+          </Flex>
         </Flex>
       </Container>
     </AnimatedBox>

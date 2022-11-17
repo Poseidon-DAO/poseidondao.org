@@ -11,6 +11,10 @@ const nextConfig = {
       "pinata.cloud",
     ],
   },
+  i18n: {
+    locales: ["en", "es", "it", "fr", "de"],
+    defaultLocale: "en",
+  },
 };
 
 module.exports = nextConfig;
