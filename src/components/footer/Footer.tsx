@@ -140,7 +140,7 @@ const Footer = () => {
                     Forum
                   </Link>{" "}
                   |{" "}
-                  <NextLink href="/artists" passHref>
+                  <NextLink href="/artists" passHref prefetch={false}>
                     <Link fontWeight="bold">Artists</Link>
                   </NextLink>
                 </Text>

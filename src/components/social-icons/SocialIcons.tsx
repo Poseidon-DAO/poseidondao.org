@@ -14,7 +14,11 @@ const SocialIcons = ({ size = 50 }: { size?: number }) => {
         style={{ width: size, height: size }}
       />
       <Flex alignItems="center" justifyContent="center" px="10px">
-        <NextLink href="https://discord.gg/H9jrvSwuRV" passHref>
+        <NextLink
+          href="https://discord.gg/H9jrvSwuRV"
+          passHref
+          prefetch={false}
+        >
           <Link target="_blank">
             <FaDiscord size={size - 23} />
           </Link>

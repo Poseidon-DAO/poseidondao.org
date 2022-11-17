@@ -79,7 +79,7 @@ function Header() {
             pos="relative"
             style={{ width: logoWidth, height: logoHeight, padding: "0.5rem" }}
           >
-            <Image src={logo.src} layout="fill" alt="logo" />
+            <Image src={logo.src} layout="fill" alt="logo" priority={true} />
           </AnimatedImageWrapper>
 
           {WALLET_ENABLED ? (
