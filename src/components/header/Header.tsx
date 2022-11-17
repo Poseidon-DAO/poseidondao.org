@@ -81,10 +81,6 @@ function Header() {
           />
 
           <Flex alignItems="center">
-            <Box mr={4}>
-              <LanguagePicker />
-            </Box>
-
             {WALLET_ENABLED ? (
               <ConnectButton label={t("connect")} />
             ) : (
@@ -92,6 +88,10 @@ function Header() {
                 <SocialIcons size={iconsSize} />
               </Box>
             )}
+
+            <Box ml={4}>
+              <LanguagePicker />
+            </Box>
           </Flex>
         </Flex>
       </Container>
