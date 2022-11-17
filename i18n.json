@@ -1,0 +1,10 @@
+{
+  "locales": ["en", "es", "it", "fr", "de"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common"],
+    "/": ["landing"],
+    "/burn": ["burn"],
+    "/artists": ["artists"]
+  }
+}
