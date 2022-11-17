@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import useTranslation from "next-translate/useTranslation";
 
 import { WALLET_ENABLED } from "constants/env";
-import { Container, SocialIcons } from "components";
+import { Container, SocialIcons, LanguagePicker } from "components";
 import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
@@ -15,7 +16,10 @@ const headerColorForRoute: Record<string, string> = {
   "/drop": "blue",
 };
 
+const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N;
+
 function Header() {
+  const { t } = useTranslation("common");
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
@@ -78,13 +82,21 @@ function Header() {
             style={{ width: logoWidth, padding: "0.5rem" }}
           />
 
-          {WALLET_ENABLED ? (
-            <ConnectButton />
-          ) : (
-            <Box>
-              <SocialIcons size={iconsSize} />
-            </Box>
-          )}
+          <Flex alignItems="center">
+            {WALLET_ENABLED ? (
+              <ConnectButton label={t("connect")} />
+            ) : (
+              <Box>
+                <SocialIcons size={iconsSize} />
+              </Box>
+            )}
+
+            {i18nEnabled === "true" && (
+              <Box ml={4}>
+                <LanguagePicker />
+              </Box>
+            )}
+          </Flex>
         </Flex>
       </Container>
     </AnimatedBox>

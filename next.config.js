@@ -1,4 +1,7 @@
+const nextTranslate = require("next-translate");
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -11,6 +14,7 @@ const nextConfig = {
       "pinata.cloud",
     ],
   },
+  ...nextTranslate(),
 };
 
 module.exports = nextConfig;
