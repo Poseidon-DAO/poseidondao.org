@@ -16,6 +16,8 @@ const headerColorForRoute: Record<string, string> = {
   "/drop": "blue",
 };
 
+const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N;
+
 function Header() {
   const { t } = useTranslation("common");
   const theme = useTheme();
@@ -89,9 +91,11 @@ function Header() {
               </Box>
             )}
 
-            <Box ml={4}>
-              <LanguagePicker />
-            </Box>
+            {i18nEnabled === "true" && (
+              <Box ml={4}>
+                <LanguagePicker />
+              </Box>
+            )}
           </Flex>
         </Flex>
       </Container>
