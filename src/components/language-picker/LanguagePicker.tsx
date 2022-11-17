@@ -58,7 +58,7 @@ const LanguagePicker = () => {
               const Locale = getFlagForLocale(l) as FlagComponent;
 
               return (
-                <Link href={asPath} locale={l} key={l}>
+                <Link href={asPath} locale={l}>
                   <IconButton
                     key={l}
                     aria-label="Change language"

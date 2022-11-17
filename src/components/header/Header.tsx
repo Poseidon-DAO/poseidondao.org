@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import useTranslation from "next-translate/useTranslation";
 
 import { WALLET_ENABLED } from "constants/env";
 import { Container, SocialIcons, LanguagePicker } from "components";
@@ -17,7 +16,6 @@ const headerColorForRoute: Record<string, string> = {
 };
 
 function Header() {
-  const { t } = useTranslation("common");
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
@@ -86,7 +84,7 @@ function Header() {
             </Box>
 
             {WALLET_ENABLED ? (
-              <ConnectButton label={t("connect")} />
+              <ConnectButton />
             ) : (
               <Box>
                 <SocialIcons size={iconsSize} />
