@@ -38,12 +38,12 @@ const Architecture = () => {
         </Text>
       </Flex>
 
-      <Box w={{ sm: "100%", lg: "50%" }} h="60vh" pos="relative">
+      <Box w={{ sm: "100%", lg: "50%" }}>
         <Image
-          layout="fill"
-          src={image.src}
+          src={image}
           objectFit="cover"
           objectPosition="center"
+          quality={100}
         />
       </Box>
     </Flex>

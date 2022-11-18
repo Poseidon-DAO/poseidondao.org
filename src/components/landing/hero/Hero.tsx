@@ -19,6 +19,7 @@ const Hero = () => {
           layout="fill"
           objectFit="cover"
           alt="hero"
+          priority
         />
       </Box>
 

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 
+import twitterTeaser from "../../../../public/img/derivatives/twitter-teaser.png";
+
 const DerivatesCollection = () => {
   return (
     <Flex
@@ -21,7 +23,6 @@ const DerivatesCollection = () => {
       >
         <Box
           w="100%"
-          h="50vh"
           transform="scaleX(-1)"
           opacity={0.3}
           zIndex={1}
@@ -29,7 +30,7 @@ const DerivatesCollection = () => {
           top={0}
           left={0}
         >
-          <Image src="/img/derivatives/twitter-teaser.png" layout="fill" />
+          <Image src={twitterTeaser} layout="responsive" />
         </Box>
 
         <Box position="relative" zIndex={5}>
@@ -48,8 +49,8 @@ const DerivatesCollection = () => {
         </Box>
       </Box>
 
-      <Box w={{ sm: "100%", lg: "50%" }} h="50vh" pos="relative">
-        <Image src="/img/derivatives/twitter-teaser.png" layout="fill" />
+      <Box w={{ sm: "100%", lg: "50%" }}>
+        <Image src={twitterTeaser} quality={80} layout="responsive" />
       </Box>
     </Flex>
   );

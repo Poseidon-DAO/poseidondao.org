@@ -28,13 +28,8 @@ const PoseidonDAO = () => {
             </Text>
           </Flex>
 
-          <Box
-            w={{ sm: "100%", lg: "60%" }}
-            h="320px"
-            ml={{ sm: 0, lg: 16 }}
-            pos="relative"
-          >
-            <Image layout="fill" src={image.src} />
+          <Box w={{ sm: "100%", lg: "60%" }} pl={{ sm: 0, lg: 16 }}>
+            <Image src={image} objectFit="cover" objectPosition="center" />
           </Box>
         </Flex>
       </Container>

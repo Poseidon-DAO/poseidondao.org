@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -10,7 +11,6 @@ import { Container, SocialIcons, LanguagePicker } from "components";
 import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
-import Image from "next/image";
 
 const headerColorForRoute: Record<string, string> = {
   "/": "transparent",
@@ -43,8 +43,6 @@ function Header() {
     [buttonSize, (buttonSize as number) - 30]
   );
 
-  const logoHeight = useTransform(scrollY, [0, 20], ["60%", "45%"]);
-
   useEffect(() => {
     return scrollY.onChange((y) => {
       if (router.pathname !== "/") return;
@@ -62,7 +60,7 @@ function Header() {
   }
 
   const AnimatedBox = makeAnimatedElement(motion.div);
-  const AnimatedImageWrapper = makeAnimatedElement(motion.div);
+  const AnimatedImage = makeAnimatedElement(motion.div);
 
   return (
     <AnimatedBox
@@ -77,14 +75,13 @@ function Header() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <AnimatedImageWrapper
+          <AnimatedImage
             cursor="pointer"
             onClick={handleReload}
-            pos="relative"
-            style={{ width: logoWidth, height: logoHeight, padding: "0.5rem" }}
+            style={{ width: logoWidth, padding: "0.5rem" }}
           >
-            <Image src={logo.src} layout="fill" alt="logo" priority={true} />
-          </AnimatedImageWrapper>
+            <Image src={logo} alt="logo" priority />
+          </AnimatedImage>
 
           <Flex alignItems="center">
             {WALLET_ENABLED ? (

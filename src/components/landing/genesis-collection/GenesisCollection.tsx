@@ -1,19 +1,18 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+
+import banner from "../../../../public/img/genesis/banner.jpg";
 
 const GenesisCollection = () => {
   return (
-    <Flex borderWidth="1px 0 0 0" borderColor="brand.text" pos="relative">
-      <Box pos="absolute" zIndex={1} w="100%" h="100%">
-        <Image src="/img/genesis/banner.jpg" layout="fill" loading="lazy" />
-      </Box>
-
-      <Flex
-        zIndex={2}
-        flexDir={{ sm: "column", lg: "row" }}
-        textAlign={{ sm: "center", lg: "start" }}
-      >
-        <Box pos="relative" w={{ sm: "100%", lg: "50%" }} minH="28vh" />
+    <Box
+      borderWidth="1px 0 0 0"
+      borderColor="brand.text"
+      textAlign={{ sm: "center", lg: "start" }}
+      pos="relative"
+    >
+      <Flex flexDir={{ sm: "column", lg: "row" }} pos="relative" zIndex={1}>
+        <Box w={{ sm: "100%", lg: "50%" }} minH="28vh" />
 
         <Box
           w={{ sm: "100%", lg: "50%" }}
@@ -37,7 +36,17 @@ const GenesisCollection = () => {
           </Text>
         </Box>
       </Flex>
-    </Flex>
+
+      <Box pos="absolute" zIndex={0} minH="40vh" w="100vw" bottom={0} top={0}>
+        <Image
+          src={banner}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="top"
+          sizes="100vw"
+        />
+      </Box>
+    </Box>
   );
 };
 
