@@ -19,6 +19,7 @@ const Footer = () => {
           objectFit="cover"
           objectPosition="bottom"
           sizes="100vw"
+          alt="footer background"
         />
       </Box>
 
