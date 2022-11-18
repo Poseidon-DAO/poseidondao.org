@@ -44,6 +44,7 @@ const GenesisCollection = () => {
           objectFit="cover"
           objectPosition="top"
           sizes="100vw"
+          alt="banner"
         />
       </Box>
     </Box>

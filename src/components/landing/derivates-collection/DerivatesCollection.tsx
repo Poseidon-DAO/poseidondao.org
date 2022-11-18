@@ -30,7 +30,7 @@ const DerivatesCollection = () => {
           top={0}
           left={0}
         >
-          <Image src={twitterTeaser} layout="responsive" />
+          <Image src={twitterTeaser} layout="responsive" alt="teaser" />
         </Box>
 
         <Box position="relative" zIndex={5}>
@@ -50,7 +50,12 @@ const DerivatesCollection = () => {
       </Box>
 
       <Box w={{ sm: "100%", lg: "50%" }}>
-        <Image src={twitterTeaser} quality={80} layout="responsive" />
+        <Image
+          src={twitterTeaser}
+          quality={80}
+          layout="responsive"
+          alt="teaser"
+        />
       </Box>
     </Flex>
   );

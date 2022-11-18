@@ -44,6 +44,7 @@ const Architecture = () => {
           objectFit="cover"
           objectPosition="center"
           quality={100}
+          alt="architecture"
         />
       </Box>
     </Flex>

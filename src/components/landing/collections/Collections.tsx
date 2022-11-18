@@ -69,7 +69,12 @@ const Collections = () => {
                 objectFit="cover"
                 pos="relative"
               >
-                <Image src={imageName.src} layout="fill" objectFit="cover" />
+                <Image
+                  src={imageName.src}
+                  layout="fill"
+                  objectFit="cover"
+                  alt={imageName.blurDataURL}
+                />
               </Box>
             );
           })}

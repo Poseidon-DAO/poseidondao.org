@@ -22,6 +22,7 @@ const Whitepaper = () => {
           objectFit="cover"
           objectPosition="bottom"
           sizes="100vw"
+          alt="whitepaper background"
         />
       </Box>
 
@@ -43,7 +44,7 @@ const Whitepaper = () => {
             transitionEasing={"cubic-bezier(0.2,.98,.52,.99)"}
           >
             <Box w="100%" boxShadow="0 0 10px darkmagenta">
-              <Image src={image} layout="responsive" />
+              <Image src={image} layout="responsive" alt="whitepaper" />
             </Box>
           </Tilt>
         </Box>
