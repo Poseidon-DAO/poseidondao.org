@@ -24,7 +24,7 @@ function Header() {
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
-  const iconsSize = useBreakpointValue({ sm: 80, lg: 50, base: 50 });
+  const iconsSize = useBreakpointValue({ sm: 60, lg: 30, base: 30 });
 
   const headerColor = headerColorForRoute[router.pathname as string];
   const headerThemeColor = theme.colors.brand[headerColor];
