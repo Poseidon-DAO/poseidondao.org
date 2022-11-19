@@ -15,7 +15,7 @@ const Whitepaper = () => {
       textAlign={{ sm: "center", lg: "start" }}
       pos="relative"
     >
-      <Box pos="absolute" bottom={0} top={0} zIndex={1} minH="20vh" w="100vw">
+      <Box pos="absolute" bottom={0} top={0} zIndex={1} minH="20vh" w="100%">
         <Image
           src={background}
           layout="fill"

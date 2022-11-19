@@ -15,6 +15,8 @@ import {
 const Home: NextPage = () => {
   return (
     <Box
+      pos="relative"
+      zIndex={-1}
       css={{
         backgroundImage:
           "linear-gradient(180deg,hsl(238deg 39% 20%) 0%,hsl(239deg 38% 14%) 23%,hsl(288deg 45% 2%) 100%)",
@@ -22,12 +24,12 @@ const Home: NextPage = () => {
     >
       <Hero />
       <CollectionStats />
-      <Collections />
+      {/* <Collections />
       <PoseidonDAO />
       <Whitepaper />
       <Architecture />
       <DerivatesCollection />
-      <GenesisCollection />
+      <GenesisCollection /> */}
     </Box>
   );
 };

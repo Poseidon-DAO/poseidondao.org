@@ -37,7 +37,7 @@ const GenesisCollection = () => {
         </Box>
       </Flex>
 
-      <Box pos="absolute" zIndex={0} minH="40vh" w="100vw" bottom={0} top={0}>
+      <Box pos="absolute" zIndex={0} minH="40vh" w="100%" overflow="hidden" bottom={0} top={0}>
         <Image
           src={banner}
           layout="fill"

@@ -2,10 +2,10 @@ import NextLink from "next/link";
 import { Flex, Link } from "@chakra-ui/react";
 import { FaDiscord, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
 
-const SocialIcons = ({ size = 30 }: { size?: number }) => {
+const SocialIcons = ({ size = 20 }: { size?: number }) => {
   return (
     <Flex textAlign="center">
-      <Flex alignItems="center" justifyContent="center" px="10px">
+      <Flex alignItems="center" justifyContent="center" px="5px">
         <NextLink
           href="https://twitter.com/Poseidon_SF/"
           passHref
@@ -17,7 +17,7 @@ const SocialIcons = ({ size = 30 }: { size?: number }) => {
         </NextLink>
       </Flex>
 
-      <Flex alignItems="center" justifyContent="center" px="10px">
+      <Flex alignItems="center" justifyContent="center" px="5px">
         <NextLink
           href="https://discord.gg/H9jrvSwuRV"
           passHref
@@ -29,7 +29,7 @@ const SocialIcons = ({ size = 30 }: { size?: number }) => {
         </NextLink>
       </Flex>
 
-      <Flex alignItems="center" justifyContent="center" px="10px">
+      <Flex alignItems="center" justifyContent="center" px="5px">
         <NextLink
           href="https://instagram.com/poseidondao"
           passHref
@@ -41,7 +41,7 @@ const SocialIcons = ({ size = 30 }: { size?: number }) => {
         </NextLink>
       </Flex>
 
-      <Flex alignItems="center" justifyContent="center" px="10px">
+      <Flex alignItems="center" justifyContent="center" px="5px">
         <NextLink
           href="https://github.com/Poseidon-DAO"
           passHref

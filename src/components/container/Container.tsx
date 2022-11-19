@@ -28,7 +28,7 @@ const Container: FC<IPageContainerProps> = ({
 
   return (
     <ChakraContainer
-      maxW={maxW || { sm: "90%", lg: "container.2xl" }}
+      maxW={maxW || { base: "90%", sm: "90%", lg: "container.2xl" }}
       p={0}
       h={takeFullHeight ? "100%" : "initial"}
     >
