@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Image,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import Tilt from "react-parallax-tilt";
 
 import background from "assets/images/background-tunnel.png";
@@ -14,16 +7,24 @@ import image from "../../../../public/img/wp/wp-cover-draft.jpg";
 
 const Whitepaper = () => {
   return (
-    <Flex
+    <Box
       as="section"
       id="whitepaper"
-      backgroundImage={background.src}
-      backgroundSize="cover"
       borderWidth="1px 0 0 0"
       borderColor="brand.text"
-      flexDir={{ sm: "column", lg: "row" }}
-      textAlign={{ sm: "center", lg: "start" }}
+      pos="relative"
     >
+      <Box pos="absolute" bottom={0} top={0} zIndex={1} minH="20vh" w="100%">
+        <Image
+          src={background}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="bottom"
+          sizes="100vw"
+          alt="whitepaper background"
+        />
+      </Box>
+
       <Flex
         w={{ sm: "100%", lg: "100%" }}
         p={{ sm: 20, lg: 24 }}
@@ -31,6 +32,8 @@ const Whitepaper = () => {
         bg="rgba(0,0,0,0.7)"
         flexDir={{ sm: "column", lg: "row" }}
         alignItems="center"
+        pos="relative"
+        zIndex={2}
       >
         <Box w={{ sm: "80%", lg: "30%" }} pl={{ sm: 0, lg: 16 }}>
           <Tilt
@@ -39,13 +42,9 @@ const Whitepaper = () => {
             scale={1.01}
             transitionEasing={"cubic-bezier(0.2,.98,.52,.99)"}
           >
-            <Image
-              w="100%"
-              src={image.src}
-              objectFit="cover"
-              objectPosition="center"
-              boxShadow="0 0 10px darkmagenta"
-            />
+            <Box w="100%" boxShadow="0 0 10px darkmagenta">
+              <Image src={image} layout="responsive" alt="whitepaper" />
+            </Box>
           </Tilt>
         </Box>
         <Flex
@@ -64,7 +63,7 @@ const Whitepaper = () => {
             Download the latest whitepaper version to learn more
           </Text>
           <Link
-            href={"/Whitepaper_Poseidon_DAO.pdf"}
+            href="/Whitepaper_Poseidon_DAO.pdf"
             target="_blank"
             bg={"brand.red"}
             p={{ sm: "2rem 4rem", lg: "1rem 2rem" }}
@@ -79,7 +78,7 @@ const Whitepaper = () => {
           </Link>
         </Flex>
       </Flex>
-    </Flex>
+    </Box>
   );
 };
 

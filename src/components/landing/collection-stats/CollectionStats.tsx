@@ -43,7 +43,7 @@ const CollectionStats = () => {
             bg="brand.text"
             order={{ sm: -1, lg: "initial" }}
           >
-            <Box pos="absolute" top="-580px" left="-200px">
+            <Box pos="absolute" zIndex={-2} top="-580px" left="-200px">
               <Flex
                 border="1px solid white"
                 w="400px"
@@ -52,20 +52,7 @@ const CollectionStats = () => {
                 alignItems="center"
                 justifyContent="center"
                 pos="relative"
-              >
-                {/* 
-                // internal ellipsis overlapping with background 
-                // banner and hiding the tunnerl sight, hidden 
-                <Box
-                  pos="absolute"
-                  w="50px"
-                  h="90px"
-                  zIndex={10}
-                  border="1px solid"
-                  borderColor="brand.text"
-                  borderRadius="calc(90px / 2)"
-                ></Box> */}
-              </Flex>
+              ></Flex>
             </Box>
           </Box>
 
