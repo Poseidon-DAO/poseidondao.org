@@ -53,18 +53,27 @@ const SectionInfo: FC<ISectionInfoProps> = ({
   onClick,
 }) => {
   return (
-    <FormControl my={12} px="5vw">
+    <FormControl my={12} px={{ sm: 0, lg: "5vw" }}>
       <Flex alignItems="center" mb={2}>
-        {questionNo && <Text fontSize="2xl">{questionNo}</Text>}
+        {questionNo && (
+          <Text fontSize={{ sm: "4xl", lg: "2xl" }}>{questionNo}</Text>
+        )}
         {questionNo && <BsArrowRightShort size={30} />}
-        <Heading pl={questionNo ? "7px" : "initial"} size="lg">
+        <Heading
+          pl={questionNo ? "7px" : "initial"}
+          fontSize={{ sm: "5xl", lg: "3xl" }}
+        >
           {title} {required ? "*" : ""}
         </Heading>
       </Flex>
 
       <Box ml={questionNo ? "49px" : 0}>
         <Box>
-          <Text fontSize="lg" lineHeight={1.2} opacity={0.7}>
+          <Text
+            fontSize={{ sm: "4xl", lg: "lg" }}
+            lineHeight={1.2}
+            opacity={0.7}
+          >
             {question}
           </Text>
         </Box>

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useAccount } from "wagmi";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, useBreakpointValue } from "@chakra-ui/react";
 import { type NextPage } from "next";
 
 import { BurnSelect, ConnectWallet, NotEnoughTokens } from "components/burn";
@@ -13,6 +13,7 @@ import { usePDNBalance, usePDNBurn, usePDNRatio } from "lib/hooks";
 
 const Burn: NextPage = () => {
   const { isConnected } = useAccount();
+  const buttonSize = useBreakpointValue({ sm: "2xl", lg: "xl" });
 
   const { balance } = usePDNBalance();
   const { ratio } = usePDNRatio();
@@ -74,7 +75,7 @@ const Burn: NextPage = () => {
           questionNo: 2,
           continueButton: (
             <Button
-              size="xl"
+              size={buttonSize}
               type="submit"
               isLoading={isBurning || isBurnFetching}
               isDisabled={isBurning || isBurnFetching}
@@ -85,7 +86,7 @@ const Burn: NextPage = () => {
         },
       ],
     }),
-    [isBurning, isBurnFetching, maxAmountToBuy, ratio, balance]
+    [isBurning, isBurnFetching, maxAmountToBuy, ratio, balance, buttonSize]
   );
 
   function handleSubmit() {
