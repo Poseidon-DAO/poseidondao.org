@@ -8,7 +8,7 @@ import footer from "assets/images/footer.png";
 import logo from "../../../public/img/logo-transparent.png";
 
 const Footer = () => {
-  const iconsSize = useBreakpointValue({ sm: 60, lg: 30, base: 30 });
+  const iconsSize = useBreakpointValue({ sm: 50, lg: 25, base: 25 });
 
   return (
     <Box borderTop="1px solid" borderColor="brand.text" pos="relative">

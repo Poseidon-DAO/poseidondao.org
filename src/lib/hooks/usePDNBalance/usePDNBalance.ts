@@ -13,6 +13,7 @@ const usePDNBalance = (props: ICustomHookBaseProps = {}) => {
     ...config,
     ...props,
     args: props?.args || address,
+    enabled: !!props?.args || !!address,
   });
 
   return {

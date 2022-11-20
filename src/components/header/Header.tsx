@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -23,7 +24,7 @@ function Header() {
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
-  const iconsSize = useBreakpointValue({ sm: 80, lg: 50, base: 50 });
+  const iconsSize = useBreakpointValue({ sm: 50, lg: 25 });
 
   const headerColor = headerColorForRoute[router.pathname as string];
   const headerThemeColor = theme.colors.brand[headerColor];
@@ -59,7 +60,7 @@ function Header() {
   }
 
   const AnimatedBox = makeAnimatedElement(motion.div);
-  const AnimatedImage = makeAnimatedElement(motion.img);
+  const AnimatedImage = makeAnimatedElement(motion.div);
 
   return (
     <AnimatedBox
@@ -76,11 +77,11 @@ function Header() {
         >
           <AnimatedImage
             cursor="pointer"
-            alt="logo"
-            src={logo.src}
             onClick={handleReload}
             style={{ width: logoWidth, padding: "0.5rem" }}
-          />
+          >
+            <Image src={logo} alt="logo" priority />
+          </AnimatedImage>
 
           <Flex alignItems="center">
             {WALLET_ENABLED ? (
