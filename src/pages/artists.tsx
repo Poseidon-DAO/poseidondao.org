@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Box, Button, useToast } from "@chakra-ui/react";
+import { Box, Button, useBreakpointValue, useToast } from "@chakra-ui/react";
 
 import { submitArtist } from "apis/index";
 import { IFormConfig, MultiStepForm } from "components/multi-step-form";
@@ -8,6 +8,7 @@ import { validators } from "utils/formValidators";
 
 const ArtistForm = () => {
   const toast = useToast();
+  const buttonSize = useBreakpointValue({ sm: "2xl", lg: "xl" });
 
   const formConfig = useMemo<IFormConfig>(
     () => ({
@@ -37,6 +38,8 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={field?.onChange}
               isInvalid={!!fieldState?.error}
+              h={{ sm: 90, lg: "initial" }}
+              fontSize={{ sm: "4xl", lg: "3xl" }}
             />
           ),
           validate: (v) => v.length > 3 && v.length < 70,
@@ -54,6 +57,8 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={field?.onChange}
               isInvalid={!!fieldState?.error}
+              h={{ sm: 90, lg: "initial" }}
+              fontSize={{ sm: "4xl", lg: "3xl" }}
             />
           ),
           validate: (v) => validators.emailValidator(v),
@@ -71,6 +76,8 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={field?.onChange}
               isInvalid={!!fieldState?.error}
+              h={{ sm: 90, lg: "initial" }}
+              fontSize={{ sm: "4xl", lg: "3xl" }}
             />
           ),
           validate: (v) => validators.urlValidator(v, "twitter"),
@@ -88,6 +95,8 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={field?.onChange}
               isInvalid={!!fieldState?.error}
+              h={{ sm: 90, lg: "initial" }}
+              fontSize={{ sm: "4xl", lg: "3xl" }}
             />
           ),
           validate: (v) =>
@@ -107,6 +116,8 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={field?.onChange}
               isInvalid={!!fieldState?.error}
+              h={{ sm: 90, lg: "initial" }}
+              fontSize={{ sm: "4xl", lg: "3xl" }}
             />
           ),
           validate: (v) => validators.urlValidator(v),
@@ -182,6 +193,8 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={field?.onChange}
               isInvalid={!!fieldState?.error}
+              h={{ sm: 90, lg: "initial" }}
+              fontSize={{ sm: "4xl", lg: "3xl" }}
             />
           ),
           validate: (v) => (!!v ? validators.urlValidator(v) : true),
@@ -193,14 +206,14 @@ const ArtistForm = () => {
           question:
             "If you want to change your inputs use the controls to see previous sections!",
           continueButton: (
-            <Button size="xl" type="submit">
+            <Button size={buttonSize} type="submit">
               Submit
             </Button>
           ),
         },
       ],
     }),
-    []
+    [buttonSize]
   );
 
   async function handleSubmit(data: any, showOutro: () => void) {
