@@ -12,6 +12,7 @@ const useNfts = (props: IUseNfts = {}) => {
 
   const query = useQuery([KEYS.nfts], {
     queryFn: () => getNfts({ owner: props?.owner || address! }),
+    enabled: !!props.owner || !!address,
   });
 
   return {

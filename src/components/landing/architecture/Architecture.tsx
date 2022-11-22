@@ -1,4 +1,5 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 import image from "../../../../public/img/wp/architecture.png";
 
@@ -39,10 +40,11 @@ const Architecture = () => {
 
       <Box w={{ sm: "100%", lg: "50%" }}>
         <Image
-          w="100%"
-          src={image.src}
+          src={image}
           objectFit="cover"
           objectPosition="center"
+          quality={100}
+          alt="architecture"
         />
       </Box>
     </Flex>

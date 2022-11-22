@@ -1,4 +1,7 @@
-import { Box, Flex, Heading, Image, Link, Text } from "@chakra-ui/react";
+import Image from "next/image";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+
+import twitterTeaser from "../../../../public/img/derivatives/twitter-teaser.png";
 
 const DerivatesCollection = () => {
   return (
@@ -18,8 +21,7 @@ const DerivatesCollection = () => {
         p={{ sm: 20, lg: 24 }}
         pl="5vw"
       >
-        <Image
-          src="/img/derivatives/twitter-teaser.png"
+        <Box
           w="100%"
           transform="scaleX(-1)"
           opacity={0.3}
@@ -27,7 +29,9 @@ const DerivatesCollection = () => {
           pos="absolute"
           top={0}
           left={0}
-        />
+        >
+          <Image src={twitterTeaser} layout="responsive" alt="teaser" />
+        </Box>
 
         <Box position="relative" zIndex={5}>
           <Heading fontSize={{ sm: "6xl", lg: "2xl" }}>
@@ -46,7 +50,12 @@ const DerivatesCollection = () => {
       </Box>
 
       <Box w={{ sm: "100%", lg: "50%" }}>
-        <Image src="/img/derivatives/twitter-teaser.png" w="100%" />
+        <Image
+          src={twitterTeaser}
+          quality={80}
+          layout="responsive"
+          alt="teaser"
+        />
       </Box>
     </Flex>
   );

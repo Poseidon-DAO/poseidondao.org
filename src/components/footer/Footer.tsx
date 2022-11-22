@@ -1,12 +1,6 @@
+import Image from "next/image";
 import NextLink from "next/link";
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Text,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Flex, Link, Text, useBreakpointValue } from "@chakra-ui/react";
 
 import { Container, SocialIcons } from "components";
 import footer from "assets/images/footer.png";
@@ -14,16 +8,21 @@ import footer from "assets/images/footer.png";
 import logo from "../../../public/img/logo-transparent.png";
 
 const Footer = () => {
-  const iconsSize = useBreakpointValue({ sm: 80, lg: 50, base: 50 });
+  const iconsSize = useBreakpointValue({ sm: 50, lg: 25, base: 25 });
 
   return (
-    <Box
-      borderTop="1px solid"
-      borderColor="brand.text"
-      backgroundImage={footer.src}
-      backgroundPosition="bottom"
-      backgroundSize="cover"
-    >
+    <Box borderTop="1px solid" borderColor="brand.text" pos="relative">
+      <Box pos="absolute" bottom={0} top={0} zIndex={-1} minH="20vh" w="100%">
+        <Image
+          src={footer}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="bottom"
+          sizes="100vw"
+          alt="footer background"
+        />
+      </Box>
+
       <Container>
         <Flex py={8} alignItems="center" justifyContent="space-between">
           <Box color="brand.red">
@@ -60,13 +59,13 @@ const Footer = () => {
               w={{ sm: "100%", lg: "50%" }}
               p={{ sm: 20, lg: "initial" }}
             >
-              <Image
-                cursor="pointer"
-                alt="logo"
-                src={logo.src}
-                w={{ sm: "220px", lg: "200px" }}
+              <Box
                 pr={{ sm: 0, lg: "2rem" }}
-              />
+                w={{ sm: "30%", lg: "50%" }}
+                cursor="pointer"
+              >
+                <Image alt="logo" src={logo} />
+              </Box>
             </Box>
 
             <Box
@@ -77,7 +76,6 @@ const Footer = () => {
               justifyContent="center"
               borderWidth={{ sm: "0", lg: "0px 1px" }}
               borderColor="brand.text"
-              // p={{ sm: 8, lg: "initial" }}
             >
               <Text
                 fontSize={{ sm: "4xl", lg: "xl" }}
@@ -139,7 +137,7 @@ const Footer = () => {
                   Forum
                 </Link>{" "}
                 |{" "}
-                <NextLink href="/artists" passHref>
+                <NextLink href="/artists" passHref prefetch={false}>
                   <Link fontWeight="bold">Artists</Link>
                 </NextLink>
               </Text>
