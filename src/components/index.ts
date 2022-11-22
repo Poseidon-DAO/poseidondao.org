@@ -1,3 +1,4 @@
+export * from "./custom-connect-button";
 export * from "./container";
 export * from "./error-boundary";
 export * from "./footer";

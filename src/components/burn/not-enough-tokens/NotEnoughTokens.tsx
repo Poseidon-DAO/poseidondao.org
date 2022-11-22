@@ -15,6 +15,7 @@ const NotEnoughTokens = () => {
   function handleButtonClick() {
     router.push("/");
   }
+
   return (
     <Flex
       w="100%"

@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { CustomConnectButton } from "components/custom-connect-button";
 
 const ConnectWallet = () => {
   return (
@@ -30,7 +30,7 @@ const ConnectWallet = () => {
         </Box>
 
         <Box minH="80px" my={8}>
-          <ConnectButton />
+          <CustomConnectButton />
         </Box>
       </Box>
     </Flex>
