@@ -19,7 +19,7 @@ const TextArea: FC<ITextAreaProps> = ({ maxChars, ...props }) => {
         variant="flushed"
         size="lg"
         resize="none"
-        fontSize="3xl"
+        fontSize={{ sm: "4xl", lg: "3xl" }}
         h="140px"
         {...props}
       />

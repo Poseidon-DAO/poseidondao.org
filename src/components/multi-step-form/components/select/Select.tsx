@@ -1,5 +1,12 @@
 import { FC } from "react";
-import { Box, Button, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Stack,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { MdOutlineDone } from "react-icons/md";
 
 interface IBurnSelectProps {
@@ -12,6 +19,8 @@ interface IBurnSelectProps {
 }
 
 const Select: FC<IBurnSelectProps> = ({ options, value, onChange }) => {
+  const iconSize = useBreakpointValue({ sm: 30, lg: "16" });
+
   function handleSelect(value: any) {
     onChange(value);
   }
@@ -36,22 +45,31 @@ const Select: FC<IBurnSelectProps> = ({ options, value, onChange }) => {
             justifyContent="space-between"
             flexDir="row"
             borderRadius="none"
+            w={{ sm: "400px", lg: "initial" }}
+            h={{ sm: "90px", lg: "initial" }}
           >
-            <Box
+            <Flex
               px="6px"
+              w={{ sm: "60px", lg: "auto" }}
+              h={{ sm: "60px", lg: "auto" }}
               bg={isSelected ? "brand.text" : "transparent"}
               color={isSelected ? "brand.background" : "inherit"}
               border="1px solid"
               borderColor="brand.text"
+              fontSize={{ sm: "2xl", lg: "initial" }}
+              justifyContent="center"
+              alignItems="center"
             >
               {key}
-            </Box>
+            </Flex>
             <Box ml={2} mr={6} w="100%">
-              <Text>{Object.values(option)[0]}</Text>
+              <Text fontSize={{ sm: "2xl", lg: "initial" }}>
+                {Object.values(option)[0]}
+              </Text>
             </Box>
 
             <Box visibility={isSelected ? "visible" : "hidden"}>
-              <MdOutlineDone />
+              <MdOutlineDone size={iconSize} />
             </Box>
           </Button>
         );

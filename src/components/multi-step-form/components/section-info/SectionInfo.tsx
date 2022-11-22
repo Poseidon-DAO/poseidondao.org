@@ -5,6 +5,7 @@ import {
   FormControl,
   Heading,
   Text,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { FC, MouseEventHandler, ReactElement, ReactNode } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
@@ -52,19 +53,30 @@ const SectionInfo: FC<ISectionInfoProps> = ({
   error,
   onClick,
 }) => {
+  const errorIconSize = useBreakpointValue({ sm: "20", lg: "16" });
+
   return (
-    <FormControl my={12} px="5vw">
+    <FormControl my={12} px={{ sm: 0, lg: "5vw" }}>
       <Flex alignItems="center" mb={2}>
-        {questionNo && <Text fontSize="2xl">{questionNo}</Text>}
+        {questionNo && (
+          <Text fontSize={{ sm: "4xl", lg: "2xl" }}>{questionNo}</Text>
+        )}
         {questionNo && <BsArrowRightShort size={30} />}
-        <Heading pl={questionNo ? "7px" : "initial"} size="lg">
+        <Heading
+          pl={questionNo ? "7px" : "initial"}
+          fontSize={{ sm: "5xl", lg: "3xl" }}
+        >
           {title} {required ? "*" : ""}
         </Heading>
       </Flex>
 
       <Box ml={questionNo ? "49px" : 0}>
         <Box>
-          <Text fontSize="lg" lineHeight={1.2} opacity={0.7}>
+          <Text
+            fontSize={{ sm: "4xl", lg: "lg" }}
+            lineHeight={1.2}
+            opacity={0.7}
+          >
             {question}
           </Text>
         </Box>
@@ -85,9 +97,13 @@ const SectionInfo: FC<ISectionInfoProps> = ({
               alignItems="center"
             >
               <Box color="brand.red" mr={2}>
-                <IoIosWarning />
+                <IoIosWarning size={errorIconSize} />
               </Box>
-              <Text fontSize="sm" lineHeight={1} color="brand.red">
+              <Text
+                fontSize={{ sm: "xl", lg: "sm" }}
+                lineHeight={1}
+                color="brand.red"
+              >
                 {error}
               </Text>
             </Flex>

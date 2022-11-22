@@ -11,6 +11,7 @@ import {
   SliderMark,
   SliderThumb,
   SliderTrack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 
 import { usePDNBalance, usePDNRatio } from "lib/hooks";
@@ -28,6 +29,7 @@ const labelStyles = {
 
 const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
   const setBurnAmount = useBurnStore((state) => state.setBurnAmount);
+  const valueSize = useBreakpointValue({ sm: "2xl", lg: "md" });
 
   const { balance } = usePDNBalance();
   const { ratio } = usePDNRatio();
@@ -44,12 +46,13 @@ const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
   const fieldValue = field?.value || 1;
 
   return (
-    <Flex mt={12}>
+    <Flex mt={12} flexDir={{ sm: "column", lg: "row" }}>
       <NumberInput
-        maxW="140px"
+        maxW={{ sm: "330px", lg: "140px" }}
         mr="2rem"
         value={fieldValue}
         onChange={(value) => handleChange(Number(value))}
+        size="lg"
       >
         <NumberInputField />
         <NumberInputStepper>
@@ -66,12 +69,16 @@ const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
         min={1}
         max={maxAmountToBuy}
         step={1}
+        my={{ sm: 20, lg: "initial" }}
       >
-        <SliderMark value={1} {...labelStyles}>
+        <SliderMark value={1} {...{ ...labelStyles, fontSize: valueSize }}>
           1
         </SliderMark>
 
-        <SliderMark value={maxAmountToBuy} {...{ ...labelStyles, ml: -7 }}>
+        <SliderMark
+          value={maxAmountToBuy}
+          {...{ ...labelStyles, ml: -7, fontSize: valueSize }}
+        >
           {maxAmountToBuy}
         </SliderMark>
 
@@ -79,9 +86,10 @@ const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
           value={fieldValue}
           textAlign="center"
           fontWeight="extrabold"
+          fontSize={valueSize}
           bg="brand.red"
           color="white"
-          mt="-8"
+          mt={{ sm: "-16", lg: "-8" }}
           ml={valueLength > 3 ? "-8" : "-4"}
           w={valueLength > 3 ? "16" : "8"}
         >
@@ -90,7 +98,7 @@ const BurnSelect: FC<IBurnSelectProps> = ({ field }) => {
         <SliderTrack>
           <SliderFilledTrack bg="brand.red" />
         </SliderTrack>
-        <SliderThumb />
+        <SliderThumb w={{ sm: 12, lg: 6 }} h={{ sm: 12, lg: 6 }} />
       </Slider>
     </Flex>
   );

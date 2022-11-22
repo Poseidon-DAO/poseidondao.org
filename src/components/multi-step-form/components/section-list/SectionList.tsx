@@ -12,7 +12,7 @@ const SectionList: FC<
   ISectionListProps & { changeStep?: Dispatch<SetStateAction<number>> }
 > = ({ sections, changeStep }) => {
   return (
-    <Box px="15vw">
+    <Box px={{ sm: "5%", lg: "15vw" }}>
       {sections.map((section, index) => {
         return (
           <Section

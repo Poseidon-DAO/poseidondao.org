@@ -26,7 +26,7 @@ const Outro: FC<IOutroProps> = ({ config, onSubmit }) => {
     <Flex
       w="100%"
       h="90vh"
-      px="15vw"
+      px={{ sm: "5%", lg: "15vw" }}
       alignItems="center"
       justifyContent="center"
     >

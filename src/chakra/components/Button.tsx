@@ -11,6 +11,11 @@ const Button = {
       px: 24,
       py: 4,
     },
+    "2xl": {
+      fontSize: "4xl",
+      px: 28,
+      py: 6,
+    },
   },
   variants: {
     pdn: (props: any) => ({

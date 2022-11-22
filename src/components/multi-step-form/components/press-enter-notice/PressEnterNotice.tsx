@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react";
 import { FC } from "react";
 import { AiOutlineEnter } from "react-icons/ai";
 
@@ -7,9 +7,10 @@ interface IPressEnterNotice {
 }
 
 const PressEnterNotice: FC<IPressEnterNotice> = ({ withOr }) => {
+  const arrowSize = useBreakpointValue({ sm: 40, lg: "20" });
   return (
     <Flex>
-      <Text>
+      <Text fontSize={{ sm: "3xl", lg: "initial" }}>
         {withOr ? "or" : ""} press{" "}
         <Text as="span" fontWeight="bold">
           Enter
@@ -17,7 +18,7 @@ const PressEnterNotice: FC<IPressEnterNotice> = ({ withOr }) => {
       </Text>
 
       <Box ml={1}>
-        <AiOutlineEnter />
+        <AiOutlineEnter size={arrowSize} />
       </Box>
     </Flex>
   );

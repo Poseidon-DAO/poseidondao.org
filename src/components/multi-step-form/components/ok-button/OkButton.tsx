@@ -1,5 +1,11 @@
 import { FC, MouseEventHandler, ReactElement } from "react";
-import { Box, Button, ButtonProps, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonProps,
+  Flex,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { MdOutlineDone } from "react-icons/md";
 
 import { PressEnterNotice } from "../press-enter-notice";
@@ -23,6 +29,9 @@ const OkButton: FC<IOkButtonProps> = ({
   showEnterText = true,
   onClick,
 }) => {
+  const mdButtonSize = useBreakpointValue({ sm: "2xl", lg: "md" });
+  const xlButtonSize = useBreakpointValue({ sm: "2xl", lg: "xl" });
+
   const alginMap = {
     left: "flex-start",
     center: "center",
@@ -32,7 +41,7 @@ const OkButton: FC<IOkButtonProps> = ({
   return (
     <Flex alignItems="center" justifyContent={alginMap}>
       <Button
-        size={buttonSize}
+        size={buttonSize === "md" ? mdButtonSize : xlButtonSize}
         rightIcon={!!icon ? icon : undefined}
         fontWeight="extrabold"
         type={type}
