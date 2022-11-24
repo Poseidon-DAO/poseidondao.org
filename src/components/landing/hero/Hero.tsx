@@ -11,7 +11,7 @@ const Hero = () => {
         w="100%"
         h="100%"
         pos="absolute"
-        zIndex={-1}
+        zIndex={2}
         clipPath="polygon(0 0, 100% 0, 100% 55%, 0 100%)"
       >
         <Image
@@ -23,13 +23,15 @@ const Hero = () => {
         />
       </Box>
 
-      <Container takeFullHeight>
-        <Flex h="100%" alignItems={{ sm: "flex-start", lg: "center" }}>
-          <Heading size="4xl" mt={{ sm: "350px", lg: "-150px" }}>
-            Making Crypto Art <br /> the 21st Century Art
-          </Heading>
-        </Flex>
-      </Container>
+      <Box pos="relative" zIndex={2} w="100%" h="100%">
+        <Container takeFullHeight>
+          <Flex h="100%" alignItems={{ sm: "flex-start", lg: "center" }}>
+            <Heading size="4xl" mt={{ sm: "350px", lg: "-150px" }}>
+              Making Crypto Art <br /> the 21st Century Art
+            </Heading>
+          </Flex>
+        </Container>
+      </Box>
     </Box>
   );
 };

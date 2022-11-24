@@ -41,6 +41,7 @@ const CollectionStats = () => {
             h={{ sm: "150px", lg: "initial" }}
             position="relative"
             bg="brand.text"
+            zIndex={1}
             order={{ sm: -1, lg: "initial" }}
           >
             <Box pos="absolute" zIndex={-2} top="-580px" left="-200px">

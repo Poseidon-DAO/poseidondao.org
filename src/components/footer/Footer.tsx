@@ -130,9 +130,13 @@ const Footer = () => {
                 </Link>{" "}
                 |{" "}
                 <Link
-                  href="https://forum.poseidondao.org/"
+                  // href="https://forum.poseidondao.org/"
                   fontWeight="bold"
                   isExternal
+                  opacity={0.6}
+                  _hover={{
+                    textDecoration: "none",
+                  }}
                 >
                   Forum
                 </Link>{" "}
