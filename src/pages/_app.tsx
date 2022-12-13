@@ -67,7 +67,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <PageInitalizer>
               <DefaultSeo
                 title="Poseidon DAO"
-                description="Making Crypto Art the 21th Century Art"
+                description="Our goal is to make crypto art the artistic movement of the 21st century, creating a decentralized curator based on strong artistic knowledge, investing in NFTs"
                 openGraph={{
                   type: "website",
                   locale: "en_IE",
