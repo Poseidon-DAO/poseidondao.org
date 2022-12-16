@@ -1,9 +1,11 @@
+import { useAccount } from "wagmi";
 import { Box } from "@chakra-ui/react";
 import { type NextPage } from "next";
 
 import {
   PoseidonDAO,
   Collections,
+  TokenStats,
   CollectionStats,
   DerivatesCollection,
   GenesisCollection,
@@ -12,7 +14,11 @@ import {
   Hero,
 } from "components/landing";
 
+const showTokenSection = process.env.NEXT_PUBLIC_SHOW_TOKEN_SECTION === "true";
+
 const Home: NextPage = () => {
+  const { address } = useAccount();
+
   return (
     <Box
       css={{
@@ -23,6 +29,7 @@ const Home: NextPage = () => {
       <Hero />
       <CollectionStats />
       <Collections />
+      {showTokenSection && !!address && <TokenStats />}
       <PoseidonDAO />
       <Whitepaper />
       <Architecture />
