@@ -1,6 +1,6 @@
 import "@rainbow-me/rainbowkit/styles.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { type AppProps } from "next/app";
@@ -40,11 +40,24 @@ const tagManagerArgs = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const { pathname } = useRouter();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     TagManager.initialize(tagManagerArgs);
   }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  if (typeof window === "undefined") {
+    return <></>;
+  }
 
   return (
     <ChakraProvider theme={theme}>
