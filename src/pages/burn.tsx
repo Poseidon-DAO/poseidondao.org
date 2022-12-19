@@ -10,6 +10,7 @@ import { type FormRegisteredFieldData } from "components/multi-step-form/compone
 import { useDebounce } from "hooks";
 import { useBurnStore } from "@zustand/burn";
 import { usePDNBalance, usePDNBurn, usePDNRatio } from "lib/hooks";
+import Head from "next/head";
 
 const Burn: NextPage = () => {
   const { isConnected } = useAccount();
@@ -105,6 +106,14 @@ const Burn: NextPage = () => {
 
   return (
     <Box pt="10vh" bg="brand.background">
+      <Head>
+        <title>Burn - Become a Guardian</title>
+        <meta
+          name="description"
+          content="The Guardians are the keepers of DAO collection. Their goal is growing and improving the collection in the most healthy and representative way. Guardians are identified as owners of the Guardian NFT. The Guardian NFTs are cumulative and can be obtained burning 0 PDN tokens."
+        />
+      </Head>
+
       {isConnected ? (
         <MultiStepForm
           activeState={isBurnSuccess ? "submited" : undefined}
