@@ -62,7 +62,7 @@ const TokenStats = () => {
       toast({
         title: "Vest withdraw sucess.",
         description: `Withdrawing vest succeed. ${getTransactionLink(
-          withdrawData?.hash
+          withdrawData?.hash || ""
         )}`,
         status: "success",
         duration: 9000,
