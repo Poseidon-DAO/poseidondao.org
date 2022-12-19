@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Button, Grid, GridItem, Text, useToast } from "@chakra-ui/react";
 import { Container } from "components/container";
 import {
   usePDNBalance,
@@ -8,27 +8,69 @@ import {
   useVestWithdraw,
 } from "lib/hooks";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { getTransactionLink } from "utils/getTransactionLink";
 
 const TokenStats = () => {
   const router = useRouter();
+  const toast = useToast();
 
   const { balance } = usePDNBalance();
   const { symbol } = usePDNSymbol();
 
-  const { vestLength, vestLengthStatus } = useVestLength();
+  const { vestLength } = useVestLength();
   const {
-    vestMetadata,
     totalVestedAmount,
     totalExpiredVestedAmount,
     expiredVestIds,
-    lastUnexpiredVestTimestamp,
+    timeToNextVestString,
   } = useVestMetadata({
     vestLength,
   });
 
-  const { withdraw } = useVestWithdraw({
-    args: { vestIndex: "" },
-  });
+  const { withdraw, withdrawData, withdrawError, withdrawStatus } =
+    useVestWithdraw({
+      args: {
+        vestIndex: !!expiredVestIds.length ? expiredVestIds[0] : undefined,
+      },
+    });
+
+  useEffect(() => {
+    if (withdrawStatus === "loading") {
+      toast({
+        title: "Vest withdraw.",
+        description: "Withdrawing vest...",
+        status: "info",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+
+    if (withdrawStatus === "error" || true) {
+      toast({
+        title: "Vest withdraw error.",
+        description: `Withdrawing vest failed. ${withdrawError?.message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+
+    if (withdrawStatus === "success") {
+      toast({
+        title: "Vest withdraw sucess.",
+        description: `Withdrawing vest succeed. ${getTransactionLink(
+          withdrawData?.hash
+        )}`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+  }, [withdrawStatus]);
 
   function handleBurnClick() {
     router.push("/burn");
@@ -48,7 +90,7 @@ const TokenStats = () => {
           <GridItem
             w="100%"
             p={8}
-            h="35vh"
+            h={{ sm: "13vh", lg: "35vh" }}
             border="1px solid"
             borderColor="brand.red"
             pos="relative"
@@ -59,7 +101,7 @@ const TokenStats = () => {
             </Text>
 
             <Box pos="absolute" bottom={8}>
-              <Button size="xl" w="160px" onClick={handleBurnClick}>
+              <Button size="xl" w="240px" onClick={handleBurnClick}>
                 BURN
               </Button>
             </Box>
@@ -68,7 +110,7 @@ const TokenStats = () => {
           <GridItem
             w="100%"
             p={8}
-            h="35vh"
+            h={{ sm: "13vh", lg: "35vh" }}
             border="1px solid"
             borderColor="brand.red"
           >
@@ -81,7 +123,7 @@ const TokenStats = () => {
           <GridItem
             w="100%"
             p={8}
-            h="35vh"
+            h={{ sm: "13vh", lg: "35vh" }}
             border="1px solid"
             borderColor="brand.red"
             pos="relative"
@@ -94,11 +136,11 @@ const TokenStats = () => {
             <Box pos="absolute" bottom={8}>
               <Button
                 size="xl"
-                w="160px"
+                w="240px"
                 disabled={!expiredVestIds.length}
                 onClick={handleClaimClick}
               >
-                CLAIM
+                CLAIM LATEST VEST
               </Button>
             </Box>
           </GridItem>
@@ -106,14 +148,14 @@ const TokenStats = () => {
           <GridItem
             w="100%"
             p={8}
-            h="35vh"
+            h={{ sm: "13vh", lg: "35vh" }}
             border="1px solid"
             borderColor="brand.red"
             pos="relative"
           >
             <Text fontSize="3xl">Next {symbol} available in</Text>
             <Text fontSize="5xl" fontWeight="bold">
-              32 days
+              {timeToNextVestString}
             </Text>
           </GridItem>
         </Grid>

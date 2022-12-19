@@ -7,6 +7,13 @@ import {
 import { getBasicContractConfig } from "contracts/utils";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
+import {
+  addSeconds,
+  differenceInDays,
+  differenceInHours,
+  differenceInSeconds,
+  fromUnixTime,
+} from "date-fns";
 
 interface IUseVestMetadata {
   vestLength?: number | null;
@@ -23,14 +30,44 @@ function useVestMetadata({
   vestLength = 0,
   enabled = true,
 }: IUseVestMetadata = {}) {
-  const [lastUnexpiredVestTimestamp, setLastUnexpiredVestTimestamp] = useState<
-    string | number
-  >("");
+  const [blockTimeDiffInSeconds, setBlockTimeDiffInSeconds] =
+    useState<number>(0);
 
   const { data: lastBlock } = useBlockNumber();
   const provider = useProvider();
   const { address } = useAccount();
   const indexes = Array.from(Array(vestLength).keys());
+
+  function formatTime() {
+    if (!!timeToNextVestInDays && timeToNextVestInDays > 1) {
+      return `~ ${timeToNextVestInDays} days`;
+    }
+
+    if (timeToNextVestInDays === 1) {
+      return `~ ${timeToNextVestInDays} day`;
+    }
+
+    if (!!timeToNextVestInSeconds) {
+      return `~ ${differenceInHours(
+        timeToNextVestInSeconds,
+        new Date()
+      )} hours`;
+    }
+
+    return "";
+  }
+
+  function getNextUnexpiredVests(vests: Vest[]) {
+    const vestsCopy = [...vests];
+
+    if (!vestsCopy.length) return [];
+
+    vestsCopy.sort((a, b) =>
+      a?.expirationBlockHeight < b?.expirationBlockHeight ? -1 : 1
+    );
+
+    return vestsCopy;
+  }
 
   const query = useContractReads({
     contracts: indexes?.map((vestId) => ({
@@ -41,7 +78,7 @@ function useVestMetadata({
     watch: true,
   });
 
-  const queryWithoutNulls = query.data?.filter(Boolean);
+  const queryWithoutNulls = query.data?.filter(Boolean) || [];
 
   const vestsMetadata = queryWithoutNulls!.map((vestMetadata, index) => {
     return {
@@ -80,19 +117,19 @@ function useVestMetadata({
       !!vest?.expirationBlockHeight && vest?.expirationBlockHeight > lastBlock!
   );
 
-  function getNextUnexpiredVest(vests: Vest[]) {
-    const vestsCopy = [...vests];
+  const sortedUnExpiredVests = getNextUnexpiredVests(unexpiredVests);
 
-    if (!vestsCopy.length) return;
+  const timeToNextVestInSeconds = !!sortedUnExpiredVests.length
+    ? addSeconds(
+        new Date(),
+        (sortedUnExpiredVests[0]?.expirationBlockHeight - lastBlock!) *
+          blockTimeDiffInSeconds
+      )
+    : undefined;
 
-    vestsCopy.sort((a, b) =>
-      a?.expirationBlockHeight < b?.expirationBlockHeight ? -1 : 1
-    );
-
-    return vestsCopy[0];
-  }
-
-  const nextUnexpiredVest = getNextUnexpiredVest(unexpiredVests);
+  const timeToNextVestInDays = !!timeToNextVestInSeconds
+    ? differenceInDays(timeToNextVestInSeconds, new Date())
+    : undefined;
 
   useEffect(() => {
     async function getTimeStamp(lastBlock: number) {
@@ -100,30 +137,27 @@ function useVestMetadata({
       return block?.timestamp;
     }
 
+    let ts1: any;
+    let ts2: any;
+
     if (!!lastBlock) {
       getTimeStamp(lastBlock)
-        .then((timestamp) => {
-          console.log("first", timestamp, lastBlock);
+        .then((firstTs) => {
+          ts1 = firstTs;
           return getTimeStamp(lastBlock! - 1);
         })
-        .then((ts) => {
-          console.log("second", ts, lastBlock - 1);
+        .then((secondTs) => {
+          ts2 = secondTs;
+        })
+        .finally(() => {
+          const blockDifference = differenceInSeconds(
+            fromUnixTime(ts1),
+            fromUnixTime(ts2)
+          );
+          setBlockTimeDiffInSeconds(blockDifference);
         });
     }
   }, [lastBlock]);
-
-  // useEffect(() => {
-  //   async function getTimeStamp(vest: Vest) {
-  //     const block = await provider.getBlock(lastBlock!);
-  //     return block?.timestamp;
-  //   }
-
-  //   if (!!nextUnexpiredVest) {
-  //     getTimeStamp(nextUnexpiredVest).then((timestamp) => {
-  //       setLastUnexpiredVestTimestamp(timestamp);
-  //     });
-  //   }
-  // }, [nextUnexpiredVest?.vestIndex]);
 
   return {
     vestMetadata: vestsMetadata,
@@ -131,8 +165,8 @@ function useVestMetadata({
     totalVestedAmount,
     totalExpiredVestedAmount,
     expiredVestIds,
-    nextUnexpiredVest,
-    lastUnexpiredVestTimestamp,
+    sortedUnExpiredVests,
+    timeToNextVestString: formatTime(),
   };
 }
 

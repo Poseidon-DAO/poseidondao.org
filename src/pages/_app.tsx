@@ -19,8 +19,11 @@ import { PageInitalizer } from "PageInitalizer";
 import { Footer, Header, ErrorBoundary } from "components";
 import { theme } from "chakra/theme";
 
+const chainToUse =
+  process.env.NEXT_PUBLIC_CHAIN_ID === "0x5" ? chain.goerli : chain.mainnet;
+
 const { chains, provider } = configureChains(
-  [chain.goerli],
+  [chainToUse],
   [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID })]
 );
 
