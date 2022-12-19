@@ -5,6 +5,7 @@ import { submitArtist } from "apis/index";
 import { IFormConfig, MultiStepForm } from "components/multi-step-form";
 import { Select, Input, TextArea } from "components/multi-step-form/components";
 import { validators } from "utils/formValidators";
+import Head from "next/head";
 
 const ArtistForm = () => {
   const toast = useToast();
@@ -255,6 +256,14 @@ const ArtistForm = () => {
 
   return (
     <Box pt="10vh">
+      <Head>
+        <title>Become an Artist.</title>
+        <meta
+          name="description"
+          content="Become an artists by filling your info."
+        />
+      </Head>
+
       <MultiStepForm
         activeState="started"
         formConfig={formConfig}

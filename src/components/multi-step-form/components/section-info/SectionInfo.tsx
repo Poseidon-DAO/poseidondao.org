@@ -65,6 +65,7 @@ const SectionInfo: FC<ISectionInfoProps> = ({
         <Heading
           pl={questionNo ? "7px" : "initial"}
           fontSize={{ sm: "5xl", lg: "3xl" }}
+          as="h1"
         >
           {title} {required ? "*" : ""}
         </Heading>
