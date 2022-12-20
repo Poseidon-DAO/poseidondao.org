@@ -2,6 +2,7 @@ import { Box, Button, Grid, GridItem, Text, useToast } from "@chakra-ui/react";
 import { Container } from "components/container";
 import {
   usePDNBalance,
+  usePDNRatio,
   usePDNSymbol,
   useVestLength,
   useVestMetadata,
@@ -17,6 +18,7 @@ const TokenStats = () => {
 
   const { balance } = usePDNBalance();
   const { symbol } = usePDNSymbol();
+  const { ratio } = usePDNRatio();
 
   const { vestLength } = useVestLength();
   const {
@@ -90,7 +92,6 @@ const TokenStats = () => {
           <GridItem
             w="100%"
             p={8}
-            h={{ sm: "13vh", lg: "35vh" }}
             border="1px solid"
             borderColor="brand.red"
             pos="relative"
@@ -100,40 +101,34 @@ const TokenStats = () => {
               {balance} {symbol}
             </Text>
 
-            <Box pos="absolute" bottom={8}>
-              <Button size="xl" w="240px" onClick={handleBurnClick}>
+            <Box h="60px" mt={6}>
+              <Button
+                size="xl"
+                w="240px"
+                onClick={handleBurnClick}
+                disabled={Number(balance) < ratio!}
+              >
                 BURN
               </Button>
             </Box>
           </GridItem>
 
-          <GridItem
-            w="100%"
-            p={8}
-            h={{ sm: "13vh", lg: "35vh" }}
-            border="1px solid"
-            borderColor="brand.red"
-          >
+          <GridItem w="100%" p={8} border="1px solid" borderColor="brand.red">
             <Text fontSize="3xl">Total Vested {symbol}</Text>
             <Text fontSize="5xl" fontWeight="bold">
               {totalVestedAmount} {symbol}
             </Text>
+
+            <Box h="60px" mt={6}></Box>
           </GridItem>
 
-          <GridItem
-            w="100%"
-            p={8}
-            h={{ sm: "13vh", lg: "35vh" }}
-            border="1px solid"
-            borderColor="brand.red"
-            pos="relative"
-          >
+          <GridItem w="100%" p={8} border="1px solid" borderColor="brand.red">
             <Text fontSize="3xl">Available {symbol}</Text>
             <Text fontSize="5xl" fontWeight="bold">
               {totalExpiredVestedAmount} {symbol}
             </Text>
 
-            <Box pos="absolute" bottom={8}>
+            <Box h="60px" mt={6}>
               <Button
                 size="xl"
                 w="240px"
@@ -148,15 +143,15 @@ const TokenStats = () => {
           <GridItem
             w="100%"
             p={8}
-            h={{ sm: "13vh", lg: "35vh" }}
             border="1px solid"
             borderColor="brand.red"
             pos="relative"
           >
             <Text fontSize="3xl">Next {symbol} available in</Text>
             <Text fontSize="5xl" fontWeight="bold">
-              {timeToNextVestString}
+              {timeToNextVestString || "N/A"}
             </Text>
+            <Box h="60px" mt={6}></Box>
           </GridItem>
         </Grid>
       </Container>
