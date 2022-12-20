@@ -1,4 +1,12 @@
-import { Box, Button, Grid, GridItem, Text, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Grid,
+  GridItem,
+  Text,
+  Tooltip,
+  useToast,
+} from "@chakra-ui/react";
 import { Container } from "components/container";
 import {
   usePDNBalance,
@@ -97,9 +105,11 @@ const TokenStats = () => {
             pos="relative"
           >
             <Text fontSize="3xl">Total {symbol}</Text>
-            <Text fontSize="5xl" fontWeight="bold">
-              {balance} {symbol}
-            </Text>
+            <Tooltip label={balance}>
+              <Text fontSize="5xl" fontWeight="bold">
+                {Number(balance).toFixed(2)} {symbol}
+              </Text>
+            </Tooltip>
 
             <Box h="60px" mt={6}>
               <Button
@@ -115,18 +125,22 @@ const TokenStats = () => {
 
           <GridItem w="100%" p={8} border="1px solid" borderColor="brand.red">
             <Text fontSize="3xl">Total Vested {symbol}</Text>
-            <Text fontSize="5xl" fontWeight="bold">
-              {totalVestedAmount} {symbol}
-            </Text>
+            <Tooltip label={totalVestedAmount}>
+              <Text fontSize="5xl" fontWeight="bold">
+                {Number(totalVestedAmount).toFixed(2)} {symbol}
+              </Text>
+            </Tooltip>
 
             <Box h="60px" mt={6}></Box>
           </GridItem>
 
           <GridItem w="100%" p={8} border="1px solid" borderColor="brand.red">
             <Text fontSize="3xl">Available {symbol}</Text>
-            <Text fontSize="5xl" fontWeight="bold">
-              {totalExpiredVestedAmount} {symbol}
-            </Text>
+            <Tooltip label={totalExpiredVestedAmount}>
+              <Text fontSize="5xl" fontWeight="bold">
+                {Number(totalExpiredVestedAmount).toFixed(2)} {symbol}
+              </Text>
+            </Tooltip>
 
             <Box h="60px" mt={6}>
               <Button
