@@ -115,6 +115,7 @@ const TokenStats = () => {
               <Button
                 size="xl"
                 w="240px"
+                fontSize="md"
                 onClick={handleBurnClick}
                 disabled={Number(balance) < ratio!}
               >
@@ -146,6 +147,7 @@ const TokenStats = () => {
               <Button
                 size="xl"
                 w="240px"
+                fontSize="md"
                 disabled={!expiredVestIds.length}
                 onClick={handleClaimClick}
               >
