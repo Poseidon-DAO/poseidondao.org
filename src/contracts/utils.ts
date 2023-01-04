@@ -10,6 +10,10 @@ export const SMART_CONTRACT_FUNCTIONS_NAMES = {
   GET_BALANCE: "balanceOf",
   BURN: "burnAndReceiveNFT",
   TRANSFER: "transfer",
+  SYMBOL: "symbol",
+  VEST_LENGTH: "getVestLength",
+  VEST_METADATA: "getVestMetaData",
+  WITHDRAW_VEST: "withdrawVest",
 } as const;
 
 export type SmartContractFunctionName =

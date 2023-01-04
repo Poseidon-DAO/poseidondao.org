@@ -1,6 +1,6 @@
 import "@rainbow-me/rainbowkit/styles.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { type AppProps } from "next/app";
@@ -19,8 +19,11 @@ import { PageInitalizer } from "PageInitalizer";
 import { Footer, Header, ErrorBoundary } from "components";
 import { theme } from "chakra/theme";
 
+const chainToUse =
+  process.env.NEXT_PUBLIC_CHAIN_ID === "0x5" ? chain.goerli : chain.mainnet;
+
 const { chains, provider } = configureChains(
-  [chain.goerli],
+  [chainToUse],
   [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID })]
 );
 
@@ -40,11 +43,24 @@ const tagManagerArgs = {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const { pathname } = useRouter();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     TagManager.initialize(tagManagerArgs);
   }, []);
+
+  if (!isMounted) {
+    return null;
+  }
+
+  if (typeof window === "undefined") {
+    return <></>;
+  }
 
   return (
     <ChakraProvider theme={theme}>
