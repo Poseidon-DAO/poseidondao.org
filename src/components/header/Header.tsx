@@ -15,6 +15,7 @@ import logo from "../../../public/img/logo-transparent.png";
 const headerColorForRoute: Record<string, string> = {
   "/": "transparent",
   "/drop": "blue",
+  "/open-edition": "black",
 };
 
 const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N;
@@ -84,7 +85,7 @@ function Header() {
           </AnimatedImage>
 
           <Flex alignItems="center">
-            {WALLET_ENABLED ? (
+            {WALLET_ENABLED && router.pathname !== "/open-edition" ? (
               <ConnectButton label={t("connect")} />
             ) : (
               <Box>
