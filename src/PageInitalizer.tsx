@@ -18,7 +18,12 @@ const PageInitalizer: NextPage<IPageInitalizerProps> = ({ children }) => {
   return (
     <Box
       minH="100vh"
-      bg={pathname === "/open-edition" ? "brand.black" : "brand.background"}
+      bg={
+        pathname === "/deploy-collection-drop" ||
+        pathname === "/deploy-collection" 
+          ? "brand.black"
+          : "brand.background"
+      }
     >
       {children}
     </Box>

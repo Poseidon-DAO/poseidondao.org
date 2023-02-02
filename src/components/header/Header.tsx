@@ -15,7 +15,8 @@ import logo from "../../../public/img/logo-transparent.png";
 const headerColorForRoute: Record<string, string> = {
   "/": "transparent",
   "/drop": "blue",
-  "/open-edition": "black",
+  "/deploy-collection-drop": "black",
+  "/deploy-collection": "black",
 };
 
 const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N;
@@ -85,7 +86,9 @@ function Header() {
           </AnimatedImage>
 
           <Flex alignItems="center">
-            {WALLET_ENABLED && router.pathname !== "/open-edition" ? (
+            {WALLET_ENABLED &&
+            router.pathname !== "/deploy-collection-drop" &&
+            router.pathname !== "/deploy-collection" ? (
               <ConnectButton label={t("connect")} />
             ) : (
               <Box>
