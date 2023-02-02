@@ -19,7 +19,17 @@ const DeployCollection = () => {
           The goal of the initiative is to encourage token distribution.
         </Text>
 
-        <Grid templateColumns="repeat(3, 1fr)" gap="100px" py="40px">
+        <Grid
+          templateColumns={[
+            "repeat(1, 1fr)",
+            "repeat(1, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(2, 1fr)",
+            "repeat(3, 1fr)",
+          ]}
+          gap={["100px", "100px", "20px", "20px", "50px"]}
+          py="40px"
+        >
           <GridItem>
             <Flex flexDir="column" borderWidth="1px" py="20px" px="15%">
               <Box w="100%" h="400px" pos="relative">
@@ -28,7 +38,9 @@ const DeployCollection = () => {
 
               <Box my="6">
                 <Text fontSize="lg">Yu Cai</Text>
-                <Text fontSize="lg">𝕋𝕙𝕖 𝔹𝕒𝕣 𝕒𝕥 𝕥𝕙𝕖 𝕋𝕣𝕒𝕚𝕟 𝕊𝕥𝕒𝕥𝕚𝕠𝕟</Text>
+                <Text fontSize="lg" noOfLines={1}>
+                  𝕋𝕙𝕖 𝔹𝕒𝕣 𝕒𝕥 𝕥𝕙𝕖 𝕋𝕣𝕒𝕚𝕟 𝕊𝕥𝕒𝕥𝕚𝕠𝕟
+                </Text>
               </Box>
 
               <Flex justifyContent="center">
@@ -101,7 +113,9 @@ const DeployCollection = () => {
 
               <Box my="6">
                 <Text fontSize="lg">niroperrone</Text>
-                <Text fontSize="lg">Assets are Fried</Text>
+                <Text fontSize="lg" noOfLines={1}>
+                  Assets are Fried
+                </Text>
               </Box>
 
               <Flex justifyContent="center">
@@ -174,7 +188,7 @@ const DeployCollection = () => {
 
               <Box my="6">
                 <Text fontSize="lg">Orkhan Isayev</Text>
-                <Text fontSize="lg">
+                <Text fontSize="lg" noOfLines={1}>
                   VICTORY Aeromobile - Artemis Classic Y5
                 </Text>
               </Box>
@@ -249,7 +263,9 @@ const DeployCollection = () => {
 
               <Box my="6">
                 <Text fontSize="lg">Laprisamata</Text>
-                <Text fontSize="lg">Saint in the Blue Desert</Text>
+                <Text fontSize="lg" noOfLines={1}>
+                  Saint in the Blue Desert
+                </Text>
               </Box>
 
               <Flex justifyContent="center">
@@ -322,7 +338,9 @@ const DeployCollection = () => {
 
               <Box my="6">
                 <Text fontSize="lg">FourLeafClover</Text>
-                <Text fontSize="lg">A World of Hope</Text>
+                <Text fontSize="lg" noOfLines={1}>
+                  A World of Hope
+                </Text>
               </Box>
 
               <Flex justifyContent="center">
