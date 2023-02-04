@@ -57,7 +57,7 @@ const TokenStats = () => {
       });
     }
 
-    if (withdrawStatus === "error" || true) {
+    if (withdrawStatus === "error") {
       toast({
         title: "Vest withdraw error.",
         description: `Withdrawing vest failed. ${withdrawError?.message}`,

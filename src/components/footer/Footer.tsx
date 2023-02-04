@@ -46,7 +46,7 @@ const Footer = () => {
       <Box borderTop="1px solid" borderColor="brand.text">
         <Container>
           <Flex
-            h={{ sm: "25vh", lg: "20vh" }}
+            h={{ sm: "35vh", lg: "20vh" }}
             alignItems="center"
             flexDir={{ sm: "column-reverse", lg: "row" }}
             justifyContent={{ sm: "center", lg: "space-between" }}
@@ -56,12 +56,12 @@ const Footer = () => {
               alignItems="center"
               justifyContent={{ sm: "center", lg: "initial" }}
               h="100%"
-              w={{ sm: "100%", lg: "50%" }}
+              w={{ sm: "100%", lg: "100%" }}
               p={{ sm: 20, lg: "initial" }}
             >
               <Box
                 pr={{ sm: 0, lg: "2rem" }}
-                w={{ sm: "30%", lg: "50%" }}
+                w={{ sm: "30%", lg: "20%" }}
                 cursor="pointer"
               >
                 <Image alt="logo" src={logo} />
@@ -73,8 +73,8 @@ const Footer = () => {
               w="100%"
               as={Flex}
               alignItems="center"
-              justifyContent="center"
-              borderWidth={{ sm: "0", lg: "0px 1px" }}
+              justifyContent={{ sm: "center", lg: "flex-end" }}
+              borderWidth={{ sm: "0", lg: "0 0 0 1px" }}
               borderColor="brand.text"
             >
               <Text
@@ -105,41 +105,6 @@ const Footer = () => {
                 >
                   Foundation
                 </Link>
-              </Text>
-            </Box>
-
-            <Box
-              h="100%"
-              w={{ sm: "100%", lg: "50%" }}
-              as={Flex}
-              alignItems="center"
-              justifyContent={{ sm: "center", lg: "flex-end" }}
-              color="brand.red"
-              p={{ sm: 8, lg: "initial" }}
-            >
-              <Text
-                fontSize={{ sm: "4xl", lg: "xl" }}
-                textAlign={{ sm: "center", lg: "start" }}
-              >
-                <Link
-                  href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
-                  fontWeight="bold"
-                  isExternal
-                >
-                  Blog
-                </Link>{" "}
-                |{" "}
-                <Link
-                  href="https://forum.poseidondao.org/"
-                  fontWeight="bold"
-                  isExternal
-                >
-                  Forum
-                </Link>{" "}
-                |{" "}
-                <NextLink href="/artists" passHref prefetch={false}>
-                  <Link fontWeight="bold">Artists</Link>
-                </NextLink>
               </Text>
             </Box>
           </Flex>

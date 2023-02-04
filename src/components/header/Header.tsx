@@ -1,13 +1,21 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Box, Flex, useBreakpointValue, useTheme } from "@chakra-ui/react";
+import NextLink from "next/link";
+import {
+  Box,
+  Flex,
+  Link,
+  Text,
+  useBreakpointValue,
+  useTheme,
+} from "@chakra-ui/react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useTranslation from "next-translate/useTranslation";
 
 import { WALLET_ENABLED } from "constants/env";
-import { Container, SocialIcons, LanguagePicker } from "components";
+import { Container, LanguagePicker } from "components";
 import { makeAnimatedElement } from "utils/makeAnimatedElement";
 
 import logo from "../../../public/img/logo-transparent.png";
@@ -26,7 +34,6 @@ function Header() {
   const theme = useTheme();
   const router = useRouter();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
-  const iconsSize = useBreakpointValue({ sm: 50, lg: 25 });
 
   const headerColor = headerColorForRoute[router.pathname as string];
   const headerThemeColor = theme.colors.brand[headerColor];
@@ -64,6 +71,11 @@ function Header() {
   const AnimatedBox = makeAnimatedElement(motion.div);
   const AnimatedImage = makeAnimatedElement(motion.div);
 
+  const showConnectButton =
+    WALLET_ENABLED &&
+    router.pathname !== "/deploy-collection-drop" &&
+    router.pathname !== "/deploy-collection";
+
   return (
     <AnimatedBox
       pos="fixed"
@@ -86,15 +98,48 @@ function Header() {
           </AnimatedImage>
 
           <Flex alignItems="center">
-            {WALLET_ENABLED &&
-            router.pathname !== "/deploy-collection-drop" &&
-            router.pathname !== "/deploy-collection" ? (
-              <ConnectButton label={t("connect")} />
-            ) : (
-              <Box>
-                <SocialIcons size={iconsSize} />
-              </Box>
-            )}
+            <Flex
+              display="inline-flex"
+              alignItems="center"
+              justifyContent={{ sm: "center", lg: "flex-end" }}
+              p={{ sm: 8, lg: "initial" }}
+              mr={showConnectButton ? 8 : -4}
+            >
+              <Text
+                fontSize={{ sm: "4xl", lg: "xl" }}
+                textAlign={{ sm: "center", lg: "start" }}
+              >
+                <Link
+                  href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
+                  fontWeight="bold"
+                  isExternal
+                  mx={4}
+                  _hover={{ color: "brand.red", textDecoration: "underline" }}
+                >
+                  Blog
+                </Link>{" "}
+                <Link
+                  href="https://forum.poseidondao.org/"
+                  fontWeight="bold"
+                  isExternal
+                  mx={4}
+                  _hover={{ color: "brand.red", textDecoration: "underline" }}
+                >
+                  Forum
+                </Link>{" "}
+                <NextLink href="/artists" passHref prefetch={false}>
+                  <Link
+                    mx={4}
+                    fontWeight="bold"
+                    _hover={{ color: "brand.red", textDecoration: "underline" }}
+                  >
+                    Artists
+                  </Link>
+                </NextLink>
+              </Text>
+            </Flex>
+
+            {showConnectButton && <ConnectButton label={t("connect")} />}
 
             {i18nEnabled === "true" && (
               <Box ml={4}>

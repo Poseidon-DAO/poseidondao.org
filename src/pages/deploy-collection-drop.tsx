@@ -12,7 +12,7 @@ const DeployCollectionDrop = () => {
     setIsLoading(false);
   }
 
-  const showFrame = !!process.env.NEXT_PUBLIC_OPEN_EDITION_URLL;
+  const showFrame = !!process.env.NEXT_PUBLIC_OPEN_EDITION_URL;
 
   if (!showFrame) {
     return <EmptyPage />;

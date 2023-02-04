@@ -17,7 +17,12 @@ export const DeployCollectionCard = ({
   return (
     <Flex flexDir="column" borderWidth="1px" py="20px" px="15%">
       <Box w="100%" h="400px" pos="relative">
-        <Image src={collectionImageUrl} layout="fill" />
+        <Image
+          priority={true}
+          objectFit="contain"
+          src={collectionImageUrl}
+          layout="fill"
+        />
       </Box>
 
       <Box my="6">
@@ -31,7 +36,7 @@ export const DeployCollectionCard = ({
         <Flex
           justifyContent="center"
           alignItems="center"
-          borderWidth="1px 1px 0 0"
+          borderWidth="1px"
           w="50px"
           h="50px"
           cursor="pointer"
@@ -43,7 +48,7 @@ export const DeployCollectionCard = ({
         <Flex
           justifyContent="center"
           alignItems="center"
-          borderWidth="1px 0 0 0"
+          borderWidth="1px 0"
           w="50px"
           h="50px"
           cursor="pointer"
@@ -59,7 +64,7 @@ export const DeployCollectionCard = ({
         <Flex
           justifyContent="center"
           alignItems="center"
-          borderWidth="1px 0 0 1px"
+          borderWidth="1px"
           w="50px"
           h="50px"
           cursor="pointer"
