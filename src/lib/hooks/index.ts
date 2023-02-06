@@ -1,3 +1,4 @@
+export * from "./useIsAllowedToBurn";
 export * from "./useNftMetadata";
 export * from "./useNfts";
 export * from "./useNftsForContract";
