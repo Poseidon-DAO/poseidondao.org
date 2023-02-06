@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Container } from "components/container";
 import {
+  useIsAllowedToBurn,
   usePDNBalance,
   usePDNRatio,
   usePDNSymbol,
@@ -27,6 +28,7 @@ const TokenStats = () => {
   const { balance } = usePDNBalance();
   const { symbol } = usePDNSymbol();
   const { ratio } = usePDNRatio();
+  const { isAllowedToBurn } = useIsAllowedToBurn();
 
   const { vestLength } = useVestLength();
   const {
@@ -111,13 +113,19 @@ const TokenStats = () => {
               </Text>
             </Tooltip>
 
+            {!isAllowedToBurn && (
+              <Text fontSize="xl" fontWeight="bold" color="#b71c1c">
+                * Burn mechanism it not available yet
+              </Text>
+            )}
+
             <Box h="60px" mt={6}>
               <Button
                 size="xl"
                 w="240px"
                 fontSize="md"
                 onClick={handleBurnClick}
-                disabled={Number(balance) < ratio!}
+                disabled={Number(balance) < ratio! || !isAllowedToBurn}
               >
                 BURN
               </Button>

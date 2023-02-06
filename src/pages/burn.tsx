@@ -2,15 +2,20 @@ import { useMemo } from "react";
 import { useAccount } from "wagmi";
 import { Box, Button, useBreakpointValue } from "@chakra-ui/react";
 import { type NextPage } from "next";
+import Head from "next/head";
 
-import { BurnSelect, ConnectWallet, NotEnoughTokens } from "components/burn";
+import { BurnSelect, ConnectWallet, CustomMessage } from "components/burn";
 import { IFormConfig, MultiStepForm } from "components/multi-step-form";
 import { type FormRegisteredFieldData } from "components/multi-step-form/components";
 
 import { useDebounce } from "hooks";
 import { useBurnStore } from "@zustand/burn";
-import { usePDNBalance, usePDNBurn, usePDNRatio } from "lib/hooks";
-import Head from "next/head";
+import {
+  useIsAllowedToBurn,
+  usePDNBalance,
+  usePDNBurn,
+  usePDNRatio,
+} from "lib/hooks";
 
 const Burn: NextPage = () => {
   const { isConnected } = useAccount();
@@ -21,6 +26,7 @@ const Burn: NextPage = () => {
 
   const burnAmount = useBurnStore((state) => state.burnAmount);
   const debouncedAmount = useDebounce(burnAmount);
+  const { isAllowedToBurn } = useIsAllowedToBurn();
 
   const { burn, isBurning, isBurnFetching, isBurnSuccess } = usePDNBurn({
     args: {
@@ -96,10 +102,26 @@ const Burn: NextPage = () => {
 
   const nonSufficientFunds = ratio! > Number(balance);
 
+  if (!isAllowedToBurn) {
+    return (
+      <Box pt="10vh" bg="brand.background" w="70vw">
+        <CustomMessage
+          title="Burn mechanism it not available yet"
+          message="To be able to burn your tokens, the burn mechanism must be available."
+        />
+      </Box>
+    );
+  }
+
   if (nonSufficientFunds) {
     return (
       <Box pt="10vh" bg="brand.background">
-        <NotEnoughTokens />;
+        <CustomMessage
+          title="You don't have enough tokens"
+          message=" To be able to burn your tokens you have to connect your wallet. If
+            you already connected the wallet click the Connect button below to
+            proceed."
+        />
       </Box>
     );
   }

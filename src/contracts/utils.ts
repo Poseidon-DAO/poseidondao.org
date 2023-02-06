@@ -14,6 +14,7 @@ export const SMART_CONTRACT_FUNCTIONS_NAMES = {
   VEST_LENGTH: "getVestLength",
   VEST_METADATA: "getVestMetaData",
   WITHDRAW_VEST: "withdrawVest",
+  GET_IS_ALLOWED_TO_BURN: "isAllowedToBurn",
 } as const;
 
 export type SmartContractFunctionName =
