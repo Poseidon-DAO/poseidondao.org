@@ -83,6 +83,7 @@ function Header() {
     WALLET_ENABLED &&
     router.pathname !== "/deploy-collection-drop" &&
     router.pathname !== "/deploy-collection";
+  const showDropButton = !!dropAvailable && router.pathname === "/";
 
   return (
     <AnimatedBox
@@ -111,7 +112,7 @@ function Header() {
               alignItems="center"
               justifyContent={{ sm: "center", lg: "flex-end" }}
               p={{ sm: 8, lg: "initial" }}
-              mr={showConnectButton ? 8 : -4}
+              mr={showConnectButton ? 8 : showDropButton ? 4 : -4}
             >
               <Text
                 fontSize={{ sm: "4xl", lg: "xl" }}
@@ -147,14 +148,14 @@ function Header() {
               </Text>
             </Flex>
 
-            {!!dropAvailable && router.pathname === "/" && (
+            {showDropButton && (
               <Button
                 variant="solid"
                 bg={isConnected ? "white" : "brand.red"}
                 color={isConnected ? "brand.black" : "white"}
                 borderRadius="none"
                 fontWeight="bolder"
-                mr="2"
+                mr={showConnectButton ? 2 : 0}
                 onClick={handleDropClick}
               >
                 Drop
