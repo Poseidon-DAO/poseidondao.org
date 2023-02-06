@@ -4,6 +4,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import {
   Box,
+  Button,
   Flex,
   Link,
   Text,
@@ -13,6 +14,7 @@ import {
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import useTranslation from "next-translate/useTranslation";
+import { useAccount } from "wagmi";
 
 import { WALLET_ENABLED } from "constants/env";
 import { Container, LanguagePicker } from "components";
@@ -28,11 +30,13 @@ const headerColorForRoute: Record<string, string> = {
 };
 
 const i18nEnabled = process.env.NEXT_PUBLIC_ENABLE_I18N;
+const dropAvailable = process.env.NEXT_PUBLIC_OPEN_EDITION_URL;
 
 function Header() {
   const { t } = useTranslation("common");
   const theme = useTheme();
   const router = useRouter();
+  const { isConnected } = useAccount();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
 
   const headerColor = headerColorForRoute[router.pathname as string];
@@ -66,6 +70,10 @@ function Header() {
 
   function handleReload() {
     router.push("/");
+  }
+
+  function handleDropClick() {
+    router.push("/deploy-collection-drop");
   }
 
   const AnimatedBox = makeAnimatedElement(motion.div);
@@ -138,6 +146,20 @@ function Header() {
                 </NextLink>
               </Text>
             </Flex>
+
+            {!!dropAvailable && router.pathname === "/" && (
+              <Button
+                variant="solid"
+                bg={isConnected ? "white" : "brand.red"}
+                color={isConnected ? "brand.black" : "white"}
+                borderRadius="none"
+                fontWeight="bolder"
+                mr="2"
+                onClick={handleDropClick}
+              >
+                Drop
+              </Button>
+            )}
 
             {showConnectButton && <ConnectButton label={t("connect")} />}
 

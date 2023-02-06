@@ -1,9 +1,16 @@
 import Image from "next/image";
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 
 import twitterTeaser from "../../../../public/img/derivatives/twitter-teaser.png";
+import { useRouter } from "next/router";
 
 const DerivatesCollection = () => {
+  const { push } = useRouter();
+
+  function handleDeployCollectionClick() {
+    push("/deploy-collection");
+  }
+
   return (
     <Flex
       borderWidth="1px 0 0 0"
@@ -46,6 +53,10 @@ const DerivatesCollection = () => {
             edition because they will automatically receive a certain amount of
             PDN tokens back in airdrop.
           </Text>
+
+          <Button mt="6" onClick={handleDeployCollectionClick}>
+            Deploy Collection
+          </Button>
         </Box>
       </Box>
 
