@@ -23,8 +23,8 @@ const Architecture = () => {
       >
         <Text
           fontWeight="bold"
-          fontSize={{ sm: "2xl", lg: "medium" }}
-          textAlign={{ sm: "center", lg: "center" }}
+          fontSize={{ sm: "4xl", lg: "xl" }}
+          lineHeight={1.2}
           m={{ sm: 10 }}
         >
           Composed of two souls: DAO Governance and Founder Collection. The PDN

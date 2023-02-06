@@ -33,7 +33,7 @@ const Footer = () => {
                 textAlign={{ sm: "center", lg: "start" }}
                 color="brand.red"
               >
-                Contact Us &gt;
+                Contact Us
               </Text>
             </Link>
           </Box>
