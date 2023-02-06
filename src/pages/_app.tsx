@@ -1,4 +1,5 @@
 import "@rainbow-me/rainbowkit/styles.css";
+import "@fontsource/roboto";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
