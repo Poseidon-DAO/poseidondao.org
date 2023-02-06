@@ -14,9 +14,10 @@
     "@chakra-ui/react": "1.8",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@fontsource/merriweather": "^4.5.14",
+    "@fontsource/roboto": "^4.5.8",
     "@next/bundle-analyzer": "^13.0.4",
     "@rainbow-me/rainbowkit": "^0.7.1",
+    "add": "^2.0.6",
     "country-flag-icons": "^1.5.5",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.1",
@@ -33,6 +34,7 @@
     "react-parallax-tilt": "^1.7.35",
     "wagmi": "^0.6.8",
     "web3": "^1.7.5",
+    "yarn": "^1.22.19",
     "zustand": "^4.1.4"
   },
   "devDependencies": {

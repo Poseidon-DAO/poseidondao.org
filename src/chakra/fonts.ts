@@ -1,6 +1,6 @@
 const fonts = {
-  heading: `"Merriweather", serif`,
-  body: `"Source Sans Pro", serif`,
+  body: "Roboto",
+  heading: "Roboto",
 };
 
 const fontSizes = {
