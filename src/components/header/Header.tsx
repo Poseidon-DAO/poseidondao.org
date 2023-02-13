@@ -119,7 +119,7 @@ function Header() {
                 textAlign={{ sm: "center", lg: "start" }}
               >
                 <Link
-                  href="https://mirror.xyz/0x4Ac0eaC004c87e43a8D52CAC8B431FEaFBb9B62b"
+                  href="https://poseidondao.blog/"
                   fontWeight="bold"
                   isExternal
                   mx={4}
