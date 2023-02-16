@@ -113,6 +113,23 @@ const DeployCollection = () => {
               }}
             />
           </GridItem>
+
+          <GridItem>
+            <DeployCollectionCard
+              video
+              artist="FourLeafClover"
+              collectionName="A World of Hope"
+              collectionImageUrl="https://openseauserdata.com/files/ac43e6128c3ebbdf42ed46717f6ef94c.mp4#t=0.001"
+              collectionUrl={{
+                opensea:
+                  "https://opensea.io/assets/ethereum/0xac9db340485aef69621510f0a3928dfd3b181799/6",
+                looksrare:
+                  "https://looksrare.org/collections/0xAc9DB340485aEf69621510F0a3928DFD3B181799/6",
+                rarible:
+                  "https://rarible.com/token/0xac9db340485aef69621510f0a3928dfd3b181799:6",
+              }}
+            />
+          </GridItem>
         </Grid>
       </Box>
     </Container>
