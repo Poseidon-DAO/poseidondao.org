@@ -6,6 +6,7 @@ interface IDeplyCollectionCardProps {
   collectionName: string;
   collectionUrl: { opensea: string; looksrare: string; rarible: string };
   collectionImageUrl: string;
+  video?: boolean;
 }
 
 export const DeployCollectionCard = ({
@@ -13,16 +14,21 @@ export const DeployCollectionCard = ({
   collectionName,
   collectionUrl: { opensea, looksrare, rarible },
   collectionImageUrl,
+  video = false,
 }: IDeplyCollectionCardProps) => {
   return (
     <Flex flexDir="column" borderWidth="1px" py="20px" px="15%">
       <Box w="100%" h="400px" pos="relative">
-        <Image
-          priority={true}
-          objectFit="contain"
-          src={collectionImageUrl}
-          layout="fill"
-        />
+        {video ? (
+          <video autoPlay loop controls src={collectionImageUrl}></video>
+        ) : (
+          <Image
+            priority={true}
+            objectFit="contain"
+            src={collectionImageUrl}
+            layout="fill"
+          />
+        )}
       </Box>
 
       <Box my="6">
