@@ -93,7 +93,7 @@ const TokenStats = () => {
   }
 
   return (
-    <Box py={20} w="100vw">
+    <Box py={20} w="100%">
       <Container>
         <Grid
           templateColumns={{ sm: "repeat(1, 1fr)", lg: "repeat(2, 1fr)" }}

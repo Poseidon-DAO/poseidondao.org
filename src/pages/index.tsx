@@ -5,6 +5,7 @@ import { type NextPage } from "next";
 import {
   PoseidonDAO,
   Collections,
+  TokenRelease,
   TokenStats,
   CollectionStats,
   DerivatesCollection,
@@ -29,6 +30,7 @@ const Home: NextPage = () => {
       <Hero />
       <CollectionStats />
       <Collections />
+      {showTokenSection && <TokenRelease />}
       {showTokenSection && !!address && <TokenStats />}
       <PoseidonDAO />
       <Whitepaper />
