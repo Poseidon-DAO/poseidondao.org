@@ -54,7 +54,7 @@ const DerivatesCollection = () => {
             PDN tokens back in airdrop.
           </Text>
 
-          <Button mt="6" onClick={handleDeployCollectionClick}>
+          <Button mt="6" size="lg" onClick={handleDeployCollectionClick}>
             Deploy Collection
           </Button>
         </Box>

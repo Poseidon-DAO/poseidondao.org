@@ -5,5 +5,6 @@ export * from "./derivates-collection";
 export * from "./genesis-collection";
 export * from "./hero";
 export * from "./whitepaper";
+export * from "./token-release";
 export * from "./token-stats";
 export * from "./architecture";

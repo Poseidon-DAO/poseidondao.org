@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
@@ -38,6 +38,7 @@ function Header() {
   const router = useRouter();
   const { isConnected } = useAccount();
   const buttonSize = useBreakpointValue({ base: 150, sm: 200, lg: 120 });
+  const [isOpen, setOpen] = useState(false);
 
   const headerColor = headerColorForRoute[router.pathname as string];
   const headerThemeColor = theme.colors.brand[headerColor];
@@ -76,6 +77,10 @@ function Header() {
     router.push("/deploy-collection-drop");
   }
 
+  function handleMenuOpen() {
+    setOpen((prev) => !prev);
+  }
+
   const AnimatedBox = makeAnimatedElement(motion.div);
   const AnimatedImage = makeAnimatedElement(motion.div);
 
@@ -108,7 +113,7 @@ function Header() {
 
           <Flex alignItems="center">
             <Flex
-              display="inline-flex"
+              display={{ sm: "none", lg: "inline-flex" }}
               alignItems="center"
               justifyContent={{ sm: "center", lg: "flex-end" }}
               p={{ sm: 8, lg: "initial" }}
@@ -151,6 +156,7 @@ function Header() {
             {showDropButton && (
               <Button
                 variant="solid"
+                fontSize={18}
                 bg={isConnected ? "white" : "brand.red"}
                 color={isConnected ? "brand.black" : "white"}
                 borderRadius="none"
@@ -169,9 +175,75 @@ function Header() {
                 <LanguagePicker />
               </Box>
             )}
+
+            <Flex
+              w="60px"
+              h="50px"
+              display={{ sm: "flex", lg: "none" }}
+              flexDir="column"
+              justifyContent="space-around"
+              ml="4"
+              sx={{
+                "& > div": {
+                  width: "80%",
+                  height: "4px",
+                  margin: "0 auto",
+                  background: "white",
+                  opacity: isOpen ? 0.5 : 1,
+                },
+              }}
+              onClick={handleMenuOpen}
+            >
+              <Box></Box>
+              <Box></Box>
+              <Box></Box>
+            </Flex>
           </Flex>
         </Flex>
       </Container>
+
+      {isOpen && (
+        <Flex
+          flexDir="column"
+          justifyContent="center"
+          alignItems="center"
+          display={{ sm: "flex", lg: "none" }}
+          w="100%"
+          h="93vh"
+          bg="brand.blue"
+        >
+          <Link
+            href="https://poseidondao.blog/"
+            fontSize={80}
+            fontWeight="bold"
+            isExternal
+            m={4}
+            _hover={{ color: "brand.red", textDecoration: "underline" }}
+          >
+            Blog
+          </Link>{" "}
+          <Link
+            href="https://forum.poseidondao.org/"
+            fontWeight="bold"
+            fontSize={80}
+            isExternal
+            m={4}
+            _hover={{ color: "brand.red", textDecoration: "underline" }}
+          >
+            Forum
+          </Link>{" "}
+          <NextLink href="/artists" passHref prefetch={false}>
+            <Link
+              m={4}
+              fontSize={80}
+              fontWeight="bold"
+              _hover={{ color: "brand.red", textDecoration: "underline" }}
+            >
+              Artists
+            </Link>
+          </NextLink>
+        </Flex>
+      )}
     </AnimatedBox>
   );
 }
