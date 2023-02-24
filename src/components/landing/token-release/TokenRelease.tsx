@@ -49,7 +49,8 @@ const TokenRelease = () => {
 
           <Box textAlign={{ sm: "center", lg: "initial" }} mt="6">
             <Link
-              href="/Whitepaper_Poseidon_DAO.pdf"
+              // href="/Whitepaper_Poseidon_DAO.pdf"
+              opacity={0.4}
               target="_blank"
               bg={"brand.red"}
               p={{ sm: "1rem 4rem", lg: "1rem 2rem" }}

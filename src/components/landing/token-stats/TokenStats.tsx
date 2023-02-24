@@ -20,6 +20,8 @@ import {
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getTransactionLink } from "utils/getTransactionLink";
+import { useBlockNumber } from "wagmi";
+import { formatDistance } from "date-fns";
 
 const TokenStats = () => {
   const router = useRouter();
@@ -29,9 +31,11 @@ const TokenStats = () => {
   const { symbol } = usePDNSymbol();
   const { ratio } = usePDNRatio();
   const { isAllowedToBurn } = useIsAllowedToBurn();
+  const { data: lastBlock } = useBlockNumber();
 
   const { vestLength } = useVestLength();
   const {
+    sortedUnExpiredVests,
     totalVestedAmount,
     totalExpiredVestedAmount,
     expiredVestIds,
@@ -91,6 +95,15 @@ const TokenStats = () => {
   function handleClaimClick() {
     withdraw?.();
   }
+
+  const nextVestBlockHeight = !!sortedUnExpiredVests.length
+    ? sortedUnExpiredVests[0].expirationBlockHeight - lastBlock!
+    : null;
+
+  const blocksWithSeconds = !!nextVestBlockHeight && nextVestBlockHeight * 15;
+
+  const aproximatDuration = (s: number) =>
+    formatDistance(0, s * 1000, { includeSeconds: true });
 
   return (
     <Box py={20} w="100%">
@@ -173,7 +186,9 @@ const TokenStats = () => {
           >
             <Text fontSize="3xl">Next {symbol} available in</Text>
             <Text fontSize="5xl" fontWeight="bold">
-              {timeToNextVestString || "N/A"}
+              {!!blocksWithSeconds
+                ? aproximatDuration(blocksWithSeconds)
+                : "N/A"}
             </Text>
             <Box h="60px" mt={6}></Box>
           </GridItem>
