@@ -128,7 +128,7 @@ const TokenStats = () => {
 
             {!isAllowedToBurn && (
               <Text fontSize="xl" fontWeight="bold" color="#b71c1c">
-                * Burn mechanism it not available yet
+                * Burn mechanism is not available yet
               </Text>
             )}
 
