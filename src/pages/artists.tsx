@@ -136,9 +136,9 @@ const ArtistForm = () => {
               value={field?.value}
               onChange={(value) => field?.onChange(value)}
               options={[
-                { "1": "Derivatives", value: "derivatives" },
-                { "2": "Genesis", value: "genesis" },
-                { "3": "Other", value: "other" },
+                { "1": "Derivatives", value: "Derivatives" },
+                { "2": "Genesis", value: "Genesis" },
+                { "3": "Other", value: "Other" },
               ]}
             />
           ),
