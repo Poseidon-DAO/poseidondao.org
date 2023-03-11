@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Box, Button, useBreakpointValue, useToast } from "@chakra-ui/react";
 
 import { submitArtist } from "apis/index";
@@ -10,6 +10,7 @@ import Head from "next/head";
 const ArtistForm = () => {
   const toast = useToast();
   const buttonSize = useBreakpointValue({ sm: "2xl", lg: "xl" });
+  const [isLoading, setIsLoading] = useState(false);
 
   const formConfig = useMemo<IFormConfig>(
     () => ({
@@ -207,18 +208,24 @@ const ArtistForm = () => {
           question:
             "If you want to change your inputs use the controls to see previous sections!",
           continueButton: (
-            <Button size={buttonSize} type="submit">
+            <Button
+              size={buttonSize}
+              isLoading={isLoading}
+              disabled={isLoading}
+              type="submit"
+            >
               Submit
             </Button>
           ),
         },
       ],
     }),
-    [buttonSize]
+    [buttonSize, isLoading]
   );
 
   async function handleSubmit(data: any, showOutro: () => void) {
     try {
+      setIsLoading(true);
       await submitArtist({
         name: data.name,
         email: data.email,
@@ -231,6 +238,7 @@ const ArtistForm = () => {
         samples: data.samples,
       });
 
+      setIsLoading(false);
       showOutro();
 
       toast({
@@ -243,10 +251,11 @@ const ArtistForm = () => {
         duration: 2000,
       });
     } catch (err) {
+      setIsLoading(false);
       toast({
         title: "Aplication was not successful.",
         description: (err as Error)?.message,
-        status: "error",
+        status: "warning",
         variant: "solid",
         position: "bottom-left",
         duration: 2000,
